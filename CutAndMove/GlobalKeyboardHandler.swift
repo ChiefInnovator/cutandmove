@@ -96,6 +96,18 @@ class GlobalKeyboardHandler: ObservableObject {
         let isCmd = flags.contains(.maskCommand)
         
         // -------------------------------------------------------------
+        // ESC (Cancel Cut Mode)
+        // -------------------------------------------------------------
+        // KeyCode 53 is Escape. We check this first.
+        if event.type == .keyDown, keyCode == 53 {
+            if isCutModeActive {
+                DispatchQueue.main.async { self.isCutModeActive = false }
+                // We do NOT return nil here because we want Escape to still work
+                // for other things (like closing a window)
+            }
+        }
+        
+        // -------------------------------------------------------------
         // CMD + X (Cut) -> Suppress and Simulate Cmd+C
         // -------------------------------------------------------------
         // We only trigger on KeyDown to avoid double firing
@@ -151,7 +163,7 @@ class GlobalKeyboardHandler: ObservableObject {
         keyDown?.flags = flags
         keyUp?.flags = flags
         
-        // TAG THE EVENT so we know it's ours
+        // TAG THE EVENT so we know it's ours (The Magic Number)
         keyDown?.setIntegerValueField(.eventSourceUserData, value: 0xCAFE)
         keyUp?.setIntegerValueField(.eventSourceUserData, value: 0xCAFE)
         
