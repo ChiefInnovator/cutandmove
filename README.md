@@ -54,11 +54,19 @@ The keyboard interception uses a `CGEvent` tap (`CFMachPort`) at the session lev
 
 ## Credits
 
-Created by **Richard Crane** with **Gemini**.
+Created by **[Richard Crane](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d)** — Microsoft MVP and founder of **[MILL5](https://mill5.com)** — with **Gemini**.
 
-Website: https://inventingfirewith.ai
-Support: support@inventingfirewith.ai
+- **MILL5:** [mill5.com](https://mill5.com)
+- **Microsoft MVP profile:** [mvp.microsoft.com/…/Richard-Crane](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d)
+- **Podcast — *Inventing Fire with AI*:** [inventingfirewith.ai](https://inventingfirewith.ai)
+- **Support:** [rich@mill5.com](mailto:rich@mill5.com)
+
+Built in [Visual Studio Code](https://code.visualstudio.com) and shipped on [GitHub](https://github.com/ChiefInnovator).
 
 ## License
 
-(c) 2025 Richard Crane. All rights reserved.
+© 2025 [Richard Crane](https://mill5.com). All rights reserved.
+
+---
+
+*Powered by [MILL5](https://www.mill5.com).*

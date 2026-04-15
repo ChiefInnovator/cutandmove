@@ -1,0 +1,55 @@
+# Cut & Move
+
+> Cut & Move is a free macOS menu bar utility that adds real Cmd+X cut-and-move to Finder. It intercepts Cmd+X in Finder, enters cut mode, then converts the next Cmd+V into Cmd+Option+V (Finder's native "Move Item Here" command). Built by Microsoft MVP Richard Crane at MILL5.
+
+## About
+
+- **Name:** Cut & Move
+- **Version:** 1.0
+- **Platform:** MacOS 26.1 or later
+- **Price:** Free
+- **Stack:** Swift, SwiftUI, Cocoa — zero third-party dependencies
+- **Author:** Richard Crane (Microsoft MVP, Founder of MILL5)
+- **MVP profile:** https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d
+- **MILL5:** https://mill5.com
+- **Podcast:** *Inventing Fire with AI* — https://inventingfirewith.ai
+- **Support:** rich@mill5.com
+
+## How it works
+
+1. Press **Cmd+X** with files selected in Finder. Cut & Move performs a silent Cmd+C and enters cut mode. The menu bar scissors icon fills in to confirm.
+2. Navigate to the destination folder in Finder.
+3. Press **Cmd+V**. Cut & Move injects the Option modifier so Finder receives Cmd+Option+V — the native *Move Item Here* command. The files are moved, not copied.
+4. Press **Escape** or **Cmd+C** at any time to cancel cut mode.
+
+## Why it exists
+
+macOS Finder has never had a native Cmd+X keyboard shortcut for cut-and-move. The closest native equivalent is Cmd+C followed by Cmd+Option+V. Cut & Move fills the gap so the expected Cmd+X / Cmd+V flow just works, without replacing Finder or installing kernel extensions.
+
+## Technical details
+
+- Uses a `CGEvent` tap (`CFMachPort`) at the session level to intercept keyboard events
+- Only processes events when Finder (`com.apple.finder`) is the frontmost application
+- Tags simulated events with a `0xCAFE` magic number to prevent infinite loops
+- Requires macOS Accessibility permissions for keyboard event monitoring
+- App Sandbox must be disabled; Hardened Runtime is enabled
+- No network access, no analytics, no telemetry, no data collection
+
+## Docs
+
+- [README](/README.md): Project overview and feature list
+- [Architecture](/docs/architecture.md): Component diagram, event flow, and design decisions
+- [Setup](/docs/setup.md): Build instructions, permission setup, and troubleshooting
+
+## Author
+
+Richard Crane is a **Microsoft Most Valuable Professional (MVP)** and the founder of **MILL5**, a software consultancy specializing in cloud, AI, and developer tooling.
+
+- MILL5: https://mill5.com
+- Microsoft MVP profile: https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d
+- Inventing Fire With AI (podcast): https://inventingfirewith.ai
+- Contact: rich@mill5.com
+
+## License
+
+© 2025 Richard Crane. All rights reserved.
