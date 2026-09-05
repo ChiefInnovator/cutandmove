@@ -3,14 +3,14 @@
 
 Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves to Finder**. Use familiar cut-and-paste shortcuts while Finder handles the actual move and any conflicts.
 
-**Current source: v1.0.2 (development preview; not yet published). Published download: v1.0.1.**
+**Current source: v1.0.2 (published release). Published download: v1.0.2.**
 
-[Download v1.0.1](https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.1) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v1.0.2 release notes](docs/RELEASE_NOTES_1.0.2.md)
+[Download v1.0.2](https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.2) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v1.0.2 release notes](docs/RELEASE_NOTES_1.0.2.md)
 
 | Product fact | Details |
 | :--- | :--- |
-| Published version | v1.0.1 — signed and notarized DMG / ZIP |
-| Current source | v1.0.2 — development preview; not yet published |
+| Published version | v1.0.2 — signed and notarized DMG / ZIP |
+| Current source | v1.0.2 — published release |
 | Compatibility | macOS 26.1 or later; Apple silicon and Intel |
 | Permission | Accessibility access for Finder keyboard shortcuts |
 | License | Free for uses permitted by [PolyForm Strict 1.0.0](LICENSE) |
@@ -38,7 +38,7 @@ Cancel cut mode at any time with **Escape** or **Cmd+C**.
 ## Requirements
 
 - macOS 26.1+
-- **Accessibility permissions** -- the app needs permission to modify Finder keyboard events. Enable access in System Settings; the current-source preview adds native launch prompting and automatic rechecks.
+- **Accessibility permissions** -- the app needs permission to modify Finder keyboard events. It requests access at launch and rechecks permission automatically; enable access in System Settings when prompted.
 
 ## Installation
 
@@ -67,9 +67,9 @@ Update `MARKETING_VERSION` (always major.minor.patch), `CURRENT_PROJECT_VERSION`
 The export plists use `method=developer-id`; `destination=upload` sends to Apple's notary service, **not App Store Connect publishing**. Keep the bundle identifier `M5.CutAndMove` and team `FS6453639M`. Downloads are available from GitHub Releases. Update `marketing.json` only after a new release is actually published.
 
 <!-- preview-version:start -->
-## Coming in v1.0.2
+## New in v1.0.2
 
-Development preview; not yet published. The enhancements below describe the current source, not an older download.
+Published release. The enhancements below describe the current source, not an older download.
 <!-- preview-version:end -->
 
 - **Text-field protection:** preserve native editing in Finder search and rename fields.
@@ -95,7 +95,7 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v1.0.1, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.2 (development preview; not yet published). It is not distributed through the Mac App Store.
+The published download is Cut & Move v1.0.2, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.2 (published release). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 
