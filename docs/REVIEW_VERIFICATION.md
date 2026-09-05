@@ -1,4 +1,34 @@
-# Review fix verification — 1.0.2
+# Finder shortcut fix — unreleased after 1.0.3
+
+The explicit `keyboardSetUnicodeString` override on the remapped Cmd+X event
+prevented Finder from executing Copy in a live test. The clipboard retained its
+previous text, so the subsequent ordinary Paste could create a text clipping.
+The fix changes only the virtual keycode and lets macOS perform key translation.
+
+## Live regression coverage
+
+Run `make test-finder` with Accessibility and Finder Automation access. This is
+an opt-in desktop test: do not type while it runs. It compiles the production
+shortcut state and focus guard into a temporary event-tap harness, opens only
+disposable Finder fixtures, restores the previous clipboard if unchanged by
+another application, and removes its own fixtures. It does not test the packaged
+app's permissions or startup lifecycle.
+
+- The pre-fix shortcut state fails: Cmd+X does not place the selected file URL on
+  the clipboard. The fixed state passes.
+- List, icon, column, and gallery (`flow`) views: Cmd+X/Cmd+V moves the file,
+  removes the source, preserves bytes, and creates no text clipping.
+- Ordinary Cmd+C/Cmd+V still copies in all four views.
+- The harness waits for file focus after switching view styles before sending
+  keyboard input. Text-field/unknown-focus protection remains unchanged.
+- The unit regression checks that remapping preserves the original Unicode
+  payload while AppKit translates the new keycode as Copy.
+
+These checks do not constitute publication or installation of a new release.
+
+---
+
+# Historical review fix verification — 1.0.2
 
 ## Completed
 

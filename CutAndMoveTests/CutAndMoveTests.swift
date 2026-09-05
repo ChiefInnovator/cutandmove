@@ -103,15 +103,23 @@ struct CutAndMoveTests {
         #expect(GlobalKeyboardHandler.monitoringAction(trusted: true, hasTap: true, enabled: false) == .enable)
         #expect(GlobalKeyboardHandler.monitoringAction(trusted: true, hasTap: true, enabled: true) == .none)
     }
-    @Test func unicodeMatchesRemappedKey() {
+    @Test func remappedCopyUsesKeyTranslationNotUnicodeInjection() {
         var s = ShortcutState()
         let cut = event(7)
+        var originalCharacter: UniChar = 0
+        var originalLength = 0
+        cut.keyboardGetUnicodeString(maxStringLength: 1, actualStringLength: &originalLength, unicodeString: &originalCharacter)
         _ = s.process(cut, fileContext: true, clipboard: 0, hasFiles: false)
         var character: UniChar = 0
         var length = 0
         cut.keyboardGetUnicodeString(maxStringLength: 1, actualStringLength: &length, unicodeString: &character)
-        #expect(length == 1)
-        #expect(character == 99)
+        // An explicit Unicode payload bypasses Finder's Copy command in a live
+        // event tap, even when NSEvent displays the expected character.
+        #expect(length == originalLength)
+        #expect(character == originalCharacter)
+        let translated = NSEvent(cgEvent: cut)
+        #expect(translated?.keyCode == 8)
+        #expect(translated?.charactersIgnoringModifiers == "c")
     }
     @Test func missingLoginServiceAttemptsRegistration() {
         var status = SMAppService.Status.notFound
