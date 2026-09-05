@@ -55,8 +55,11 @@ nonisolated enum FileMoveService {
             let target = folder.appendingPathComponent(item.url.lastPathComponent)
             guard target != item.url else { throw MoveFailure("The items are already in this folder.") }
             var info = stat()
-            guard lstat(target.path, &info) != 0, errno == ENOENT,
-                  names.insert(target.lastPathComponent.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))).inserted else {
+            let exists = lstat(target.path, &info) == 0
+            if !exists && errno != ENOENT {
+                throw NSError(domain: NSPOSIXErrorDomain, code: Int(errno), userInfo: [NSFilePathErrorKey: target.path])
+            }
+            guard !exists, names.insert(target.lastPathComponent.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))).inserted else {
                 throw MoveFailure("“\(target.lastPathComponent)” already exists at the destination. Nothing will be replaced.")
             }
             return (item, target)

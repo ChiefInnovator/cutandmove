@@ -14,6 +14,10 @@ struct FinderIntegrationTests {
         #expect(actions.request(for: firstTag)?.urls == first.urls)
         #expect(actions.request(for: secondTag)?.urls == second.urls)
         #expect(actions.request(for: 0) == nil)
+        for _ in 0..<256 { _ = actions.register(second) }
+        #expect(actions.request(for: firstTag) == nil)
+        let laterTag = actions.register(second)
+        #expect(laterTag > secondTag)
     }
 
     func fixture() throws -> URL {
@@ -136,5 +140,40 @@ struct FinderIntegrationTests {
         #expect(!FileManager.default.fileExists(atPath: malformed.path))
         #expect(try bridge.requests().count == 1)
         #expect(try FileManager.default.contentsOfDirectory(atPath: bridge.directory.appendingPathComponent("rejected").path).count == 1)
+    }
+
+    @Test func destinationPermissionFailureIsNotReportedAsCollision() throws {
+        guard geteuid() != 0 else { return }
+        let root = try fixture()
+        let target = root.appendingPathComponent("target")
+        defer {
+            try? FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: target.path)
+            try? FileManager.default.removeItem(at: root)
+        }
+        try FileManager.default.setAttributes([.posixPermissions: 0], ofItemAtPath: target.path)
+        let source = root.appendingPathComponent("source/a.txt")
+        let result = FileMoveService.move(try FileMoveService.capture([source]), destination: target)
+        #expect(result.moved == 0)
+        #expect(result.error != nil)
+        #expect(result.error?.contains("already exists") == false)
+        #expect(FileManager.default.fileExists(atPath: source.path))
+    }
+
+    @Test(arguments: [CGKeyCode(7), 9])
+    func busyMovePreservesTextKeysAndConsumesOnlyBlockedPairs(key: CGKeyCode) {
+        var state = ShortcutState()
+        func event(down: Bool) -> CGEvent {
+            let value = CGEvent(keyboardEventSource: nil, virtualKey: key, keyDown: down)!
+            value.flags = .maskCommand
+            return value
+        }
+        #expect({ state.process(event(down: true), fileContext: false, clipboard: 0, hasFiles: false, fileMoveInProgress: true) }())
+        // The event tap skips AX for key-up and supplies true; it must still pass.
+        #expect({ state.process(event(down: false), fileContext: true, clipboard: 0, hasFiles: false, fileMoveInProgress: true) }())
+        #expect({ !state.process(event(down: true), fileContext: true, clipboard: 0, hasFiles: true, fileMoveInProgress: true) }())
+        let up = event(down: false)
+        up.flags = []
+        #expect({ !state.process(up, fileContext: true, clipboard: 0, hasFiles: true, fileMoveInProgress: false) }())
+        #expect({ state.process(event(down: false), fileContext: true, clipboard: 0, hasFiles: false, fileMoveInProgress: true) }())
     }
 }

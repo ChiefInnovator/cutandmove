@@ -28,6 +28,8 @@ struct FinderMenuActions {
     private var commands: [Int: FinderRequest] = [:]
 
     mutating func register(_ request: FinderRequest) -> Int {
+        // Bound retained snapshots, but never reuse tags: an older open menu
+        // must fail closed rather than dispatching a newer action's selection.
         if commands.count >= 256 { commands.removeAll() }
         let tag = nextTag
         nextTag += 1

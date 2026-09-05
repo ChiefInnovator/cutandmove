@@ -1,6 +1,7 @@
 import Cocoa
 import Combine
 import FinderSync
+import Darwin
 
 @MainActor
 final class FinderIntegration: ObservableObject {
