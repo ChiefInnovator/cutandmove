@@ -4,10 +4,10 @@
 
 ## Version and availability
 
-Current source: v2.0.0 (development preview; not yet published). Published download: v1.0.3.
+Current source: v2.0.0 (published release). Published download: v2.0.0.
 
 - Canonical marketing page: https://chiefinnovator.github.io/cutandmove/
-- Published download v1.0.3: https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.3
+- Published download v2.0.0: https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.0
 - Current source v2.0.0: https://github.com/ChiefInnovator/cutandmove
 - Requirements: macOS 26.1+, Apple silicon or Intel, Accessibility permission.
 - Distribution: Developer ID signed and Apple-notarized DMG/ZIP releases, not the Mac App Store. Do not describe an unpublished source version as a notarized download.
@@ -26,7 +26,7 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v1.0.3, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.0 (development preview; not yet published). It is not distributed through the Mac App Store.
+The published download is Cut & Move v2.0.0, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.0 (published release). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 
