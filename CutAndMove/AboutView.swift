@@ -51,7 +51,7 @@ struct AboutView: View {
             Spacer()
             
             // 4. Footer
-            Text("© 2025 Richard Crane. All rights reserved.")
+            Text("© 2025-2026 Richard Crane. PolyForm Strict 1.0.0.")
                 .font(.caption2)
                 // FIX: Changed .tertiary to .secondary because .tertiary doesn't exist on Color
                 .foregroundColor(.secondary)

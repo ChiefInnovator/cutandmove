@@ -5,9 +5,11 @@
 ## About
 
 - **Name:** Cut & Move
-- **Version:** 1.0
+- **Version:** 1.0.1
+- **Distribution:** Developer ID signed, Apple-notarized DMG and ZIP through private GitHub Releases; repository access required. Not distributed through the Mac App Store.
+- **Downloads:** https://github.com/ChiefInnovator/cutandmove/releases/latest
 - **Platform:** MacOS 26.1 or later
-- **Price:** Free
+- **Price:** Free for uses permitted by PolyForm Strict 1.0.0
 - **Stack:** Swift, SwiftUI, Cocoa — zero third-party dependencies
 - **Author:** Richard Crane (Microsoft MVP, Founder of MILL5)
 - **MVP profile:** https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d
@@ -52,4 +54,6 @@ Richard Crane is a **Microsoft Most Valuable Professional (MVP)** and the founde
 
 ## License
 
-© 2025 Richard Crane. All rights reserved.
+[PolyForm Strict 1.0.0](https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE). Copyright © 2025-2026 Richard Crane.
+
+See the full license for restrictions on use, modification, and distribution.

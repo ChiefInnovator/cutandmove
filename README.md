@@ -19,9 +19,29 @@ Cancel cut mode at any time with **Escape** or **Cmd+C**.
 
 ## Installation
 
-1. Open `CutAndMove.xcodeproj` in Xcode
-2. Build and run (Cmd+R)
+1. Sign in to GitHub with access to this private repository and download `CutAndMove.dmg` from [Releases](https://github.com/ChiefInnovator/cutandmove/releases/latest).
+2. Open the DMG and drag CutAndMove into Applications, then launch it.
 3. Grant Accessibility permissions when prompted (System Settings > Privacy & Security > Accessibility)
+
+The app is signed with MILL5's Developer ID and notarized by Apple. It is distributed directly, not through the Mac App Store. A ZIP is also available.
+
+## Build and Release
+
+Open `CutAndMove.xcodeproj` in Xcode to develop locally, or use `make build` and `make test`.
+
+Releases follow MacEdgeLight's workflow: archive → Developer ID upload for notarization → export the notarized app → verify → package a signed DMG and ZIP → private GitHub Release.
+
+Requirements: full Xcode selected with `xcode-select` (or `DEVELOPER_DIR`), the MILL5 Apple account configured in Xcode, its Developer ID Application certificate/private key, `create-dmg`, and authenticated GitHub CLI access.
+
+```sh
+make release
+# Commit the release changes, then create and push the matching vVERSION tag.
+make publish
+```
+
+Update `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION`, website/llms version, and `docs/RELEASE_NOTES_VERSION.md` before releasing. `make release` waits for notarization and checks the signature, stapled ticket, and Gatekeeper acceptance before packaging. It refuses to overwrite existing DMG/ZIP files; move previous artifacts aside before rerunning. `make publish` requires the tag to exist on GitHub and verifies package checksums.
+
+The export plists use `method=developer-id`; `destination=upload` sends to Apple's notary service, **not App Store Connect publishing**. Keep the bundle identifier `M5.CutAndMove` and team `FS6453639M`. Downloads remain private and require repository access.
 
 ## Features
 
@@ -65,7 +85,9 @@ Built in [Visual Studio Code](https://code.visualstudio.com) and shipped on [Git
 
 ## License
 
-© 2025 [Richard Crane](https://mill5.com). All rights reserved.
+Licensed under [PolyForm Strict 1.0.0](LICENSE). Copyright © 2025-2026 [Richard Crane](https://mill5.com).
+
+Free for uses permitted by the license. See the full terms for restrictions on use, modification, and distribution.
 
 ---
 
