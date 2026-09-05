@@ -113,6 +113,19 @@ struct CutAndMoveTests {
         #expect(length == 1)
         #expect(character == 99)
     }
+    @Test func missingLoginServiceAttemptsRegistration() {
+        var status = SMAppService.Status.notFound
+        var registrations = 0
+        let manager = LaunchManager(readStatus: { status }, register: {
+            registrations += 1
+            status = .enabled
+        })
+        manager.toggle()
+        #expect(registrations == 1)
+        #expect(manager.isEnabled)
+        #expect(manager.errorMessage == nil)
+    }
+
     @Test func loginStatusAndErrors() {
         var status = SMAppService.Status.notRegistered
         var opened = false
@@ -131,5 +144,48 @@ struct CutAndMoveTests {
         failed.toggle()
         #expect(failed.errorMessage != nil)
         #expect(!failed.isEnabled)
+    }
+
+    @Test func missingLoginServiceCanRequireApproval() {
+        var status = SMAppService.Status.notFound
+        var opened = false
+        let manager = LaunchManager(readStatus: { status }, register: { status = .requiresApproval }, openSettings: { opened = true })
+        manager.toggle()
+        #expect(manager.requiresApproval)
+        #expect(manager.errorMessage == nil)
+        manager.toggle()
+        #expect(opened)
+    }
+
+    @Test func missingLoginServiceReportsActualFailureAndAllowsRetry() {
+        var status = SMAppService.Status.notFound
+        var fail = true
+        let manager = LaunchManager(readStatus: { status }, register: {
+            if fail {
+                throw NSError(domain: "LoginTest", code: 42, userInfo: [NSLocalizedDescriptionKey: "Registration unavailable"])
+            }
+            status = .enabled
+        })
+        manager.toggle()
+        #expect(manager.errorMessage?.contains("Registration unavailable") == true)
+        #expect(manager.errorMessage?.contains("LoginTest, 42") == true)
+        #expect(manager.errorMessage?.contains("Install Cut & Move") == false)
+        #expect(!manager.isEnabled)
+        fail = false
+        manager.toggle()
+        #expect(manager.isEnabled)
+        #expect(manager.errorMessage == nil)
+    }
+
+    @Test func unconfirmedLoginRegistrationIsNotReportedAsSuccess() {
+        var status = SMAppService.Status.notFound
+        let manager = LaunchManager(readStatus: { status }, register: {})
+        manager.toggle()
+        #expect(!manager.isEnabled)
+        #expect(manager.errorMessage?.contains("not confirmed") == true)
+        status = .enabled
+        manager.checkStatus()
+        #expect(manager.isEnabled)
+        #expect(manager.errorMessage == nil)
     }
 }

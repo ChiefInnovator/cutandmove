@@ -24,7 +24,13 @@ class LaunchManager: ObservableObject {
         checkStatus()
     }
 
-    func checkStatus() { status = readStatus() }
+    func checkStatus() {
+        let updated = readStatus()
+        if updated != status && (updated == .enabled || updated == .requiresApproval) {
+            errorMessage = nil
+        }
+        status = updated
+    }
 
     func toggle() {
         errorMessage = nil
@@ -33,14 +39,20 @@ class LaunchManager: ObservableObject {
             switch status {
             case .enabled: try unregister()
             case .requiresApproval: openSettings()
-            case .notRegistered: try register()
-            case .notFound:
-                errorMessage = "Install Cut & Move in Applications before enabling Launch at Login."
+            case .notRegistered, .notFound:
+                // A missing service is not evidence of an incorrect installation path.
+                // Let ServiceManagement attempt registration and report its actual result.
+                try register()
+                checkStatus()
+                if status != .enabled && status != .requiresApproval {
+                    errorMessage = "macOS has not confirmed Launch at Login. Check System Settings > General > Login Items, then try again."
+                }
             @unknown default:
                 errorMessage = "Unknown login-item status. Check System Settings > General > Login Items."
             }
         } catch {
-            errorMessage = "Launch at Login failed: \(error.localizedDescription)"
+            let failure = error as NSError
+            errorMessage = "Launch at Login failed: \(failure.localizedDescription) (\(failure.domain), \(failure.code)). Check System Settings > General > Login Items."
         }
         checkStatus()
     }

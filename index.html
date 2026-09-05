@@ -113,7 +113,7 @@
           "name": "Which version can I download?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The published download is Cut & Move v1.0.2, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.2 (published release). It is not distributed through the Mac App Store."
+            "text": "The published download is Cut & Move v1.0.2, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.3 (development preview; not yet published). It is not distributed through the Mac App Store."
           }
         },
         {
@@ -740,7 +740,7 @@
       <div class="container">
         <span class="eyebrow">
           <span class="dot"></span>
-          macOS 26.1+&nbsp;·&nbsp;Native Swift&nbsp;·&nbsp;No analytics
+          Cmd+X. Cmd+V. Files moved.
         </span>
         <h1>
           Your fingers know <span class="grad">Cmd+X.</span><br>
@@ -750,8 +750,9 @@
           Meet Cut &amp; Move. Cut files with Cmd+X. Open a folder. Paste with Cmd+V. A tiny native Mac menu bar app for the shortcut you already reach for.
         </p>
 <!-- version:start -->
-<p class="version-summary">Current source: v1.0.2 (published release). Published download: v1.0.2.</p>
+<p class="version-summary">Current source: v1.0.3 (development preview; not yet published). Published download: v1.0.2.</p>
 <!-- version:end -->
+        <p class="version-summary">Requires macOS 26.1 or later.</p>
         <div class="cta-row">
 <!-- hero-download:start -->
 <a href="https://github.com/ChiefInnovator/cutandmove/releases/download/v1.0.2/CutAndMove.dmg" class="btn btn-primary">Download v1.0.2 DMG <span aria-hidden="true">↓</span></a>
@@ -851,8 +852,8 @@
                 <line x1="17.5" y1="15" x2="9" y2="15"/>
               </svg>
             </div>
-            <h3>Zero dependencies</h3>
-            <p>Pure Swift and system frameworks. No analytics, no network, no third-party code to audit.</p>
+            <h3>Easy to cancel</h3>
+            <p>Changed your mind? Press Escape or Cmd+C to clear a pending cut before moving anything.</p>
           </article>
         </div>
       </div>
@@ -860,19 +861,16 @@
 
 <section id="preview" aria-labelledby="preview-heading">
   <div class="container">
-    <h2 id="preview-heading">More control over Finder shortcuts</h2>
+    <h2 id="preview-heading">Clearer Launch at Login setup</h2>
     <!-- preview-version:start -->
-<h3>What's new in v1.0.2?</h3>
-<p>Published release. See the <a href="https://github.com/ChiefInnovator/cutandmove/blob/main/docs/RELEASE_NOTES_1.0.2.md">v1.0.2 release notes</a>.</p>
+<h3>What's coming in v1.0.3?</h3>
+<p>Development preview; not yet published. See the <a href="https://github.com/ChiefInnovator/cutandmove/blob/main/docs/RELEASE_NOTES_1.0.3.md">v1.0.3 release notes</a>.</p>
 <!-- preview-version:end -->
     <ul>
-      <li><strong>Text-field protection:</strong> leave Finder search and rename fields to native text editing.</li>
-      <li><strong>Clipboard checks:</strong> require a fresh file copy before turning paste into a move.</li>
-      <li><strong>Predictable shortcuts:</strong> preserve extra modifiers, match key-up events, and suppress held-key repeats.</li>
-      <li><strong>Clear cancellation:</strong> clear pending cut state when switching away from Finder, including by mouse.</li>
-      <li><strong>Monitoring recovery:</strong> recover disabled taps and report when keyboard monitoring is unavailable.</li>
-      <li><strong>Clear setup:</strong> show Accessibility and login-item approval guidance, plus registration errors.</li>
-      <li><strong>Full-bleed icon:</strong> crisp artwork without a baked-in outer border.</li>
+      <li><strong>Correct registration:</strong> try enabling Launch at Login when macOS reports a missing service.</li>
+      <li><strong>Accurate guidance:</strong> no false warning to move an already-installed app into Applications.</li>
+      <li><strong>Visible results:</strong> show approval requirements and actual registration errors.</li>
+      <li><strong>Status recovery:</strong> clear stale errors when macOS confirms the service is enabled.</li>
     </ul>
   </div>
 </section>
@@ -915,7 +913,7 @@
 <!-- faq:start -->
 <details class="faq-item"><summary>What is Cut &amp; Move?</summary><p class="faq-item-body">Cut &amp; Move is a native macOS menu bar utility that adds Cmd+X followed by Cmd+V for moving files in Finder. It uses Finder&#x27;s built-in Move Item Here command rather than replacing Finder.</p></details>
 <details class="faq-item"><summary>How do I cut and paste files on a Mac?</summary><p class="faq-item-body">Without an app, select files in Finder, press Cmd+C, open the destination, then press Cmd+Option+V to move them. With Cut &amp; Move running, use Cmd+X followed by Cmd+V instead.</p></details>
-<details class="faq-item"><summary>Which version can I download?</summary><p class="faq-item-body">The published download is Cut &amp; Move v1.0.2, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.2 (published release). It is not distributed through the Mac App Store.</p></details>
+<details class="faq-item"><summary>Which version can I download?</summary><p class="faq-item-body">The published download is Cut &amp; Move v1.0.2, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.3 (development preview; not yet published). It is not distributed through the Mac App Store.</p></details>
 <details class="faq-item"><summary>What are the macOS and hardware requirements?</summary><p class="faq-item-body">Cut &amp; Move requires macOS 26.1 or later. The universal macOS app supports Apple silicon and Intel Macs that can run the required macOS version.</p></details>
 <details class="faq-item"><summary>Why does Cut &amp; Move need Accessibility permission?</summary><p class="faq-item-body">Accessibility permission lets the app intercept and modify keyboard events for Finder shortcuts. The app does not record keystrokes, collect analytics, or transmit file contents. You can revoke access in System Settings &gt; Privacy &amp; Security &gt; Accessibility.</p></details>
 <details class="faq-item"><summary>Does Cut &amp; Move change shortcuts in other apps?</summary><p class="faq-item-body">Cut &amp; Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Finder performs the actual file move and presents any file-conflict dialogs.</p></details>
@@ -965,9 +963,9 @@
           <a href="mailto:rich@mill5.com" class="btn btn-secondary">Contact support</a>
         </div>
 <!-- download-version:start -->
-<p class="version-summary">Signed and notarized DMG or ZIP. Current source: v1.0.2 (published release). Published download: v1.0.2.</p>
+<p class="version-summary">Signed and notarized DMG or ZIP. Current source: v1.0.3 (development preview; not yet published). Published download: v1.0.2.</p>
 <!-- download-version:end -->
-        <div class="requirements">Requires macOS 26.1 or later · Free for uses permitted by <a href="https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE">PolyForm Strict 1.0.0</a> · No tracking · No analytics</div>
+        <div class="requirements">Requires macOS 26.1 or later · Free for uses permitted by <a href="https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE">PolyForm Strict 1.0.0</a></div>
       </div>
     </section>
     <section id="share" class="share-panel" aria-labelledby="share-heading">

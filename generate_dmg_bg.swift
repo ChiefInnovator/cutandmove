@@ -108,6 +108,6 @@ guard let pngData = bitmap.representation(using: .png, properties: [:]) else {
     exit(1)
 }
 
-let outputPath = "build/dmg-background.png"
+let outputPath = CommandLine.arguments.dropFirst().first ?? "build/dmg-background.png"
 try! pngData.write(to: URL(fileURLWithPath: outputPath))
 print("Created \(outputPath) (\(width)x\(height))")

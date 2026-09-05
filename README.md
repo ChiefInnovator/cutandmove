@@ -1,16 +1,16 @@
 <!-- overview:start -->
-# Cut & Move v1.0.2 — Cmd+X Cut and Paste for macOS Finder
+# Cut & Move v1.0.3 — Cmd+X Cut and Paste for macOS Finder
 
 Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves to Finder**. Use familiar cut-and-paste shortcuts while Finder handles the actual move and any conflicts.
 
-**Current source: v1.0.2 (published release). Published download: v1.0.2.**
+**Current source: v1.0.3 (development preview; not yet published). Published download: v1.0.2.**
 
-[Download v1.0.2](https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.2) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v1.0.2 release notes](docs/RELEASE_NOTES_1.0.2.md)
+[Download v1.0.2](https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.2) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v1.0.3 release notes](docs/RELEASE_NOTES_1.0.3.md)
 
 | Product fact | Details |
 | :--- | :--- |
 | Published version | v1.0.2 — signed and notarized DMG / ZIP |
-| Current source | v1.0.2 — published release |
+| Current source | v1.0.3 — development preview; not yet published |
 | Compatibility | macOS 26.1 or later; Apple silicon and Intel |
 | Permission | Accessibility access for Finder keyboard shortcuts |
 | License | Free for uses permitted by [PolyForm Strict 1.0.0](LICENSE) |
@@ -67,18 +67,15 @@ Update `MARKETING_VERSION` (always major.minor.patch), `CURRENT_PROJECT_VERSION`
 The export plists use `method=developer-id`; `destination=upload` sends to Apple's notary service, **not App Store Connect publishing**. Keep the bundle identifier `M5.CutAndMove` and team `FS6453639M`. Downloads are available from GitHub Releases. Update `marketing.json` only after a new release is actually published.
 
 <!-- preview-version:start -->
-## New in v1.0.2
+## Coming in v1.0.3
 
-Published release. The enhancements below describe the current source, not an older download.
+Development preview; not yet published. The enhancements below describe the current source, not an older download.
 <!-- preview-version:end -->
 
-- **Text-field protection:** preserve native editing in Finder search and rename fields.
-- **Clipboard safeguards:** only convert paste into a move after a fresh file copy.
-- **Consistent key events:** reject extra modifiers, pair key-down/key-up events, and prevent repeated moves from held keys.
-- **Mouse-switch cancellation:** clear cut mode when leaving Finder, even without a keyboard event.
-- **Monitoring recovery:** restart disabled event taps and show actual readiness.
-- **Permission and login guidance:** native permission prompting, automatic rechecks, approval-required status, and visible errors.
-- **Full-bleed app icon:** no baked-in gray surround or outside border.
+- **Launch at Login registration:** attempt registration when macOS reports a missing service.
+- **Accurate guidance:** remove the false Applications-folder warning and show actual registration errors.
+- **Status recovery:** handle approval-required results and clear stale errors when the service becomes enabled.
+- **Regression coverage:** test missing-service registration, approval, failures, retries, and status recovery.
 
 See [verification status](docs/REVIEW_VERIFICATION.md) for test coverage and remaining live-Finder checks.
 
@@ -95,7 +92,7 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v1.0.2, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.2 (published release). It is not distributed through the Mac App Store.
+The published download is Cut & Move v1.0.2, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.3 (development preview; not yet published). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 

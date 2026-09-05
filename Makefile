@@ -33,7 +33,7 @@ verify-release:
 	xcrun stapler validate $(APP_PATH)
 	spctl --assess --type execute --verbose=2 $(APP_PATH)
 dmg: verify-release
-	swift generate_dmg_bg.swift
+	swift generate_dmg_bg.swift $(BUILD_DIR)/dmg-background.png
 	test ! -e $(BUILD_DIR)/$(APP_NAME).dmg
 	create-dmg --volname "$(APP_NAME)" --background $(BUILD_DIR)/dmg-background.png --window-pos 200 120 --window-size 660 400 --icon-size 100 --icon "$(APP_NAME).app" 175 190 --app-drop-link 485 190 --text-size 14 --no-internet-enable $(BUILD_DIR)/$(APP_NAME).dmg $(APP_PATH)
 	codesign --sign "$(DEVELOPER_ID)" $(BUILD_DIR)/$(APP_NAME).dmg
