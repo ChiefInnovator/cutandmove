@@ -4,12 +4,12 @@
 
 ## Version and availability
 
-Current source: v2.0.0 (published release). Published download: v2.0.0.
+Current source: v2.0.1 (development preview; not yet published). Published download: v2.0.0.
 
 - Canonical marketing page: https://chiefinnovator.github.io/cutandmove/
 - Published download v2.0.0: https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.0
-- Current source v2.0.0: https://github.com/ChiefInnovator/cutandmove
-- Requirements: macOS 26.1+, Apple silicon or Intel, Accessibility permission.
+- Current source v2.0.1: https://github.com/ChiefInnovator/cutandmove
+- Requirements: macOS 26.1+, Apple silicon and Intel, Accessibility permission for keyboard shortcuts.
 - Distribution: Developer ID signed and Apple-notarized DMG/ZIP releases, not the Mac App Store. Do not describe an unpublished source version as a notarized download.
 - License: PolyForm Strict 1.0.0; free only for permitted uses, not unrestricted open source.
 - Privacy: no keystroke recording, telemetry, or application network requests.
@@ -26,11 +26,11 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v2.0.0, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.0 (published release). It is not distributed through the Mac App Store.
+The published download is Cut & Move v2.0.0, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.1 (development preview; not yet published). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 
-Cut & Move requires macOS 26.1 or later. The universal macOS app supports Apple silicon and Intel Macs that can run the required macOS version.
+Cut & Move v2.0.0 requires macOS 26.1 or later and supports Apple silicon and Intel.
 
 ### Why does Cut & Move need Accessibility permission?
 
@@ -40,9 +40,9 @@ Accessibility permission lets the app intercept and modify keyboard events for F
 
 Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs.
 
-### What does Finder integration add in v2.0.0?
+### What does Finder integration add in v2.0.1?
 
-The v2.0.0 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
+The v2.0.1 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
 
 ### How do I cancel cut mode?
 
@@ -61,7 +61,7 @@ Cut & Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Con
 - [README](https://github.com/ChiefInnovator/cutandmove/blob/main/README.md): Features, compatibility, version status, installation.
 - [Setup](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/setup.md): Permissions and troubleshooting.
 - [Architecture](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/architecture.md): Keyboard processing and safety boundaries.
-- [Current release notes](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/RELEASE_NOTES_2.0.0.md): Current-source changes; check availability above.
+- [Current release notes](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/RELEASE_NOTES_2.0.1.md): Current-source changes; check availability above.
 - [License](https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE): Complete terms.
 
 Current-source enhancements include a native Finder Sync extension, right-click Cut and Move Here actions, a toolbar menu, pending-cut badges, automatic all-folder coverage, shared keyboard/menu cut state, and collision checks for menu-driven moves. If the current source differs from the published version, treat these as preview features, not download guarantees.

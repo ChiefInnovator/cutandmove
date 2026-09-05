@@ -38,6 +38,7 @@ def outputs():
     share_text = f"Your fingers know Cmd+X. Now Finder does too. Cut & Move v{released} adds familiar cut-and-paste file moves to macOS Finder."
     preview = current != released
     status = "development preview; not yet published" if preview else "published release"
+    hardware = "Apple silicon only (M1 or later)" if tuple(map(int, released.split("."))) >= (2, 0, 1) else "Apple silicon and Intel"
     version_fact = f"Current source: v{current} ({status}). Published download: v{released}."
     title = f"Cut & Move v{released} — Cmd+X Cut and Paste for Mac Finder"
     social_title = f"Your fingers know Cmd+X. Now Finder does too. | Cut & Move v{released}"
@@ -46,7 +47,7 @@ def outputs():
         ("What is Cut & Move?", "Cut & Move is a native macOS menu bar utility that adds Cmd+X followed by Cmd+V for moving files in Finder. It uses Finder's built-in Move Item Here command rather than replacing Finder."),
         ("How do I cut and paste files on a Mac?", "Without an app, select files in Finder, press Cmd+C, open the destination, then press Cmd+Option+V to move them. With Cut & Move running, use Cmd+X followed by Cmd+V instead."),
         ("Which version can I download?", f"The published download is Cut & Move v{released}, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v{current} ({status}). It is not distributed through the Mac App Store."),
-        ("What are the macOS and hardware requirements?", "Cut & Move requires macOS 26.1 or later. The universal macOS app supports Apple silicon and Intel Macs that can run the required macOS version."),
+        ("What are the macOS and hardware requirements?", f"Cut & Move v{released} requires macOS 26.1 or later and supports {hardware}."),
         ("Why does Cut & Move need Accessibility permission?", "Accessibility permission lets the app intercept and modify keyboard events for Finder shortcuts. The app does not record keystrokes, collect analytics, or transmit file contents. You can revoke access in System Settings > Privacy & Security > Accessibility."),
         ("Does Cut & Move change shortcuts in other apps?", "Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs."),
         (f"What does Finder integration add in v{current}?", f"The v{current} current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing."),
@@ -129,7 +130,7 @@ Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves
 | :--- | :--- |
 | Published version | v{released} — signed and notarized DMG / ZIP |
 | Current source | v{current} — {status} |
-| Compatibility | macOS 26.1 or later; Apple silicon and Intel |
+| Compatibility | macOS 26.1 or later; {hardware} |
 | Permission | Accessibility access for Finder keyboard shortcuts |
 | License | Free for uses permitted by [PolyForm Strict 1.0.0](LICENSE) |
 | Distribution | GitHub Releases; no Mac App Store version |
@@ -148,7 +149,7 @@ Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves
 - Canonical marketing page: {site}
 - Published download v{released}: {release}
 - Current source v{current}: {repo}
-- Requirements: macOS 26.1+, Apple silicon or Intel, Accessibility permission.
+- Requirements: macOS 26.1+, {hardware}, Accessibility permission for keyboard shortcuts.
 - Distribution: Developer ID signed and Apple-notarized DMG/ZIP releases, not the Mac App Store. Do not describe an unpublished source version as a notarized download.
 - License: PolyForm Strict 1.0.0; free only for permitted uses, not unrestricted open source.
 - Privacy: no keystroke recording, telemetry, or application network requests.

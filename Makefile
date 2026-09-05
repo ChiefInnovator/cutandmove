@@ -31,6 +31,8 @@ notarize: archive
 	xcodebuild -exportArchive -archivePath $(ARCHIVE_PATH) -exportOptionsPlist scripts/ExportOptions-upload.plist -exportPath $(BUILD_DIR)/xcode-distribution -allowProvisioningUpdates
 	bash scripts/export-notarized.sh $(ARCHIVE_PATH) $(EXPORT_PATH)
 verify-release:
+	test "$$(lipo -archs $(APP_PATH)/Contents/MacOS/CutAndMove)" = "arm64"
+	test "$$(lipo -archs $(APP_PATH)/Contents/PlugIns/CutAndMoveFinder.appex/Contents/MacOS/CutAndMoveFinder)" = "arm64"
 	test "$$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' $(APP_PATH)/Contents/Info.plist)" = "$(VERSION)"
 	test "$$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' $(APP_PATH)/Contents/Info.plist)" = "M5.CutAndMove"
 	codesign --verify --deep --strict --verbose $(APP_PATH)

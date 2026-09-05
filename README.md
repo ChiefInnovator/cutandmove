@@ -1,16 +1,16 @@
 <!-- overview:start -->
-# Cut & Move v2.0.0 — Cmd+X Cut and Paste for macOS Finder
+# Cut & Move v2.0.1 — Cmd+X Cut and Paste for macOS Finder
 
 Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves to Finder**. Use familiar cut-and-paste shortcuts while Finder handles the actual move and any conflicts.
 
-**Current source: v2.0.0 (published release). Published download: v2.0.0.**
+**Current source: v2.0.1 (development preview; not yet published). Published download: v2.0.0.**
 
-[Download v2.0.0](https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.0) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v2.0.0 release notes](docs/RELEASE_NOTES_2.0.0.md)
+[Download v2.0.0](https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.0) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v2.0.1 release notes](docs/RELEASE_NOTES_2.0.1.md)
 
 | Product fact | Details |
 | :--- | :--- |
 | Published version | v2.0.0 — signed and notarized DMG / ZIP |
-| Current source | v2.0.0 — published release |
+| Current source | v2.0.1 — development preview; not yet published |
 | Compatibility | macOS 26.1 or later; Apple silicon and Intel |
 | Permission | Accessibility access for Finder keyboard shortcuts |
 | License | Free for uses permitted by [PolyForm Strict 1.0.0](LICENSE) |
@@ -67,9 +67,9 @@ Update `MARKETING_VERSION` (always major.minor.patch), `CURRENT_PROJECT_VERSION`
 The export plists use `method=developer-id`; `destination=upload` sends to Apple's notary service, **not App Store Connect publishing**. Keep the bundle identifier `M5.CutAndMove` and team `FS6453639M`. Downloads are available from GitHub Releases. Update `marketing.json` only after a new release is actually published.
 
 <!-- preview-version:start -->
-## New in v2.0.0
+## Coming in v2.0.1
 
-Published release. The enhancements below describe the current source, not an older download.
+Development preview; not yet published. The enhancements below describe the current source, not an older download.
 <!-- preview-version:end -->
 
 - **Finder Sync extension:** right-click Cut, Move Here, and Cancel Cut commands.
@@ -94,11 +94,11 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v2.0.0, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.0 (published release). It is not distributed through the Mac App Store.
+The published download is Cut & Move v2.0.0, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.1 (development preview; not yet published). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 
-Cut & Move requires macOS 26.1 or later. The universal macOS app supports Apple silicon and Intel Macs that can run the required macOS version.
+Cut & Move v2.0.0 requires macOS 26.1 or later and supports Apple silicon and Intel.
 
 ### Why does Cut & Move need Accessibility permission?
 
@@ -108,9 +108,9 @@ Accessibility permission lets the app intercept and modify keyboard events for F
 
 Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs.
 
-### What does Finder integration add in v2.0.0?
+### What does Finder integration add in v2.0.1?
 
-The v2.0.0 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
+The v2.0.1 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
 
 ### How do I cancel cut mode?
 

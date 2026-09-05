@@ -1,6 +1,6 @@
 # Architecture
 
-Cut & Move v2.0.0 combines a SwiftUI menu-bar app, a main-run-loop CGEvent tap, and a sandboxed Finder Sync extension. Keyboard moves use Finder's native commands. Explicit Finder-extension menu moves use the main app's validated file-move service.
+Cut & Move v2.0.1 combines a SwiftUI menu-bar app, a main-run-loop CGEvent tap, and a sandboxed Finder Sync extension. The app and extension target Apple silicon (arm64) only. Keyboard moves use Finder's native commands. Explicit Finder-extension menu moves use the main app's validated file-move service.
 
 ## Keyboard path
 

@@ -16,6 +16,28 @@ spec.loader.exec_module(marketing)
 
 
 class MarketingTests(unittest.TestCase):
+    def test_hardware_requirements_follow_published_release(self):
+        original = marketing.ROOT
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ["index.html", "README.md", "llms.txt", "marketing.json", "CutAndMove.xcodeproj/project.pbxproj"]:
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(original / name, target)
+            config_path = root / "marketing.json"
+            config = json.loads(config_path.read_text())
+            try:
+                marketing.ROOT = root
+                for version, expected in [("2.0.0", "Apple silicon and Intel"), ("2.0.1", "Apple silicon only (M1 or later)")]:
+                    config["released_version"] = version
+                    config_path.write_text(json.dumps(config))
+                    for name, text in marketing.outputs().items():
+                        self.assertIn(expected, text, name)
+                        if version == "2.0.1":
+                            self.assertNotIn("Intel", text, name)
+            finally:
+                marketing.ROOT = original
+
     def test_sharing_and_direct_download_use_published_version(self):
         page = marketing.outputs()["index.html"]
         config = json.loads((marketing.ROOT / "marketing.json").read_text())
