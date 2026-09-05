@@ -106,8 +106,6 @@ struct FinderIntegrationTests {
         let cut = FinderCut(id: UUID(), urls: [root.appendingPathComponent("source/a.txt")], clipboard: 42)
         try host.publish(FinderStatus(cut: cut))
         #expect(try finder.status().cut == cut)
-        try host.setFolders([root])
-        #expect(try finder.folders() == [root])
         let request = FinderRequest(action: .move, urls: [root.appendingPathComponent("target")], cutID: cut.id)
         try finder.send(request)
         let commands = try host.requests()

@@ -49,7 +49,7 @@ def outputs():
         ("What are the macOS and hardware requirements?", "Cut & Move requires macOS 26.1 or later. The universal macOS app supports Apple silicon and Intel Macs that can run the required macOS version."),
         ("Why does Cut & Move need Accessibility permission?", "Accessibility permission lets the app intercept and modify keyboard events for Finder shortcuts. The app does not record keystrokes, collect analytics, or transmit file contents. You can revoke access in System Settings > Privacy & Security > Accessibility."),
         ("Does Cut & Move change shortcuts in other apps?", "Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs."),
-        (f"What does Finder integration add in v{current}?", f"The v{current} current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it from Cut & Move and choose Show Finder Actions In to manage its folders. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing."),
+        (f"What does Finder integration add in v{current}?", f"The v{current} current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing."),
         ("How do I cancel cut mode?", "Press Escape or Cmd+C to cancel a pending cut. The menu bar scissors icon indicates whether cut mode is active."),
         ("Is Cut & Move free or open source?", "Cut & Move is free for uses permitted by PolyForm Strict 1.0.0. Its source is available on GitHub, but it is not offered under an unrestricted open-source license. Read LICENSE for use, modification, and distribution restrictions."),
         ("Who makes Cut & Move and how do I get support?", "Cut & Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Contact rich@mill5.com for support."),
@@ -165,7 +165,7 @@ Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves
 - [Current release notes]({repo}/blob/main/docs/RELEASE_NOTES_{current}.md): Current-source changes; check availability above.
 - [License]({repo}/blob/main/LICENSE): Complete terms.
 
-Current-source enhancements include a native Finder Sync extension, right-click Cut and Move Here actions, a toolbar menu, pending-cut badges, configurable folders, shared keyboard/menu cut state, and collision checks for menu-driven moves. If the current source differs from the published version, treat these as preview features, not download guarantees.
+Current-source enhancements include a native Finder Sync extension, right-click Cut and Move Here actions, a toolbar menu, pending-cut badges, automatic all-folder coverage, shared keyboard/menu cut state, and collision checks for menu-driven moves. If the current source differs from the published version, treat these as preview features, not download guarantees.
 '''
     return {"index.html": page, "README.md": readme, "llms.txt": llms}
 

@@ -8,7 +8,6 @@ final class FinderIntegration: ObservableObject {
     static let shared = FinderIntegration()
     @Published private(set) var status = FinderStatus()
     @Published private(set) var extensionEnabled = false
-    @Published private(set) var folders: [URL] = []
     private var bridge: FinderBridge?
     private var timer: Timer?
     private var items: [CutFile] = []
@@ -29,11 +28,6 @@ final class FinderIntegration: ObservableObject {
             }
             lock = descriptor
             bridge = store
-            folders = try store.folders()
-            if !FileManager.default.fileExists(atPath: store.directory.appendingPathComponent("folders.json").path) {
-                folders = [FileManager.default.homeDirectoryForCurrentUser, URL(fileURLWithPath: "/Volumes", isDirectory: true)]
-                try store.setFolders(folders)
-            }
             // Never resume an old destructive request or stale cut after a restart.
             status = FinderStatus()
             try store.publish(status)
@@ -62,28 +56,6 @@ final class FinderIntegration: ObservableObject {
             close(lock)
             lock = -1
         }
-    }
-
-    func addFolder() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = true
-        panel.prompt = "Show Finder Actions Here"
-        guard panel.runModal() == .OK else { return }
-        do {
-            let updated = Array(Set(folders + panel.urls)).sorted { $0.path < $1.path }
-            try bridge?.setFolders(updated)
-            folders = updated
-        } catch { report(error.localizedDescription) }
-    }
-
-    func removeFolder(_ folder: URL) {
-        do {
-            let updated = folders.filter { $0 != folder }
-            try bridge?.setFolders(updated)
-            folders = updated
-        } catch { report(error.localizedDescription) }
     }
 
     func cancel() {

@@ -24,7 +24,7 @@ The state machine is synchronous; there are no queued cut-state updates and no s
 
 `FileMoveService` snapshots source device/inode identity, preflights the full batch, and rejects replaced/missing sources, collisions, overlapping selections, same-folder moves, and destinations inside a source folder. Symbolic links are moved as links. Foundation handles cross-volume moves and refuses existing destinations. Work runs off the main actor. This is not an all-or-nothing transaction: partial I/O failures report how many moved and retain only remaining sources. It cannot eliminate every filesystem race caused by concurrent external changes. Quit is refused during a move; a crash may leave a partial operation requiring user inspection.
 
-Finder UI is folder-scoped, initially the user's home and mounted volumes; users can change coverage with **Show Finder Actions In…**. Badges are advisory and can be affected by other Finder extensions.
+Finder Sync requires directory registration, so the extension automatically registers the filesystem root and all mounted volume roots, refreshing coverage as drives mount or unmount. Apple's `directoryURLs` API applies recursively to subdirectories. There is no user-configured folder allowlist, and old preview folder preferences are ignored. Registration does not enumerate file contents or grant permissions. Virtual Finder views may lack a destination URL, and badges are advisory and can be affected by other Finder extensions. See [Apple's directoryURLs documentation](https://developer.apple.com/documentation/findersync/fifindersynccontroller/directoryurls).
 
 ## Keyboard permissions and monitoring
 
@@ -41,7 +41,7 @@ Finder UI is folder-scoped, initially the user's home and mounted volumes; users
 - `ShortcutState.swift`: deterministic shortcut and clipboard state machine.
 - `LaunchManager.swift`: login-item status and actions.
 - `FinderIntegration.swift`, `FileMoveService.swift`: shared cut state and validated menu moves.
-- `Shared/FinderBridge.swift`: app-group requests, status, folder settings, and menu action snapshots.
+- `Shared/FinderBridge.swift`: app-group requests, status, and menu action snapshots.
 - `CutAndMoveFinder/FinderSync.swift`: native Finder menus, toolbar, and badges.
 - `PermissionsView.swift`, `AboutView.swift`: user-facing guidance and app information.
 

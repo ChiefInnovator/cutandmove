@@ -76,7 +76,7 @@ Development preview; not yet published. The enhancements below describe the curr
 - **Visible cut selection:** scissors badges and a Finder toolbar menu.
 - **Keyboard + mouse:** share pending files between the keyboard helper and Finder actions.
 - **Safe menu moves:** reject collisions and changed sources; retain unmoved items after partial failures.
-- **Flexible setup:** enable the extension and manage its folders from the app menu.
+- **All-folder coverage:** enable the extension once; local folders and mounted drives are covered automatically.
 - **Correct keyboard remapping:** fix the Unicode override that could leave text on the clipboard.
 
 See [verification status](docs/REVIEW_VERIFICATION.md) for test coverage and remaining live-Finder checks.
@@ -110,7 +110,7 @@ Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior
 
 ### What does Finder integration add in v2.0.0?
 
-The v2.0.0 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it from Cut & Move and choose Show Finder Actions In to manage its folders. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
+The v2.0.0 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
 
 ### How do I cancel cut mode?
 

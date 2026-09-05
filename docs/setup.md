@@ -65,7 +65,7 @@ The app uses a low-level `CGEvent` tap to intercept keyboard events before they 
 3. In Finder, right-click selected files and choose **Cut with Cut & Move**. Open the destination, right-click its background, and choose **Move Item(s) Here**.
 4. Optionally use Finder's **Customize Toolbar…** to add the Cut & Move toolbar button.
 
-**Show Finder Actions In…** controls where the right-click actions and badges appear. It defaults to your home folder and mounted volumes; it does not move, upload, or synchronize those folders. Use Add Folder or a Remove entry to change coverage. Keyboard shortcuts work independently of these folders.
+The extension automatically covers local folders and mounted drives, including drives connected after launch. There is no folder list to configure. This enables Finder actions and badges; it does not scan, upload, or synchronize your files. Protected and read-only locations still obey macOS permissions, and virtual Finder views may not expose an actionable destination.
 
 Scissors badges mark the pending file selection. Cloud-provider extensions can affect badge presentation. Cancel from the Finder menu or app menu; Escape and Cmd+C also cancel when keyboard monitoring is enabled. A new clipboard replaces the pending cut.
 

@@ -42,7 +42,7 @@ Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior
 
 ### What does Finder integration add in v2.0.0?
 
-The v2.0.0 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it from Cut & Move and choose Show Finder Actions In to manage its folders. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
+The v2.0.0 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
 
 ### How do I cancel cut mode?
 
@@ -64,4 +64,4 @@ Cut & Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Con
 - [Current release notes](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/RELEASE_NOTES_2.0.0.md): Current-source changes; check availability above.
 - [License](https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE): Complete terms.
 
-Current-source enhancements include a native Finder Sync extension, right-click Cut and Move Here actions, a toolbar menu, pending-cut badges, configurable folders, shared keyboard/menu cut state, and collision checks for menu-driven moves. If the current source differs from the published version, treat these as preview features, not download guarantees.
+Current-source enhancements include a native Finder Sync extension, right-click Cut and Move Here actions, a toolbar menu, pending-cut badges, automatic all-folder coverage, shared keyboard/menu cut state, and collision checks for menu-driven moves. If the current source differs from the published version, treat these as preview features, not download guarantees.

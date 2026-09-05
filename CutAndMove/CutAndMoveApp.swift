@@ -64,12 +64,6 @@ struct AppMenu: View {
 
         Text(finder.extensionEnabled ? "Finder Extension Enabled" : "Finder Extension Not Enabled")
         Button("Enable / Manage Finder Extension…") { finder.configureExtension() }
-        Menu("Show Finder Actions In…") {
-            Button("Add Folder…") { finder.addFolder() }
-            ForEach(finder.folders, id: \.self) { folder in
-                Button("Remove \(folder.path)") { finder.removeFolder(folder) }
-            }
-        }
         if let cut = finder.status.cut {
             Button("Cancel Cut (\(cut.urls.count) items)") { finder.cancel() }
                 .disabled(finder.status.busy)

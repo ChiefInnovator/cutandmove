@@ -64,16 +64,6 @@ struct FinderBridge {
         try JSONEncoder().encode(status).write(to: directory.appendingPathComponent("status.json"), options: .atomic)
     }
 
-    func folders() throws -> [URL] {
-        let file = directory.appendingPathComponent("folders.json")
-        guard FileManager.default.fileExists(atPath: file.path) else { return [] }
-        return try JSONDecoder().decode([URL].self, from: Data(contentsOf: file))
-    }
-
-    func setFolders(_ urls: [URL]) throws {
-        try JSONEncoder().encode(urls).write(to: directory.appendingPathComponent("folders.json"), options: .atomic)
-    }
-
     func send(_ request: FinderRequest) throws {
         let file = directory.appendingPathComponent("requests/\(request.id.uuidString).json")
         try JSONEncoder().encode(request).write(to: file, options: .atomic)

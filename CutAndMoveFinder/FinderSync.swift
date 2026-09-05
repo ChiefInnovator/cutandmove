@@ -17,11 +17,15 @@ final class FinderSync: FIFinderSync {
     }
 
     private func refresh() {
+        // Finder Sync scopes UI recursively. Cover the filesystem and every
+        // mounted volume automatically, including drives mounted after launch.
+        // Registration does not scan files or grant additional file access.
+        let directories = Set([URL(fileURLWithPath: "/", isDirectory: true)] +
+            (FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: nil, options: []) ?? []))
+        let controller = FIFinderSyncController.default()
+        if controller.directoryURLs != directories { controller.directoryURLs = directories }
         guard let bridge else { failure = "Open Cut & Move to set up Finder integration."; return }
         do {
-            let folders = Set(try bridge.folders())
-            let controller = FIFinderSyncController.default()
-            if controller.directoryURLs != folders { controller.directoryURLs = folders }
             var latest = try bridge.status()
             if let cut = latest.cut, cut.clipboard != NSPasteboard.general.changeCount { latest.cut = nil }
             if latest != status {
