@@ -4,6 +4,7 @@ import argparse
 import html
 import json
 import re
+from urllib.parse import quote, urlencode
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,10 +34,13 @@ def outputs():
         raise ValueError("site_url must be an HTTPS directory URL ending in /")
     repo = "https://github.com/ChiefInnovator/cutandmove"
     release = f"{repo}/releases/tag/v{released}"
+    dmg = f"{repo}/releases/download/v{released}/CutAndMove.dmg"
+    share_text = f"Your fingers know Cmd+X. Now Finder does too. Cut & Move v{released} adds familiar cut-and-paste file moves to macOS Finder."
     preview = current != released
     status = "development preview; not yet published" if preview else "published release"
     version_fact = f"Current source: v{current} ({status}). Published download: v{released}."
     title = f"Cut & Move v{released} — Cmd+X Cut and Paste for Mac Finder"
+    social_title = f"Your fingers know Cmd+X. Now Finder does too. | Cut & Move v{released}"
     description = f"Cut and paste files in macOS Finder with Cmd+X and Cmd+V. Cut & Move v{released}: a native menu bar app with launch at login. Requires macOS 26.1+."
     questions = [
         ("What is Cut & Move?", "Cut & Move is a native macOS menu bar utility that adds Cmd+X followed by Cmd+V for moving files in Finder. It uses Finder's built-in Move Item Here command rather than replacing Finder."),
@@ -80,7 +84,7 @@ def outputs():
   <link rel="apple-touch-icon" href="CutAndMove/Assets.xcassets/AppIcon.appiconset/512.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Cut &amp; Move">
-  <meta property="og:title" content="{esc(title)}">
+  <meta property="og:title" content="{esc(social_title)}">
   <meta property="og:description" content="{esc(description)}">
   <meta property="og:url" content="{site}">
   <meta property="og:image" content="{site}og-image.png">
@@ -89,7 +93,7 @@ def outputs():
   <meta property="og:image:alt" content="Cut &amp; Move: Cmd+X file moves in macOS Finder">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{esc(title)}">
+  <meta name="twitter:title" content="{esc(social_title)}">
   <meta name="twitter:description" content="{esc(description)}">
   <meta name="twitter:image" content="{site}og-image.png">
   <meta name="twitter:image:alt" content="Cut &amp; Move: Cmd+X file moves in macOS Finder">
@@ -98,8 +102,16 @@ def outputs():
     page = replace_block(page, "seo", metadata)
     page = replace_block(page, "version", f'<p class="version-summary">{esc(version_fact)}</p>')
     page = replace_block(page, "nav-download", f'<a href="#download" class="nav-cta">Download v{released}</a>')
-    page = replace_block(page, "hero-download", f'Download v{released} for macOS')
-    page = replace_block(page, "download", f'<a href="{release}" class="btn btn-primary">Download Cut &amp; Move v{released} for macOS</a>')
+    page = replace_block(page, "hero-download", f'<a href="{dmg}" class="btn btn-primary">Download v{released} DMG <span aria-hidden="true">↓</span></a>')
+    page = replace_block(page, "download", f'<a href="{dmg}" class="btn btn-primary">Download Cut &amp; Move v{released} DMG</a>\n<a href="{release}" class="btn btn-secondary">ZIP &amp; release notes v{released}</a>')
+    page = replace_block(page, "share", f'''<p class="share-message" id="share-message">{esc(share_text)} <a href="{site}">{site}</a></p>
+<div class="share-actions">
+  <button type="button" class="btn btn-secondary" id="copy-share" hidden>Copy share text</button>
+  <a class="btn btn-secondary" href="https://twitter.com/intent/tweet?{esc(urlencode({'text': share_text, 'url': site}))}" target="_blank" rel="noopener noreferrer">Share on X ↗</a>
+  <a class="btn btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?{esc(urlencode({'url': site}))}" target="_blank" rel="noopener noreferrer">Share on LinkedIn ↗</a>
+  <a class="btn btn-secondary" href="mailto:?{esc(urlencode({'subject': f'Cut & Move v{released} for Mac', 'body': share_text + chr(10) + site}, quote_via=quote))}">Send to a Mac friend</a>
+</div>
+<p id="share-status" role="status" aria-live="polite"></p>''')
     page = replace_block(page, "download-version", f'<p class="version-summary">Signed and notarized DMG or ZIP. {esc(version_fact)}</p>')
     page = replace_block(page, "preview-version", f'<h3>What\'s {"coming in" if preview else "new in"} v{current}?</h3>\n<p>{esc(status.capitalize())}. See the <a href="{repo}/blob/main/docs/RELEASE_NOTES_{current}.md">v{current} release notes</a>.</p>')
     page = replace_block(page, "faq", '\n'.join(f'<details class="faq-item"><summary>{esc(q)}</summary><p class="faq-item-body">{esc(a)}</p></details>' for q, a in questions))

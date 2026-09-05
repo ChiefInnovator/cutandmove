@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from html import unescape
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 spec = importlib.util.spec_from_file_location("marketing", Path(__file__).with_name("sync-marketing.py"))
 marketing = importlib.util.module_from_spec(spec)
@@ -15,6 +16,22 @@ spec.loader.exec_module(marketing)
 
 
 class MarketingTests(unittest.TestCase):
+    def test_sharing_and_direct_download_use_published_version(self):
+        page = marketing.outputs()["index.html"]
+        config = json.loads((marketing.ROOT / "marketing.json").read_text())
+        version = config["released_version"]
+        self.assertEqual(page.count(f'/releases/download/v{version}/CutAndMove.dmg'), 2)
+        share = re.search(r'<!-- share:start -->(.*?)<!-- share:end -->', page, re.S)[1]
+        links = [unescape(url) for url in re.findall(r'href="([^"]+)"', share)]
+        tweet = parse_qs(urlsplit(next(url for url in links if 'twitter.com/' in url)).query)
+        self.assertIn('Cut & Move v' + version, tweet['text'][0])
+        self.assertIn('Cmd+X', tweet['text'][0])
+        self.assertEqual(tweet['url'], [config['site_url']])
+        email = next(url for url in links if url.startswith('mailto:'))
+        self.assertIn('%20', email)
+        self.assertNotIn('+', email)
+        self.assertIn('id="copy-share" hidden', share)
+
     def test_metadata_and_visible_faq_match(self):
         page = marketing.outputs()["index.html"]
         graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', page, re.S)[1])["@graph"]

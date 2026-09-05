@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="CutAndMove/Assets.xcassets/AppIcon.appiconset/512.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Cut &amp; Move">
-  <meta property="og:title" content="Cut &amp; Move v1.0.2 — Cmd+X Cut and Paste for Mac Finder">
+  <meta property="og:title" content="Your fingers know Cmd+X. Now Finder does too. | Cut &amp; Move v1.0.2">
   <meta property="og:description" content="Cut and paste files in macOS Finder with Cmd+X and Cmd+V. Cut &amp; Move v1.0.2: a native menu bar app with launch at login. Requires macOS 26.1+.">
   <meta property="og:url" content="https://chiefinnovator.github.io/cutandmove/">
   <meta property="og:image" content="https://chiefinnovator.github.io/cutandmove/og-image.png">
@@ -27,7 +27,7 @@
   <meta property="og:image:alt" content="Cut &amp; Move: Cmd+X file moves in macOS Finder">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cut &amp; Move v1.0.2 — Cmd+X Cut and Paste for Mac Finder">
+  <meta name="twitter:title" content="Your fingers know Cmd+X. Now Finder does too. | Cut &amp; Move v1.0.2">
   <meta name="twitter:description" content="Cut and paste files in macOS Finder with Cmd+X and Cmd+V. Cut &amp; Move v1.0.2: a native menu bar app with launch at login. Requires macOS 26.1+.">
   <meta name="twitter:image" content="https://chiefinnovator.github.io/cutandmove/og-image.png">
   <meta name="twitter:image:alt" content="Cut &amp; Move: Cmd+X file moves in macOS Finder">
@@ -692,9 +692,28 @@
     .footer-logo img { width: 22px; height: 22px; border-radius: 5px; }
     .footer-links { display: flex; gap: 22px; }
 
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+    [hidden] { display: none !important; }
+    .shortcut-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 760px; margin: 36px auto 0; text-align: left; }
+    .shortcut-compare article { padding: 24px; background: var(--panel); border: 1px solid var(--border-strong); border-radius: 16px; }
+    .shortcut-compare article:last-child { border-color: var(--accent); }
+    .shortcut-compare h2 { font-size: 17px; margin: 0 0 18px; letter-spacing: normal; }
+    .shortcut-compare p { color: var(--text-dim); margin: 16px 0 0; font-size: 14px; }
+    .shortcut-compare .keys { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .share-panel { text-align: center; border-top: 1px solid var(--border); }
+    .share-message { max-width: 680px; margin: 24px auto; color: var(--text-dim); font-size: 19px; line-height: 1.6; overflow-wrap: anywhere; }
+    .share-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .share-actions button { font-family: inherit; }
+    #share-status { min-height: 1.5em; color: var(--text-dim); }
+    @media (max-width: 600px) {
+      .hero { padding-top: 56px; }
+      .shortcut-compare { grid-template-columns: 1fr; }
+      .footer-links { flex-wrap: wrap; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .hero-visual img { animation: none; }
-      * { transition: none !important; }
+      * { transition: none !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
@@ -724,26 +743,19 @@
           macOS 26.1+&nbsp;·&nbsp;Native Swift&nbsp;·&nbsp;No analytics
         </span>
         <h1>
-          Cut &amp; Move: <span class="grad">Cmd+X</span><br>
-          cut and paste for macOS Finder.
+          Your fingers know <span class="grad">Cmd+X.</span><br>
+          Now Finder does too.
         </h1>
         <p class="lead">
-          Cut &amp; Move is a native macOS menu bar app that adds Cmd+X followed by Cmd+V for moving files in Finder. Keep familiar cut-and-paste shortcuts while Finder handles the move.
+          Meet Cut &amp; Move. Cut files with Cmd+X. Open a folder. Paste with Cmd+V. A tiny native Mac menu bar app for the shortcut you already reach for.
         </p>
 <!-- version:start -->
 <p class="version-summary">Current source: v1.0.2 (published release). Published download: v1.0.2.</p>
 <!-- version:end -->
         <div class="cta-row">
-          <a href="#download" class="btn btn-primary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
 <!-- hero-download:start -->
-Download v1.0.2 for macOS
+<a href="https://github.com/ChiefInnovator/cutandmove/releases/download/v1.0.2/CutAndMove.dmg" class="btn btn-primary">Download v1.0.2 DMG <span aria-hidden="true">↓</span></a>
 <!-- hero-download:end -->
-          </a>
           <a href="#how" class="btn btn-secondary">See how it works</a>
         </div>
         <div class="hero-visual">
@@ -755,6 +767,18 @@ Download v1.0.2 for macOS
           <span class="kbd">⌘</span><span class="kbd">V</span>
           <span class="arrow">=</span>
           <span class="kbd">Move</span>
+        </div>
+        <div class="shortcut-compare" aria-label="Two ways to move files in Finder">
+          <article>
+            <h2>Finder already moves files.</h2>
+            <div class="keys"><kbd class="kbd">⌘ C</kbd><span>then</span><kbd class="kbd">⌘ ⌥ V</kbd></div>
+            <p>The built-in way. No extra app required.</p>
+          </article>
+          <article>
+            <h2>Keep your muscle memory.</h2>
+            <div class="keys"><kbd class="kbd">⌘ X</kbd><span>then</span><kbd class="kbd">⌘ V</kbd></div>
+            <p>With Cut &amp; Move. Same Finder move, familiar keys.</p>
+          </article>
         </div>
       </div>
     </header>
@@ -931,11 +955,12 @@ Download v1.0.2 for macOS
 
     <section id="download" class="download-cta" aria-labelledby="download-heading">
       <div class="container">
-        <h2 id="download-heading">Ready to fix Finder?</h2>
-        <p>Grab Cut &amp; Move and give Finder the keyboard shortcut it should have shipped with.</p>
+        <h2 id="download-heading">Less remembering. More moving.</h2>
+        <p>Download the DMG, drag Cut &amp; Move into Applications, then open it and grant Accessibility access. Your next file move starts with Cmd+X.</p>
         <div class="cta-row" style="margin-bottom:0">
 <!-- download:start -->
-<a href="https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.2" class="btn btn-primary">Download Cut &amp; Move v1.0.2 for macOS</a>
+<a href="https://github.com/ChiefInnovator/cutandmove/releases/download/v1.0.2/CutAndMove.dmg" class="btn btn-primary">Download Cut &amp; Move v1.0.2 DMG</a>
+<a href="https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.2" class="btn btn-secondary">ZIP &amp; release notes v1.0.2</a>
 <!-- download:end -->
           <a href="mailto:rich@mill5.com" class="btn btn-secondary">Contact support</a>
         </div>
@@ -943,6 +968,23 @@ Download v1.0.2 for macOS
 <p class="version-summary">Signed and notarized DMG or ZIP. Current source: v1.0.2 (published release). Published download: v1.0.2.</p>
 <!-- download-version:end -->
         <div class="requirements">Requires macOS 26.1 or later · Free for uses permitted by <a href="https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE">PolyForm Strict 1.0.0</a> · No tracking · No analytics</div>
+      </div>
+    </section>
+    <section id="share" class="share-panel" aria-labelledby="share-heading">
+      <div class="container">
+        <span class="label">Small app. Familiar feeling.</span>
+        <h2 id="share-heading">Know a Mac user who keeps pressing Cmd+X?</h2>
+        <p>Send them their next favorite shortcut. Edit the message to make it yours.</p>
+<!-- share:start -->
+<p class="share-message" id="share-message">Your fingers know Cmd+X. Now Finder does too. Cut &amp; Move v1.0.2 adds familiar cut-and-paste file moves to macOS Finder. <a href="https://chiefinnovator.github.io/cutandmove/">https://chiefinnovator.github.io/cutandmove/</a></p>
+<div class="share-actions">
+  <button type="button" class="btn btn-secondary" id="copy-share" hidden>Copy share text</button>
+  <a class="btn btn-secondary" href="https://twitter.com/intent/tweet?text=Your+fingers+know+Cmd%2BX.+Now+Finder+does+too.+Cut+%26+Move+v1.0.2+adds+familiar+cut-and-paste+file+moves+to+macOS+Finder.&amp;url=https%3A%2F%2Fchiefinnovator.github.io%2Fcutandmove%2F" target="_blank" rel="noopener noreferrer">Share on X ↗</a>
+  <a class="btn btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fchiefinnovator.github.io%2Fcutandmove%2F" target="_blank" rel="noopener noreferrer">Share on LinkedIn ↗</a>
+  <a class="btn btn-secondary" href="mailto:?subject=Cut%20%26%20Move%20v1.0.2%20for%20Mac&amp;body=Your%20fingers%20know%20Cmd%2BX.%20Now%20Finder%20does%20too.%20Cut%20%26%20Move%20v1.0.2%20adds%20familiar%20cut-and-paste%20file%20moves%20to%20macOS%20Finder.%0Ahttps%3A%2F%2Fchiefinnovator.github.io%2Fcutandmove%2F">Send to a Mac friend</a>
+</div>
+<p id="share-status" role="status" aria-live="polite"></p>
+<!-- share:end -->
       </div>
     </section>
   </main>
@@ -963,5 +1005,6 @@ Download v1.0.2 for macOS
       <div>&copy; 2025-2026 Richard Crane</div>
     </div>
   </footer>
+  <script src="share.js" defer></script>
 </body>
 </html>
