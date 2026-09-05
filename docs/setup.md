@@ -31,7 +31,7 @@ The app will appear as a **scissors icon** in your menu bar.
 
 ## Granting Accessibility Permissions
 
-Cut & Move requires **Accessibility** permissions to intercept keyboard events. Without these, the app cannot function.
+Cut & Move requires **Accessibility** permissions for keyboard shortcuts. The v2.0.0 Finder extension's menu commands can work without keyboard monitoring.
 
 ### On first launch
 
@@ -58,6 +58,19 @@ The app uses a low-level `CGEvent` tap to intercept keyboard events before they 
 
 ## Configuration
 
+### Finder extension (v2.0.0)
+
+1. Install the entire app in Applications and launch it. The Finder extension is embedded in the app, not installed separately.
+2. Choose **Enable / Manage Finder Extension…** from the scissors menu and enable Cut & Move in macOS's extension settings.
+3. In Finder, right-click selected files and choose **Cut with Cut & Move**. Open the destination, right-click its background, and choose **Move Item(s) Here**.
+4. Optionally use Finder's **Customize Toolbar…** to add the Cut & Move toolbar button.
+
+**Show Finder Actions In…** controls where the right-click actions and badges appear. It defaults to your home folder and mounted volumes; it does not move, upload, or synchronize those folders. Use Add Folder or a Remove entry to change coverage. Keyboard shortcuts work independently of these folders.
+
+Scissors badges mark the pending file selection. Cloud-provider extensions can affect badge presentation. Cancel from the Finder menu or app menu; Escape and Cmd+C also cancel when keyboard monitoring is enabled. A new clipboard replaces the pending cut.
+
+Menu moves never automatically overwrite an existing file. If a move fails, check the status in the app or Finder menu; remaining items stay pending when their clipboard is still current. Quit is deferred while a menu move is in progress. macOS file-access permissions still apply.
+
 ### Launch at login
 
 From the menu bar dropdown, click **Launch at Login** to toggle auto-start. A checkmark indicates it's enabled.
@@ -78,7 +91,7 @@ Click the scissors icon in the menu bar, then click **Quit**.
 | **"Permissions Missing" won't go away** | Confirm the installed app is enabled in Accessibility. The app rechecks automatically; after replacing a development build you may need to re-add it. |
 | **Cmd+X does nothing in Finder** | Check that Accessibility permissions are granted and the menu shows **"Ready to Cut"**. |
 | **Cut mode stuck (filled icon)** | Press **Escape** or **Cmd+C** to cancel, or switch away from Finder. |
-| **App Sandbox errors** | The app requires sandbox to be disabled — verify in Xcode build settings. |
+| **App Sandbox errors** | The main app is not sandboxed; the Finder extension is sandboxed and shares a team-owned app group. Keep each target's configured entitlements. |
 | **Keyboard Monitoring Unavailable** | Open Fix Permissions for the error details. The app retries monitoring and recovers disabled taps automatically. |
 | **Cmd+X still edits text** | Expected in Finder search/rename fields. File shortcuts are enabled only in recognized non-editable file views. |
 | **Paste copies instead of moving** | For safety, the app requires a fresh file clipboard from the cut. An unchanged, replaced, or non-file clipboard is never converted into a move. |

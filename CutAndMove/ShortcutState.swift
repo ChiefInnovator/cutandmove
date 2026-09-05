@@ -6,6 +6,12 @@ struct ShortcutState {
     private var cutKeyHeld = false
     private var moveKeyHeld = false
     var isCutModeActive: Bool { expectedClipboard != nil }
+    var cutClipboard: Int? { expectedClipboard }
+
+    mutating func armCut(clipboard: Int) {
+        reset()
+        expectedClipboard = clipboard
+    }
 
     mutating func reset() {
         expectedClipboard = nil

@@ -27,7 +27,7 @@ struct AboutView: View {
                     .foregroundColor(.secondary)
             }
             
-            Text("The missing Cut & Move for macOS Finder. Vibe coded for you by Richard Crane and Gemini.")
+            Text("Cut and move files in macOS Finder. Created by Richard Crane.")
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
@@ -62,7 +62,7 @@ struct AboutView: View {
     
     // Helper to get version from Info.plist
     private var appVersion: String {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
         return "\(version) (\(build))"
     }

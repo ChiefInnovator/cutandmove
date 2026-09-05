@@ -6,6 +6,74 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin Finder Sync integration */
+		A20000000000000000000001 = {isa = PBXBuildFile; fileRef = A20000000000000000000002; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A20000000000000000000002 = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = CutAndMoveFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000003 = {isa = PBXFileSystemSynchronizedRootGroup; path = CutAndMoveFinder; sourceTree = "<group>"; };
+		A20000000000000000000004 = {isa = PBXFileSystemSynchronizedRootGroup; path = Shared; sourceTree = "<group>"; };
+		A20000000000000000000005 = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (A20000000000000000000001, ); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0; };
+		A20000000000000000000006 = {isa = PBXContainerItemProxy; containerPortal = 9BB8EE5C2ECE2B9D00059C55; proxyType = 1; remoteGlobalIDString = A20000000000000000000008; remoteInfo = CutAndMoveFinder; };
+		A20000000000000000000007 = {isa = PBXTargetDependency; target = A20000000000000000000008; targetProxy = A20000000000000000000006; };
+		A20000000000000000000008 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A20000000000000000000009;
+			buildPhases = (A20000000000000000000010, A20000000000000000000011, A20000000000000000000012, );
+			buildRules = ();
+			dependencies = ();
+			fileSystemSynchronizedGroups = (A20000000000000000000003, A20000000000000000000004, );
+			name = CutAndMoveFinder;
+			productName = CutAndMoveFinder;
+			productReference = A20000000000000000000002;
+			productType = "com.apple.product-type.app-extension";
+		};
+		A20000000000000000000009 = {isa = XCConfigurationList; buildConfigurations = (A20000000000000000000013, A20000000000000000000014, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A20000000000000000000010 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A20000000000000000000011 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A20000000000000000000012 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A20000000000000000000013 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Config/FinderSync.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = FS6453639M;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/FinderSync-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/../Frameworks", "@executable_path/../../../../Frameworks", );
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = M5.CutAndMove.FinderSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A20000000000000000000014 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Config/FinderSync.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = FS6453639M;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/FinderSync-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/../Frameworks", "@executable_path/../../../../Frameworks", );
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = M5.CutAndMove.FinderSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End Finder Sync integration */
+
 /* Begin PBXContainerItemProxy section */
 		9BB8EE722ECE2BA000059C55 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -76,6 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				9BB8EE662ECE2B9D00059C55 /* CutAndMove */,
+				A20000000000000000000003,
+				A20000000000000000000004,
 				9BB8EE742ECE2BA000059C55 /* CutAndMoveTests */,
 				9BB8EE7E2ECE2BA000059C55 /* CutAndMoveUITests */,
 				9BB8EE652ECE2B9D00059C55 /* Products */,
@@ -86,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				9BB8EE642ECE2B9D00059C55 /* CutAndMove.app */,
+				A20000000000000000000002,
 				9BB8EE712ECE2BA000059C55 /* CutAndMoveTests.xctest */,
 				9BB8EE7B2ECE2BA000059C55 /* CutAndMoveUITests.xctest */,
 			);
@@ -102,13 +173,16 @@
 				9BB8EE602ECE2B9D00059C55 /* Sources */,
 				9BB8EE612ECE2B9D00059C55 /* Frameworks */,
 				9BB8EE622ECE2B9D00059C55 /* Resources */,
+				A20000000000000000000005,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A20000000000000000000007,
 			);
 			fileSystemSynchronizedGroups = (
 				9BB8EE662ECE2B9D00059C55 /* CutAndMove */,
+				A20000000000000000000004,
 			);
 			name = CutAndMove;
 			packageProductDependencies = (
@@ -201,6 +275,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				A20000000000000000000008,
 				9BB8EE632ECE2B9D00059C55 /* CutAndMove */,
 				9BB8EE702ECE2BA000059C55 /* CutAndMoveTests */,
 				9BB8EE7A2ECE2BA000059C55 /* CutAndMoveUITests */,
@@ -397,9 +472,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = FS6453639M;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -417,7 +493,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = M5.CutAndMove;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -444,9 +520,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = FS6453639M;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -464,7 +541,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = M5.CutAndMove;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -489,11 +566,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = FS6453639M;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = MILL5.CutAndMoveTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -510,11 +587,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = FS6453639M;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = MILL5.CutAndMoveTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -530,10 +607,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = MQ84GC7YUV;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = MILL5.CutAndMoveUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -549,10 +626,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = MQ84GC7YUV;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = MILL5.CutAndMoveUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;

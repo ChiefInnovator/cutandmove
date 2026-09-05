@@ -1,16 +1,16 @@
 <!-- overview:start -->
-# Cut & Move v1.0.3 — Cmd+X Cut and Paste for macOS Finder
+# Cut & Move v2.0.0 — Cmd+X Cut and Paste for macOS Finder
 
 Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves to Finder**. Use familiar cut-and-paste shortcuts while Finder handles the actual move and any conflicts.
 
-**Current source: v1.0.3 (published release). Published download: v1.0.3.**
+**Current source: v2.0.0 (development preview; not yet published). Published download: v1.0.3.**
 
-[Download v1.0.3](https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.3) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v1.0.3 release notes](docs/RELEASE_NOTES_1.0.3.md)
+[Download v1.0.3](https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.3) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v2.0.0 release notes](docs/RELEASE_NOTES_2.0.0.md)
 
 | Product fact | Details |
 | :--- | :--- |
 | Published version | v1.0.3 — signed and notarized DMG / ZIP |
-| Current source | v1.0.3 — published release |
+| Current source | v2.0.0 — development preview; not yet published |
 | Compatibility | macOS 26.1 or later; Apple silicon and Intel |
 | Permission | Accessibility access for Finder keyboard shortcuts |
 | License | Free for uses permitted by [PolyForm Strict 1.0.0](LICENSE) |
@@ -67,15 +67,17 @@ Update `MARKETING_VERSION` (always major.minor.patch), `CURRENT_PROJECT_VERSION`
 The export plists use `method=developer-id`; `destination=upload` sends to Apple's notary service, **not App Store Connect publishing**. Keep the bundle identifier `M5.CutAndMove` and team `FS6453639M`. Downloads are available from GitHub Releases. Update `marketing.json` only after a new release is actually published.
 
 <!-- preview-version:start -->
-## New in v1.0.3
+## Coming in v2.0.0
 
-Published release. The enhancements below describe the current source, not an older download.
+Development preview; not yet published. The enhancements below describe the current source, not an older download.
 <!-- preview-version:end -->
 
-- **Launch at Login registration:** attempt registration when macOS reports a missing service.
-- **Accurate guidance:** remove the false Applications-folder warning and show actual registration errors.
-- **Status recovery:** handle approval-required results and clear stale errors when the service becomes enabled.
-- **Regression coverage:** test missing-service registration, approval, failures, retries, and status recovery.
+- **Finder Sync extension:** right-click Cut, Move Here, and Cancel Cut commands.
+- **Visible cut selection:** scissors badges and a Finder toolbar menu.
+- **Keyboard + mouse:** share pending files between the keyboard helper and Finder actions.
+- **Safe menu moves:** reject collisions and changed sources; retain unmoved items after partial failures.
+- **Flexible setup:** enable the extension and manage its folders from the app menu.
+- **Correct keyboard remapping:** fix the Unicode override that could leave text on the clipboard.
 
 See [verification status](docs/REVIEW_VERIFICATION.md) for test coverage and remaining live-Finder checks.
 
@@ -92,7 +94,7 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v1.0.3, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.3 (published release). It is not distributed through the Mac App Store.
+The published download is Cut & Move v1.0.3, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.0 (development preview; not yet published). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 
@@ -104,7 +106,11 @@ Accessibility permission lets the app intercept and modify keyboard events for F
 
 ### Does Cut & Move change shortcuts in other apps?
 
-Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Finder performs the actual file move and presents any file-conflict dialogs.
+Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs.
+
+### What does Finder integration add in v2.0.0?
+
+The v2.0.0 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it from Cut & Move and choose Show Finder Actions In to manage its folders. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
 
 ### How do I cancel cut mode?
 
@@ -126,10 +132,16 @@ Cut & Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Con
 CutAndMove/
   CutAndMoveApp.swift          # App entry point, menu bar UI, window definitions
   GlobalKeyboardHandler.swift  # Core keyboard interception via CGEvent tap
+  FinderIntegration.swift      # Shared keyboard/menu cut state and requests
+  FileMoveService.swift        # Validated menu-driven file moves
   LaunchManager.swift          # Launch-at-login via ServiceManagement
   PermissionsView.swift        # Accessibility permissions request UI
   AboutView.swift              # About window
   Assets.xcassets/             # App icons and colors
+CutAndMoveFinder/
+  FinderSync.swift             # Native Finder menus, toolbar, and badges
+Shared/
+  FinderBridge.swift           # Local app-group communication
 ```
 
 The keyboard interception uses a `CGEvent` tap (`CFMachPort`) on the main run loop. A tested synchronous state machine transforms real key-down/key-up pairs; it does not inject synthetic keystrokes. Accessibility focus checks protect text fields, and disabled event taps are automatically recovered.
@@ -139,11 +151,12 @@ The keyboard interception uses a `CGEvent` tap (`CFMachPort`) on the main run lo
 - **Swift** + **SwiftUI** + **Cocoa**
 - CGEvent / CFMachPort for low-level keyboard access
 - ServiceManagement (SMAppService) for login items
+- Finder Sync for contextual actions, toolbar, and pending-cut badges
 - No third-party dependencies
 
 ## Credits
 
-Created by **[Richard Crane](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d)** — Microsoft MVP and founder of **[MILL5](https://mill5.com)** — with **Gemini**.
+Created by **[Richard Crane](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d)** — Microsoft MVP and founder of **[MILL5](https://mill5.com)**.
 
 - **MILL5:** [mill5.com](https://mill5.com)
 - **Microsoft MVP profile:** [mvp.microsoft.com/…/Richard-Crane](https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d)
