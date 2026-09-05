@@ -1,6 +1,6 @@
 # Cut & Move v2.0.0
 
-Current source; not yet a published download.
+Version 2.0.0 (build 5). Direct download for macOS, signed by MILL5 and notarized by Apple.
 
 - Native Finder Sync extension with **Cut with Cut & Move**, **Move Here**, and **Cancel Cut** contextual actions.
 - Finder toolbar menu and scissors badges on items waiting to move.
