@@ -1,43 +1,47 @@
-//
-//  LaunchManager.swift
-//  CutAndMove
-//
-//  Created by Richard Crane on 11/19/25.
-//
-
-import Foundation
-import ServiceManagement
 import Combine
-import SwiftUI
+import ServiceManagement
 
 class LaunchManager: ObservableObject {
     static let shared = LaunchManager()
-    
-    @Published var isEnabled: Bool = false
-    
-    init() {
+    @Published private(set) var status: SMAppService.Status = .notRegistered
+    @Published private(set) var errorMessage: String?
+    var isEnabled: Bool { status == .enabled }
+    var requiresApproval: Bool { status == .requiresApproval }
+
+    private let readStatus: () -> SMAppService.Status
+    private let register: () throws -> Void
+    private let unregister: () throws -> Void
+    private let openSettings: () -> Void
+
+    init(readStatus: @escaping () -> SMAppService.Status = { SMAppService.mainApp.status },
+         register: @escaping () throws -> Void = { try SMAppService.mainApp.register() },
+         unregister: @escaping () throws -> Void = { try SMAppService.mainApp.unregister() },
+         openSettings: @escaping () -> Void = { SMAppService.openSystemSettingsLoginItems() }) {
+        self.readStatus = readStatus
+        self.register = register
+        self.unregister = unregister
+        self.openSettings = openSettings
         checkStatus()
     }
-    
-    func checkStatus() {
-        // Check if the app is currently set to launch at login
-        self.isEnabled = SMAppService.mainApp.status == .enabled
-    }
-    
+
+    func checkStatus() { status = readStatus() }
+
     func toggle() {
+        errorMessage = nil
+        checkStatus()
         do {
-            let service = SMAppService.mainApp
-            if service.status == .enabled {
-                try service.unregister()
-            } else {
-                try service.register()
-            }
-            // Delay check slightly to allow system to update status
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.checkStatus()
+            switch status {
+            case .enabled: try unregister()
+            case .requiresApproval: openSettings()
+            case .notRegistered: try register()
+            case .notFound:
+                errorMessage = "Install Cut & Move in Applications before enabling Launch at Login."
+            @unknown default:
+                errorMessage = "Unknown login-item status. Check System Settings > General > Login Items."
             }
         } catch {
-            print("Failed to toggle launch at login: \(error)")
+            errorMessage = "Launch at Login failed: \(error.localizedDescription)"
         }
+        checkStatus()
     }
 }

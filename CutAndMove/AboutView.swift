@@ -43,7 +43,7 @@ struct AboutView: View {
                 .buttonStyle(.link)
                 
                 Button("Support") {
-                    openURL("mailto:support@inventingfirewith.ai")
+                    openURL("mailto:rich@mill5.com")
                 }
                 .buttonStyle(.link)
             }

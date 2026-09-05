@@ -18,6 +18,8 @@
 - **macOS 26.1** or later
 - **Xcode** (latest version recommended)
 
+For installation without Xcode, download the signed/notarized DMG or ZIP from [GitHub Releases](https://github.com/ChiefInnovator/cutandmove/releases/latest). Drag the app into Applications. There is no Mac App Store version.
+
 ## Building from Source
 
 1. Clone the repository.
@@ -33,14 +35,14 @@ Cut & Move requires **Accessibility** permissions to intercept keyboard events. 
 
 ### On first launch
 
-1. The menu bar will show **"Permissions Missing"** in the dropdown.
+1. macOS is asked to display its Accessibility permission prompt. Until access is granted, the menu shows **"Permissions Missing"**.
 2. Click **Fix Permissions…** to open the permissions window.
 3. Click **Open System Settings**.
 4. In System Settings, navigate to **Privacy & Security → Accessibility**.
 5. Find **Cut & Move** in the list and toggle it **on**.
 6. You may need to unlock the settings with your password.
 
-The permissions window auto-dismisses once access is granted.
+Permissions are rechecked every second and when applications change. The permissions window auto-dismisses after keyboard monitoring starts successfully. Revoking access stops monitoring and clears cut mode.
 
 ### If permissions were denied
 
@@ -60,6 +62,8 @@ The app uses a low-level `CGEvent` tap to intercept keyboard events before they 
 
 From the menu bar dropdown, click **Launch at Login** to toggle auto-start. A checkmark indicates it's enabled.
 
+If approval is required, the menu says so; selecting it opens Login Items in System Settings. Registration failures are displayed in the menu instead of only being logged.
+
 This uses the macOS `SMAppService` API — no login items or LaunchAgents are created manually.
 
 ### Quitting
@@ -71,10 +75,13 @@ Click the scissors icon in the menu bar, then click **Quit**.
 | Problem | Solution |
 | :--- | :--- |
 | **Scissors icon not in menu bar** | Build and run from Xcode; the app has no Dock icon by design. |
-| **"Permissions Missing" won't go away** | Restart the app after granting Accessibility permissions. |
+| **"Permissions Missing" won't go away** | Confirm the installed app is enabled in Accessibility. The app rechecks automatically; after replacing a development build you may need to re-add it. |
 | **Cmd+X does nothing in Finder** | Check that Accessibility permissions are granted and the menu shows **"Ready to Cut"**. |
 | **Cut mode stuck (filled icon)** | Press **Escape** or **Cmd+C** to cancel, or switch away from Finder. |
 | **App Sandbox errors** | The app requires sandbox to be disabled — verify in Xcode build settings. |
+| **Keyboard Monitoring Unavailable** | Open Fix Permissions for the error details. The app retries monitoring and recovers disabled taps automatically. |
+| **Cmd+X still edits text** | Expected in Finder search/rename fields. File shortcuts are enabled only in recognized non-editable file views. |
+| **Paste copies instead of moving** | For safety, the app requires a fresh file clipboard from the cut. An unchanged, replaced, or non-file clipboard is never converted into a move. |
 
 ## Build Settings Notes
 
@@ -82,5 +89,6 @@ Click the scissors icon in the menu bar, then click **Quit**.
 | :--- | :--- |
 | **App Sandbox** | Disabled *(required for `CGEvent` tap)* |
 | **Hardened Runtime** | Enabled |
+| **Library Validation** | Enabled; app and hosted unit tests use the same MILL5 signing team |
 | **Code Signing** | Automatic |
 | **Deployment Target** | macOS 26.1 |

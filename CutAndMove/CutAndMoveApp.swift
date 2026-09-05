@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct CutAndMoveApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @ObservedObject var keyHandler = GlobalKeyboardHandler.shared
     @ObservedObject var launchManager = LaunchManager.shared
     
@@ -47,8 +48,10 @@ struct AppMenu: View {
     var body: some View {
         // STATUS SECTION
         Button(action: {}) {
-            if keyHandler.hasPermissions {
+            if keyHandler.isMonitoring {
                 Label("Ready to Cut", systemImage: "checkmark.circle")
+            } else if keyHandler.hasPermissions {
+                Label("Keyboard Monitoring Unavailable", systemImage: "exclamationmark.triangle")
             } else {
                 Label("Permissions Missing", systemImage: "exclamationmark.triangle")
             }
@@ -61,14 +64,20 @@ struct AppMenu: View {
         Button(action: {
             launchManager.toggle()
         }) {
-            if launchManager.isEnabled {
+            if launchManager.requiresApproval {
+                Text("Launch at Login — Approval Required…")
+            } else if launchManager.isEnabled {
                 Label("Launch at Login", systemImage: "checkmark")
             } else {
                 Text("Launch at Login")
             }
         }
         
-        if !keyHandler.hasPermissions {
+        if let error = launchManager.errorMessage {
+            Text(error).foregroundStyle(.red)
+        }
+
+        if !keyHandler.isMonitoring {
             Button("Fix Permissions...") {
                 openWindow(id: "permissions-window")
                 NSApplication.shared.activate(ignoringOtherApps: true)
@@ -87,5 +96,15 @@ struct AppMenu: View {
         Button("Quit") {
             NSApplication.shared.terminate(nil)
         }
+        .onAppear { launchManager.checkStatus() }
+        .onReceive(NSWorkspace.shared.notificationCenter.publisher(for: NSWorkspace.didActivateApplicationNotification)) { _ in
+            launchManager.checkStatus()
+        }
+    }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        GlobalKeyboardHandler.shared.requestPermissions()
     }
 }

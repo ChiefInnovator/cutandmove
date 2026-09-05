@@ -7,13 +7,17 @@ APP_PATH = $(EXPORT_PATH)/$(APP_NAME).app
 DEVELOPER_ID = Developer ID Application: MILL5, LLC (FS6453639M)
 VERSION = $(shell sed -n 's/.*MARKETING_VERSION = \([^;]*\);/\1/p' CutAndMove.xcodeproj/project.pbxproj | head -1)
 
-.PHONY: build test archive export notarize verify-release dmg zip package release publish
+.PHONY: build test archive export notarize verify-release dmg zip package release publish marketing marketing-check
 .NOTPARALLEL:
 build:
 	xcodebuild -project CutAndMove.xcodeproj -scheme $(SCHEME) -configuration Debug build
 test:
 	xcodebuild -project CutAndMove.xcodeproj -scheme $(SCHEME) -destination 'platform=macOS' test
-archive:
+marketing:
+	python3 scripts/sync-marketing.py
+marketing-check:
+	python3 scripts/sync-marketing.py --check
+archive: marketing-check
 	mkdir -p $(BUILD_DIR)
 	xcodebuild -project CutAndMove.xcodeproj -scheme $(SCHEME) -configuration Release -destination 'generic/platform=macOS' -archivePath $(ARCHIVE_PATH) -allowProvisioningUpdates archive
 export: archive

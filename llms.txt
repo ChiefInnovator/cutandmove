@@ -1,59 +1,63 @@
 # Cut & Move
 
-> Cut & Move is a free macOS menu bar utility that adds real Cmd+X cut-and-move to Finder. It intercepts Cmd+X in Finder, enters cut mode, then converts the next Cmd+V into Cmd+Option+V (Finder's native "Move Item Here" command). Built by Microsoft MVP Richard Crane at MILL5.
+> Native macOS menu bar app for Cmd+X followed by Cmd+V file moves in Finder. By Richard Crane at MILL5.
 
-## About
+## Version and availability
 
-- **Name:** Cut & Move
-- **Version:** 1.0.1
-- **Distribution:** Developer ID signed, Apple-notarized DMG and ZIP through private GitHub Releases; repository access required. Not distributed through the Mac App Store.
-- **Downloads:** https://github.com/ChiefInnovator/cutandmove/releases/latest
-- **Platform:** MacOS 26.1 or later
-- **Price:** Free for uses permitted by PolyForm Strict 1.0.0
-- **Stack:** Swift, SwiftUI, Cocoa — zero third-party dependencies
-- **Author:** Richard Crane (Microsoft MVP, Founder of MILL5)
-- **MVP profile:** https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d
-- **MILL5:** https://mill5.com
-- **Podcast:** *Inventing Fire with AI* — https://inventingfirewith.ai
-- **Support:** rich@mill5.com
+Current source: v1.0.2 (development preview; not yet published). Published download: v1.0.1.
 
-## How it works
+- Canonical marketing page: https://chiefinnovator.github.io/cutandmove/
+- Published download v1.0.1: https://github.com/ChiefInnovator/cutandmove/releases/tag/v1.0.1
+- Current source v1.0.2: https://github.com/ChiefInnovator/cutandmove
+- Requirements: macOS 26.1+, Apple silicon or Intel, Accessibility permission.
+- Distribution: Developer ID signed and Apple-notarized DMG/ZIP releases, not the Mac App Store. Do not describe an unpublished source version as a notarized download.
+- License: PolyForm Strict 1.0.0; free only for permitted uses, not unrestricted open source.
+- Privacy: no keystroke recording, telemetry, or application network requests.
 
-1. Press **Cmd+X** with files selected in Finder. Cut & Move performs a silent Cmd+C and enters cut mode. The menu bar scissors icon fills in to confirm.
-2. Navigate to the destination folder in Finder.
-3. Press **Cmd+V**. Cut & Move injects the Option modifier so Finder receives Cmd+Option+V — the native *Move Item Here* command. The files are moved, not copied.
-4. Press **Escape** or **Cmd+C** at any time to cancel cut mode.
+## Direct answers
 
-## Why it exists
+### What is Cut & Move?
 
-macOS Finder has never had a native Cmd+X keyboard shortcut for cut-and-move. The closest native equivalent is Cmd+C followed by Cmd+Option+V. Cut & Move fills the gap so the expected Cmd+X / Cmd+V flow just works, without replacing Finder or installing kernel extensions.
+Cut & Move is a native macOS menu bar utility that adds Cmd+X followed by Cmd+V for moving files in Finder. It uses Finder's built-in Move Item Here command rather than replacing Finder.
 
-## Technical details
+### How do I cut and paste files on a Mac?
 
-- Uses a `CGEvent` tap (`CFMachPort`) at the session level to intercept keyboard events
-- Only processes events when Finder (`com.apple.finder`) is the frontmost application
-- Tags simulated events with a `0xCAFE` magic number to prevent infinite loops
-- Requires macOS Accessibility permissions for keyboard event monitoring
-- App Sandbox must be disabled; Hardened Runtime is enabled
-- No network access, no analytics, no telemetry, no data collection
+Without an app, select files in Finder, press Cmd+C, open the destination, then press Cmd+Option+V to move them. With Cut & Move running, use Cmd+X followed by Cmd+V instead.
 
-## Docs
+### Which version can I download?
 
-- [README](/README.md): Project overview and feature list
-- [Architecture](/docs/architecture.md): Component diagram, event flow, and design decisions
-- [Setup](/docs/setup.md): Build instructions, permission setup, and troubleshooting
+The published download is Cut & Move v1.0.1, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v1.0.2 (development preview; not yet published). It is not distributed through the Mac App Store.
 
-## Author
+### What are the macOS and hardware requirements?
 
-Richard Crane is a **Microsoft Most Valuable Professional (MVP)** and the founder of **MILL5**, a software consultancy specializing in cloud, AI, and developer tooling.
+Cut & Move requires macOS 26.1 or later. The universal macOS app supports Apple silicon and Intel Macs that can run the required macOS version.
 
-- MILL5: https://mill5.com
-- Microsoft MVP profile: https://mvp.microsoft.com/en-US/MVP/profile/10ce0bc0-7536-43f6-b28c-e9601a4a0d0d
-- Inventing Fire With AI (podcast): https://inventingfirewith.ai
-- Contact: rich@mill5.com
+### Why does Cut & Move need Accessibility permission?
 
-## License
+Accessibility permission lets the app intercept and modify keyboard events for Finder shortcuts. The app does not record keystrokes, collect analytics, or transmit file contents. You can revoke access in System Settings > Privacy & Security > Accessibility.
 
-[PolyForm Strict 1.0.0](https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE). Copyright © 2025-2026 Richard Crane.
+### Does Cut & Move change shortcuts in other apps?
 
-See the full license for restrictions on use, modification, and distribution.
+Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Finder performs the actual file move and presents any file-conflict dialogs.
+
+### How do I cancel cut mode?
+
+Press Escape or Cmd+C to cancel a pending cut. The menu bar scissors icon indicates whether cut mode is active.
+
+### Is Cut & Move free or open source?
+
+Cut & Move is free for uses permitted by PolyForm Strict 1.0.0. Its source is available on GitHub, but it is not offered under an unrestricted open-source license. Read LICENSE for use, modification, and distribution restrictions.
+
+### Who makes Cut & Move and how do I get support?
+
+Cut & Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Contact rich@mill5.com for support.
+
+## Source and documentation
+
+- [README](https://github.com/ChiefInnovator/cutandmove/blob/main/README.md): Features, compatibility, version status, installation.
+- [Setup](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/setup.md): Permissions and troubleshooting.
+- [Architecture](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/architecture.md): Keyboard processing and safety boundaries.
+- [Current release notes](https://github.com/ChiefInnovator/cutandmove/blob/main/docs/RELEASE_NOTES_1.0.2.md): Current-source changes; check availability above.
+- [License](https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE): Complete terms.
+
+Current-source enhancements include Finder text-field guards, clipboard freshness checks, mouse-switch cancellation, disabled-tap recovery, login-item approval guidance, and a full-bleed icon. If the current source differs from the published version, treat these as preview features, not download guarantees.

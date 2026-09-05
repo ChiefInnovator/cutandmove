@@ -28,7 +28,7 @@ struct PermissionsView: View {
                 .foregroundColor(.secondary)
                 .padding(.horizontal)
             
-            if keyHandler.hasPermissions {
+            if keyHandler.isMonitoring {
                 VStack {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.green)
@@ -41,6 +41,9 @@ struct PermissionsView: View {
                     }
                 }
             } else {
+                if let error = keyHandler.monitoringError {
+                    Text(error).font(.caption).foregroundStyle(.red)
+                }
                 Button(action: {
                     keyHandler.openSystemSettings()
                 }) {
@@ -60,6 +63,6 @@ struct PermissionsView: View {
                 .foregroundColor(.gray)
                 .padding(.bottom, 20)
         }
-        .frame(width: 400, height: 300)
+        .frame(width: 400, height: 360)
     }
 }

@@ -1,139 +1,37 @@
 # Architecture
 
-> Internal technical design of **Cut & Move** — how the macOS menu bar utility intercepts keyboard events and turns Cmd+X / Cmd+V into Finder's native cut-and-move.
+Cut & Move is a SwiftUI menu-bar app with a main-run-loop CGEvent tap. It changes Finder file shortcuts, not filesystem contents: Finder remains responsible for all copy/move operations and conflict dialogs.
 
-## Contents
+## Keyboard path
 
-- [Overview](#overview)
-- [Component Diagram](#component-diagram)
-- [Key Design Decisions](#key-design-decisions)
-- [Event Flow](#event-flow)
-- [Files](#files)
+1. The tap handles disabled-tap notifications before ordinary events. It clears pending cut state and rechecks trust before re-enabling.
+2. Events outside Finder pass through unchanged and clear pending state. Workspace activation notifications also clear state immediately, including mouse-only application switches.
+3. Relevant Cmd+X/Cmd+V key-downs query Finder's focused Accessibility element with a bounded messaging timeout. Known file views are allowed; editable fields, unknown controls, and failed AX queries are not.
+4. `ShortcutState` transforms a real Cmd+X key-down and its matching key-up into Cmd+C, including the Unicode character. It records the expected pasteboard change count.
+5. A plain Cmd+V becomes Cmd+Option+V only when the clipboard has the expected new change count and contains file URLs. A failed copy, non-file copy, or replacement clipboard does not become a move.
+6. Matching key-up events keep the transformed modifiers even if Command was released first. Held-key repeats cannot copy or move repeatedly.
+7. Escape and Cmd+C cancel pending cut state. Shift/Option/Control combinations are not treated as plain Command shortcuts; Caps Lock is harmless.
 
----
+The state machine is synchronous; there are no queued cut-state updates and no synthetic event posting. A successful move consumes cut mode. The icon indicates a pending cut, not a guarantee that Finder has completed a filesystem operation.
 
-## Overview
+## Permissions and monitoring
 
-Cut & Move is a macOS menu bar utility built with **SwiftUI**. It intercepts keyboard events system-wide (while Finder is active) using a low-level `CGEvent` tap, converting the user's `Cmd+X` / `Cmd+V` sequence into Finder's native cut-and-move operation (`Cmd+Option+V`).
+`GlobalKeyboardHandler` owns the tap and its run-loop source, plus published UI status. It requests the native Accessibility prompt at application launch, rechecks every second and on app activation, tears down monitoring when trust is revoked, and retries creation/re-enabling while authorized. The menu reports readiness only when the tap is enabled. Creation failures are visible in the permissions window.
 
-## Component Diagram
+## Launch at login
 
-```text
-┌──────────────────────────────────────────────────┐
-│            CutAndMoveApp (Entry Point)           │
-│           MenuBarExtra + Window Scenes           │
-└──────┬────────────────────────────┬──────────────┘
-       │                            │
-┌──────▼─────────┐      ┌────────────▼─────────────┐
-│     AppMenu    │      │      Window Scenes       │
-│  (menu items)  │      │   • AboutView            │
-│                │      │   • PermissionsView      │
-└──────┬─────────┘      └──────────────────────────┘
-       │
-┌──────▼──────────────────────────────────┐
-│   GlobalKeyboardHandler (Singleton)     │
-│   • CGEvent tap via CFMachPort          │
-│   • Keyboard event interception         │
-│   • Accessibility permission checks     │
-│   • @Published state for SwiftUI        │
-└──────┬──────────────────────────────────┘
-       │
-┌──────▼──────────────────────────────────┐
-│   LaunchManager (Singleton)             │
-│   • SMAppService for login items        │
-│   • @Published state for SwiftUI        │
-└─────────────────────────────────────────┘
-```
-
-## Key Design Decisions
-
-### CGEvent tap for keyboard interception
-
-The app uses `CGEvent.tapCreate()` with a `CFMachPort` to intercept keyboard events at the macOS session level. This is the lowest-level approach available without a kernel extension, chosen because it can:
-
-- **Suppress** events — return `nil` to swallow `Cmd+X` entirely.
-- **Modify** events in flight — inject the `Option` flag into `Cmd+V`.
-- **Run before delivery** — events are processed before any application receives them.
-
-This approach requires Accessibility permissions and the App Sandbox must be **disabled**.
-
-### Magic number tagging (`0xCAFE`)
-
-When the app simulates a `Cmd+C` keystroke (after intercepting `Cmd+X`), the simulated event would itself be intercepted by the same event tap, creating an infinite loop.
-
-To prevent this, simulated events are tagged with a magic number (`0xCAFE`) in the `eventSourceUserData` field. The handler checks for this tag and passes tagged events through without processing.
-
-### Finder-only scope
-
-The event handler checks `NSWorkspace.shared.frontmostApplication` on every keyboard event. If the active app is **not** Finder (`com.apple.finder`), the event passes through unmodified.
-
-This ensures the app never interferes with keyboard shortcuts in any other application.
-
-### Singleton pattern
-
-Both `GlobalKeyboardHandler` and `LaunchManager` use the singleton pattern:
-
-- The keyboard handler must be a single instance because only one `CGEvent` tap should exist.
-- Both singletons conform to `ObservableObject` so SwiftUI views can reactively bind to their state.
-
-## Event Flow
-
-### Cut operation — `Cmd+X`
-
-```text
-User presses Cmd+X in Finder
-  ↓
-CGEvent tap intercepts keyDown
-  ↓
-Handler verifies Finder is frontmost
-  ↓
-Handler sets isCutModeActive = true
-  ↓
-Handler simulates Cmd+C (tagged with 0xCAFE)
-  ↓
-Handler returns nil (suppresses original Cmd+X)
-  ↓
-Menu bar icon changes to filled scissors
-```
-
-### Move operation — `Cmd+V` (after cut)
-
-```text
-User presses Cmd+V in Finder (cut mode active)
-  ↓
-CGEvent tap intercepts keyDown
-  ↓
-Handler verifies Finder is frontmost AND cut mode is active
-  ↓
-Handler injects .maskAlternate flag into the event
-  ↓
-Modified event (now Cmd+Option+V) continues to Finder
-  ↓
-Finder performs "Move Item Here" instead of "Paste Item"
-  ↓
-Handler sets isCutModeActive = false
-  ↓
-Menu bar icon returns to normal scissors
-```
-
-### Cancel — `Escape` or `Cmd+C`
-
-```text
-User presses Escape or Cmd+C
-  ↓
-Handler sets isCutModeActive = false
-  ↓
-Menu bar icon returns to normal
-  ↓
-Original event passes through normally
-```
+`LaunchManager` reads `SMAppService.mainApp.status`, distinguishes approval-required from enabled/disabled, opens Login Items settings for approval, and publishes registration errors. Its service operations are injectable for tests; production uses ServiceManagement directly.
 
 ## Files
 
-|File|Lines|Purpose|
-|:---|---:|:---|
-|[`CutAndMoveApp.swift`](../CutAndMove/CutAndMoveApp.swift)|92|App entry point, `MenuBarExtra` definition, `AppMenu` view, window scenes|
-|[`GlobalKeyboardHandler.swift`](../CutAndMove/GlobalKeyboardHandler.swift)|174|Core keyboard interception, event processing, permission management|
-|[`LaunchManager.swift`](../CutAndMove/LaunchManager.swift)|43|Launch-at-login toggle via the ServiceManagement framework|
-|[`PermissionsView.swift`](../CutAndMove/PermissionsView.swift)|66|UI for requesting and confirming Accessibility permissions|
-|[`AboutView.swift`](../CutAndMove/AboutView.swift)|83|About window with app info, version, and links|
+- `CutAndMoveApp.swift`: app lifecycle, menu, status and windows.
+- `GlobalKeyboardHandler.swift`: tap lifecycle, permissions, Finder AX focus checks.
+- `ShortcutState.swift`: deterministic shortcut and clipboard state machine.
+- `LaunchManager.swift`: login-item status and actions.
+- `PermissionsView.swift`, `AboutView.swift`: user-facing guidance and app information.
+
+## Verification boundaries
+
+Unit tests exercise event pairs, modifiers, repeats, cancellation, clipboard guards, focus classification, monitoring decisions, Unicode remapping, and login-item outcomes. Existing UI tests exercise launch behavior. AX role classification and clipboard timing in real Finder views still require interactive smoke testing; unit tests do not replace that.
+
+Release builds retain hardened runtime and library validation. Distribution is Developer ID signed and Apple notarized, through private GitHub Releases rather than the Mac App Store. See the README for the release commands.
