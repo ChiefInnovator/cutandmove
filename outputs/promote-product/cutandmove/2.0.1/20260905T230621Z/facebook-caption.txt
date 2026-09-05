@@ -1,0 +1,18 @@
+Your fingers know Cmd+X. Now Finder does too. ✂️
+
+Cut & Move v2.0.1 is out for Apple silicon Macs.
+
+NEW IN v2.0.1: an Apple-silicon-only app and Finder extension. No Intel binaries.
+
+INCLUDED FROM v2.0.0: right-click Cut, Move Here, and Cancel Cut; a Finder toolbar menu; pending-cut badges; and one cut selection shared between keyboard shortcuts and contextual menus. Enable the extension once for automatic coverage of local folders and mounted drives.
+
+Menu-driven moves reject existing destinations and changed sources. Normal macOS permissions still apply.
+
+Download v2.0.1 and follow the setup guide:
+https://chiefinnovator.github.io/cutandmove/
+
+Requires an M1-or-later Mac and macOS 26.1+. Accessibility access enables the keyboard shortcuts; enable the Finder extension for its menus. MILL5 Developer ID signed and Apple notarized. Direct download, not the Mac App Store. Free for uses permitted by PolyForm Strict 1.0.0.
+
+Created by @richcrane. Save this workflow—or send it to a Mac user who still reaches for Cmd+X.
+
+#CutAndMove #MacProductivity #AppleSilicon #Finder #InventingFireWithAI

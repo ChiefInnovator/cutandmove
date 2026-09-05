@@ -1,0 +1,65 @@
+{
+  "account": {
+    "id": "17841472905022055",
+    "username": "inventingfire_with_ai",
+    "name": "Inventing Fire with AI"
+  },
+  "children": [
+    {
+      "slide": 1,
+      "container_id": "17919417000430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/ad00b8ef67a7cc0116056b9ae970ef4ff3264753/outputs/promote-product/cutandmove/2.0.1/20260905T230621Z/slide-01.jpg",
+      "sha256": "39d88008b30fa90246b99badd8c233eaf5b6650864b3edc3cb29df0fed82c948"
+    },
+    {
+      "slide": 2,
+      "container_id": "17919417021430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/ad00b8ef67a7cc0116056b9ae970ef4ff3264753/outputs/promote-product/cutandmove/2.0.1/20260905T230621Z/slide-02.jpg",
+      "sha256": "704cff7823cbde4df4f4af845fab0fd54ec7338ae3f79254236a81f325d24260"
+    },
+    {
+      "slide": 3,
+      "container_id": "17919417039430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/ad00b8ef67a7cc0116056b9ae970ef4ff3264753/outputs/promote-product/cutandmove/2.0.1/20260905T230621Z/slide-03.jpg",
+      "sha256": "b0ac8286ced9ea27254c31011223174cce5b397a5723e2e1360f89f84003b607"
+    },
+    {
+      "slide": 4,
+      "container_id": "17919417057430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/ad00b8ef67a7cc0116056b9ae970ef4ff3264753/outputs/promote-product/cutandmove/2.0.1/20260905T230621Z/slide-04.jpg",
+      "sha256": "6b6051817ad317702f7fd6030dd7e3b3a8619dd27a1717e3a34f34d5f8eb88d3"
+    },
+    {
+      "slide": 5,
+      "container_id": "17919417075430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/ad00b8ef67a7cc0116056b9ae970ef4ff3264753/outputs/promote-product/cutandmove/2.0.1/20260905T230621Z/slide-05.jpg",
+      "sha256": "46b71d9e1e12a9ff94429058e481a4d09244975ac32661cf82beb29b4ba7198a"
+    },
+    {
+      "slide": 6,
+      "container_id": "17919417093430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/ad00b8ef67a7cc0116056b9ae970ef4ff3264753/outputs/promote-product/cutandmove/2.0.1/20260905T230621Z/slide-06.jpg",
+      "sha256": "a1aab2ec66d6166795f5db942cae19d3d49206e1b84c748889712b604e307ba8"
+    }
+  ],
+  "revision": "ad00b8ef67a7cc0116056b9ae970ef4ff3264753",
+  "parent": "17919417111430168",
+  "publish_attempted": true,
+  "post_id": "18124002169873848",
+  "verified": {
+    "id": "18124002169873848",
+    "username": "inventingfire_with_ai",
+    "caption": "Your fingers know Cmd+X. Now Finder does too. \u2702\ufe0f\n\nCut & Move v2.0.1 is out for Apple silicon Macs.\n\nNEW IN v2.0.1: an Apple-silicon-only app and Finder extension. No Intel binaries.\n\nINCLUDED FROM v2.0.0: right-click Cut, Move Here, and Cancel Cut; a Finder toolbar menu; pending-cut badges; and one cut selection shared between keyboard shortcuts and contextual menus. Enable the extension once for automatic coverage of local folders and mounted drives.\n\nMenu-driven moves reject existing destinations and changed sources. Normal macOS permissions still apply.\n\nDownload v2.0.1 and follow the setup guide:\nhttps://chiefinnovator.github.io/cutandmove/\nType or copy the URL into your browser.\n\nRequires an M1-or-later Mac and macOS 26.1+. Accessibility access enables the keyboard shortcuts; enable the Finder extension for its menus. MILL5 Developer ID signed and Apple notarized. Direct download, not the Mac App Store. Free for uses permitted by PolyForm Strict 1.0.0.\n\nCreated by @richcrane. Save this workflow\u2014or send it to a Mac user who still reaches for Cmd+X.\n\n#CutAndMove #MacProductivity #AppleSilicon #Finder #InventingFireWithAI",
+    "permalink": "https://www.instagram.com/p/Dc7HW4AiUVk/",
+    "media_type": "CAROUSEL_ALBUM"
+  },
+  "published_children": [
+    "18214788031345182",
+    "18153920017513362",
+    "18103341638237814",
+    "18367575823240602",
+    "17951003124037260",
+    "18110746829159282"
+  ],
+  "alt_text_and_order_verified": true
+}
