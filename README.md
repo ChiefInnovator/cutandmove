@@ -3,15 +3,15 @@
 
 Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves to Finder**. Use familiar cut-and-paste shortcuts while Finder handles the actual move and any conflicts.
 
-**Current source: v2.0.1 (development preview; not yet published). Published download: v2.0.0.**
+**Current source: v2.0.1 (published release). Published download: v2.0.1.**
 
-[Download v2.0.0](https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.0) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v2.0.1 release notes](docs/RELEASE_NOTES_2.0.1.md)
+[Download v2.0.1](https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.1) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v2.0.1 release notes](docs/RELEASE_NOTES_2.0.1.md)
 
 | Product fact | Details |
 | :--- | :--- |
-| Published version | v2.0.0 — signed and notarized DMG / ZIP |
-| Current source | v2.0.1 — development preview; not yet published |
-| Compatibility | macOS 26.1 or later; Apple silicon and Intel |
+| Published version | v2.0.1 — signed and notarized DMG / ZIP |
+| Current source | v2.0.1 — published release |
+| Compatibility | macOS 26.1 or later; Apple silicon only (M1 or later) |
 | Permission | Accessibility access for Finder keyboard shortcuts |
 | License | Free for uses permitted by [PolyForm Strict 1.0.0](LICENSE) |
 | Distribution | GitHub Releases; no Mac App Store version |
@@ -67,9 +67,9 @@ Update `MARKETING_VERSION` (always major.minor.patch), `CURRENT_PROJECT_VERSION`
 The export plists use `method=developer-id`; `destination=upload` sends to Apple's notary service, **not App Store Connect publishing**. Keep the bundle identifier `M5.CutAndMove` and team `FS6453639M`. Downloads are available from GitHub Releases. Update `marketing.json` only after a new release is actually published.
 
 <!-- preview-version:start -->
-## Coming in v2.0.1
+## New in v2.0.1
 
-Development preview; not yet published. The enhancements below describe the current source, not an older download.
+Published release. The enhancements below describe the current source, not an older download.
 <!-- preview-version:end -->
 
 - **Finder Sync extension:** right-click Cut, Move Here, and Cancel Cut commands.
@@ -94,11 +94,11 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v2.0.0, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.1 (development preview; not yet published). It is not distributed through the Mac App Store.
+The published download is Cut & Move v2.0.1, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.1 (published release). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 
-Cut & Move v2.0.0 requires macOS 26.1 or later and supports Apple silicon and Intel.
+Cut & Move v2.0.1 requires macOS 26.1 or later and supports Apple silicon only (M1 or later).
 
 ### Why does Cut & Move need Accessibility permission?
 
