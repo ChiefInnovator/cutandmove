@@ -64,7 +64,7 @@ struct ShortcutState {
 
     private func remapToCopy(_ event: CGEvent) {
         event.setIntegerValueField(.keyboardEventKeycode, value: 8)
-        var character: UniChar = 99 // Keep NSEvent's characters consistent with the keycode.
-        event.keyboardSetUnicodeString(stringLength: 1, unicodeString: &character)
+        // Let macOS translate the keycode. An explicit Unicode payload makes Finder
+        // treat the remapped shortcut as text instead of executing its Copy command.
     }
 }

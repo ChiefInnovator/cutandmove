@@ -7,12 +7,17 @@ APP_PATH = $(EXPORT_PATH)/$(APP_NAME).app
 DEVELOPER_ID = Developer ID Application: MILL5, LLC (FS6453639M)
 VERSION = $(shell sed -n 's/.*MARKETING_VERSION = \([^;]*\);/\1/p' CutAndMove.xcodeproj/project.pbxproj | head -1)
 
-.PHONY: build test archive export notarize verify-release dmg zip package release publish marketing marketing-check
+.PHONY: build test test-finder archive export notarize verify-release dmg zip package release publish marketing marketing-check
 .NOTPARALLEL:
 build:
 	xcodebuild -project CutAndMove.xcodeproj -scheme $(SCHEME) -configuration Debug build
 test:
 	xcodebuild -project CutAndMove.xcodeproj -scheme $(SCHEME) -destination 'platform=macOS' test
+# Opt-in: temporarily controls Finder; do not type during this test.
+test-finder:
+	mkdir -p $(BUILD_DIR)/diagnostics
+	swiftc CutAndMove/ShortcutState.swift CutAndMove/GlobalKeyboardHandler.swift scripts/test-finder.swift -o $(BUILD_DIR)/diagnostics/finder-regression
+	@for view in list icon column flow; do $(BUILD_DIR)/diagnostics/finder-regression $$view || exit 1; done
 marketing:
 	python3 scripts/sync-marketing.py
 marketing-check:
