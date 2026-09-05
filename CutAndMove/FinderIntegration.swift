@@ -41,7 +41,11 @@ final class FinderIntegration: ObservableObject {
                 MainActor.assumeIsolated { self?.tick() }
             }
             tick()
-        } catch { status.message = error.localizedDescription }
+        } catch {
+            if lock >= 0 { close(lock); lock = -1 }
+            bridge = nil
+            status.message = error.localizedDescription
+        }
     }
 
     func configureExtension() { FIFinderSyncController.showExtensionManagementInterface() }
@@ -157,17 +161,23 @@ final class FinderIntegration: ObservableObject {
                 self.status.busy = false
                 GlobalKeyboardHandler.shared.fileMoveInProgress = false
                 self.items = result.remaining
+                var clipboardFailed = false
                 if board.changeCount == cut.clipboard, !result.remaining.isEmpty {
                     board.clearContents()
-                    board.writeObjects(result.remaining.map { $0.url as NSURL })
-                    self.status.cut = FinderCut(id: UUID(), urls: result.remaining.map(\.url), clipboard: board.changeCount)
-                    self.applying = true
-                    if GlobalKeyboardHandler.shared.isMonitoring { GlobalKeyboardHandler.shared.armCut(clipboard: board.changeCount) }
-                    self.applying = false
+                    if board.writeObjects(result.remaining.map { $0.url as NSURL }) {
+                        self.status.cut = FinderCut(id: UUID(), urls: result.remaining.map(\.url), clipboard: board.changeCount)
+                        self.applying = true
+                        if GlobalKeyboardHandler.shared.isMonitoring { GlobalKeyboardHandler.shared.armCut(clipboard: board.changeCount) }
+                        self.applying = false
+                    } else {
+                        self.clear()
+                        clipboardFailed = true
+                    }
                 } else { self.clear() }
                 self.status.message = result.error.map { "Moved \(result.moved) item(s). \($0)" } ?? "Moved \(result.moved) item(s)."
+                if clipboardFailed { self.status.message? += " Could not refresh the clipboard. Select the remaining files and Cut again." }
                 self.publish()
-                if result.error != nil { NSSound.beep() }
+                if result.error != nil || clipboardFailed { NSSound.beep() }
             }
         }
     }

@@ -2,7 +2,7 @@ import Cocoa
 import FinderSync
 
 final class FinderSync: FIFinderSync {
-    private let bridge = try? FinderBridge()
+    private var bridge: FinderBridge?
     private var status = FinderStatus()
     private var timer: Timer?
     private var failure: String?
@@ -24,6 +24,7 @@ final class FinderSync: FIFinderSync {
             (FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: nil, options: []) ?? []))
         let controller = FIFinderSyncController.default()
         if controller.directoryURLs != directories { controller.directoryURLs = directories }
+        if bridge == nil { bridge = try? FinderBridge() }
         guard let bridge else { failure = "Open Cut & Move to set up Finder integration."; return }
         do {
             var latest = try bridge.status()
