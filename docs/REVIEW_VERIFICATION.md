@@ -1,3 +1,37 @@
+# Mixed keyboard/context-menu verification — v2.0.0 (build 5)
+
+Completed on September 5, 2026 against the actual universal Developer ID signed
+app and embedded Finder Sync extension, built from `8fd379d` (merged as
+`afb23a3`). This test did not substitute a diagnostic keyboard event tap for the
+running app.
+
+| Finder view | Cmd+X → context-menu Move Here | Context-menu Cut → Cmd+V |
+| --- | --- | --- |
+| List | Passed | Passed |
+| Icon | Passed | Passed |
+| Column | Passed | Passed |
+| Gallery | Passed | Passed |
+
+All eight cases verified removal from the source, byte-for-byte preservation at
+the destination, no text-clipping output, and cleared pending-cut state. Automated
+keyboard Cut cases began with text on the clipboard to exercise the original reported
+failure. Context-menu actions were selected through Finder's actual UI, not by
+writing requests directly to the app-group bridge. Column-view cases used the
+visible Finder menu after the automation could not locate its menu hierarchy.
+
+The initial run found a stale local registration pointing to an Xcode archive
+staging directory that no longer existed. That registration was removed and
+Finder was restarted with the signed app's existing embedded extension
+registered. The successful tests used
+`build/export-2.0.0-validated/CutAndMove.app`; app and extension signature
+verification passed. No production-code changes were required.
+
+This completes the previously outstanding mixed keyboard/context-menu smoke
+test. It does not constitute notarization, publication, or installation of a new
+DMG, nor does it claim exhaustive coverage of every filesystem or Finder view.
+
+---
+
 # Finder shortcut fix — unreleased after 1.0.3
 
 The explicit `keyboardSetUnicodeString` override on the remapped Cmd+X event
