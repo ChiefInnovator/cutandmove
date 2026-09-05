@@ -11,6 +11,8 @@ class GlobalKeyboardHandler: ObservableObject {
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     private var permissionTimer: Timer?
+    var cutDidChange: ((Int?) -> Void)?
+    var fileMoveInProgress = false
 
     private init() {
         checkPermissions()
@@ -28,8 +30,18 @@ class GlobalKeyboardHandler: ObservableObject {
     }
 
     private func resetCutMode() {
+        let wasActive = state.isCutModeActive
         state.reset()
         isCutModeActive = false
+        if wasActive { cutDidChange?(nil) }
+    }
+
+    func cancelCut() { resetCutMode() }
+
+    func armCut(clipboard: Int) {
+        state.armCut(clipboard: clipboard)
+        isCutModeActive = true
+        cutDidChange?(clipboard)
     }
 
     func requestPermissions() {
@@ -122,8 +134,10 @@ class GlobalKeyboardHandler: ObservableObject {
         let board = NSPasteboard.general
         let count = relevant ? board.changeCount : 0
         let files = relevant && board.canReadObject(forClasses: [NSURL.self], options: [.urlReadingFileURLsOnly: true])
-        let pass = state.process(event, fileContext: fileContext, clipboard: count, hasFiles: files)
+        let previous = state.cutClipboard
+        let pass = state.process(event, fileContext: fileContext, clipboard: count, hasFiles: files, fileMoveInProgress: fileMoveInProgress)
         isCutModeActive = state.isCutModeActive
+        if previous != state.cutClipboard { cutDidChange?(state.cutClipboard) }
         return pass ? Unmanaged.passUnretained(event) : nil
     }
 }

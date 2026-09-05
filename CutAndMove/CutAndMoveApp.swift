@@ -12,10 +12,11 @@ struct CutAndMoveApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @ObservedObject var keyHandler = GlobalKeyboardHandler.shared
     @ObservedObject var launchManager = LaunchManager.shared
+    @ObservedObject private var finder = FinderIntegration.shared
     
     var body: some Scene {
         // 1. The Menu Bar Icon
-        MenuBarExtra("Cut & Move", systemImage: keyHandler.isCutModeActive ? "scissors.circle.fill" : "scissors") {
+        MenuBarExtra("Cut & Move", systemImage: keyHandler.isCutModeActive || finder.status.cut != nil ? "scissors.circle.fill" : "scissors") {
             // We extract the menu content to a separate view so it can use Environment actions
             AppMenu(keyHandler: keyHandler, launchManager: launchManager)
         }
@@ -41,6 +42,7 @@ struct CutAndMoveApp: App {
 struct AppMenu: View {
     @ObservedObject var keyHandler: GlobalKeyboardHandler
     @ObservedObject var launchManager: LaunchManager
+    @ObservedObject private var finder = FinderIntegration.shared
     
     // This specific command allows us to open the windows defined above
     @Environment(\.openWindow) var openWindow
@@ -58,6 +60,15 @@ struct AppMenu: View {
         }
         .disabled(true)
         
+        Divider()
+
+        Text(finder.extensionEnabled ? "Finder Extension Enabled" : "Finder Extension Not Enabled")
+        Button("Enable / Manage Finder Extension…") { finder.configureExtension() }
+        if let cut = finder.status.cut {
+            Button("Cancel Cut (\(cut.urls.count) items)") { finder.cancel() }
+                .disabled(finder.status.busy)
+        }
+        if let message = finder.status.message { Text(message) }
         Divider()
         
         // SETTINGS SECTION
@@ -105,6 +116,16 @@ struct AppMenu: View {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
+        FinderIntegration.shared.start()
         GlobalKeyboardHandler.shared.requestPermissions()
+    }
+
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        if FinderIntegration.shared.status.busy { NSSound.beep(); return .terminateCancel }
+        return .terminateNow
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        FinderIntegration.shared.stop()
     }
 }

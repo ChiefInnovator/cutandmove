@@ -5,21 +5,34 @@ struct ShortcutState {
     private var expectedClipboard: Int?
     private var cutKeyHeld = false
     private var moveKeyHeld = false
+    private var blockedMoveKeys = Set<Int64>()
     var isCutModeActive: Bool { expectedClipboard != nil }
+    var cutClipboard: Int? { expectedClipboard }
+
+    mutating func armCut(clipboard: Int) {
+        reset()
+        expectedClipboard = clipboard
+    }
 
     mutating func reset() {
         expectedClipboard = nil
         cutKeyHeld = false
         moveKeyHeld = false
+        blockedMoveKeys.removeAll()
     }
 
-    /// Returns false only for repeated keys belonging to a consumed shortcut.
-    mutating func process(_ event: CGEvent, fileContext: Bool, clipboard: Int, hasFiles: Bool) -> Bool {
+    /// Returns false for repeats or shortcut pairs blocked during a menu move.
+    mutating func process(_ event: CGEvent, fileContext: Bool, clipboard: Int, hasFiles: Bool, fileMoveInProgress: Bool = false) -> Bool {
         let key = event.getIntegerValueField(.keyboardEventKeycode)
         let down = event.type == .keyDown
         let up = event.type == .keyUp
         let repeated = event.getIntegerValueField(.keyboardEventAutorepeat) != 0
         guard down || up else { return true }
+
+        if blockedMoveKeys.contains(key) {
+            if up { blockedMoveKeys.remove(key) }
+            return false
+        }
 
         // Finish pairs even if Command was released before the letter key.
         if key == 7 && cutKeyHeld {
@@ -46,6 +59,10 @@ struct ShortcutState {
         guard fileContext else {
             expectedClipboard = nil
             return true
+        }
+        if fileMoveInProgress && commandOnly && (key == 7 || key == 9) {
+            blockedMoveKeys.insert(key)
+            return false
         }
         guard commandOnly, !repeated else { return true }
         if key == 7 {
