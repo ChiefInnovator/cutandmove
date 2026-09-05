@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#090d18"/><stop offset="1" stop-color="#172442"/></linearGradient></defs>
+<rect width="1080" height="1350" fill="#090d18"/>
+<path d="M760 0 L1080 0 L1080 470" fill="#263f69"/>
+<rect x="76" y="85" width="48" height="6" fill="#ff9a57"/>
+<g font-family="Arial">
+<text x="76" y="135.0" font-size="26" font-weight="bold" fill="#d7dfef">INVENTING FIRE WITH AI</text>
+<text x="76" y="245.0" font-size="25" font-weight="bold" fill="#ffad75">NEW IN v1.0.2</text>
+<text x="76" y="370" font-size="78" font-weight="bold" fill="#f5f5f8">Rename a file.</text><text x="76" y="462" font-size="78" font-weight="bold" fill="#f5f5f8">Not your habits.</text>
+<text x="76" y="640" font-size="35" font-weight="normal" fill="#d7dfef">Finder search and rename fields</text><text x="76" y="691" font-size="35" font-weight="normal" fill="#d7dfef">keep their native text editing.</text>
+<rect x="76" y="867" width="928" height="166" rx="24" fill="#263f69"/>
+<text x="110" y="960.0" font-size="44" font-weight="bold" fill="#f5f5f8">TEXT STAYS TEXT</text>
+
+<text x="76" y="1102.0" font-size="27" font-weight="normal" fill="#d7dfef">Unknown or inaccessible controls stay unchanged.</text>
+<text x="76" y="1190.0" font-size="25" font-weight="normal" fill="#d7dfef">Cut &amp; Move v1.0.2</text>
+<path d="M76 1230 H1004" stroke="#40516a"/>
+<text x="76" y="1280.0" font-size="24" font-weight="normal" fill="#ffad75">@richcrane</text>
+<text x="904" y="1280.0" font-size="24" font-weight="normal" fill="#d7dfef">03 / 06</text>
+</g></svg>
