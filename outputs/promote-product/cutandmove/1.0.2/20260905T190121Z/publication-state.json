@@ -1,0 +1,58 @@
+{
+  "account": {
+    "id": "17841472905022055",
+    "username": "inventingfire_with_ai",
+    "name": "Inventing Fire with AI"
+  },
+  "children": [
+    {
+      "slide": 1,
+      "container_id": "17919396099430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/4c3ab563c05ca1be3417b5d71c4af0e7f6f41658/outputs/promote-product/cutandmove/1.0.2/20260905T190121Z/slide-01.jpg"
+    },
+    {
+      "slide": 2,
+      "container_id": "17919396117430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/4c3ab563c05ca1be3417b5d71c4af0e7f6f41658/outputs/promote-product/cutandmove/1.0.2/20260905T190121Z/slide-02.jpg"
+    },
+    {
+      "slide": 3,
+      "container_id": "17919396141430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/4c3ab563c05ca1be3417b5d71c4af0e7f6f41658/outputs/promote-product/cutandmove/1.0.2/20260905T190121Z/slide-03.jpg"
+    },
+    {
+      "slide": 4,
+      "container_id": "17919396162430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/4c3ab563c05ca1be3417b5d71c4af0e7f6f41658/outputs/promote-product/cutandmove/1.0.2/20260905T190121Z/slide-04.jpg"
+    },
+    {
+      "slide": 5,
+      "container_id": "17919396186430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/4c3ab563c05ca1be3417b5d71c4af0e7f6f41658/outputs/promote-product/cutandmove/1.0.2/20260905T190121Z/slide-05.jpg"
+    },
+    {
+      "slide": 6,
+      "container_id": "17919396204430168",
+      "url": "https://raw.githubusercontent.com/ChiefInnovator/cutandmove/4c3ab563c05ca1be3417b5d71c4af0e7f6f41658/outputs/promote-product/cutandmove/1.0.2/20260905T190121Z/slide-06.jpg"
+    }
+  ],
+  "revision": "4c3ab563c05ca1be3417b5d71c4af0e7f6f41658",
+  "parent": "17919396225430168",
+  "publish_attempted": true,
+  "post_id": "17971748337136971",
+  "verified": {
+    "id": "17971748337136971",
+    "username": "inventingfire_with_ai",
+    "caption": "Your fingers know Cmd+X. Now Finder does too. \u2702\ufe0f\n\nCut & Move v1.0.2 is out: familiar Cmd+X \u2192 Cmd+V file moves in a native Mac menu bar app.\n\nThis release adds Finder search and rename protections, fresh-clipboard checks, cut-mode cancellation when switching apps, and a full-bleed icon without the old inset border.\n\nFinder still handles the actual move and file-conflict dialogs. No keystroke recording, analytics, or app network requests.\n\nDownload v1.0.2 and see setup details:\nhttps://chiefinnovator.github.io/cutandmove/\n(Type or copy the URL into your browser.)\n\nRequires macOS 26.1+ and Accessibility permission. Apple silicon and Intel. Developer ID signed and Apple notarized; no Mac App Store version. Free for uses permitted by PolyForm Strict 1.0.0.\n\nBuilt by @richcrane. Share this with a Mac user whose fingers still reach for Cmd+X.\n\n#MacProductivity #macOS #Finder #CutAndMove #InventingFireWithAI",
+    "permalink": "https://www.instagram.com/p/Dc6rLS0IOEm/",
+    "media_type": "CAROUSEL_ALBUM"
+  },
+  "published_children": [
+    "17991393434843256",
+    "18029769971890086",
+    "18021471662863444",
+    "18428662588183165",
+    "18032555369844566",
+    "17914559601445515"
+  ]
+}
