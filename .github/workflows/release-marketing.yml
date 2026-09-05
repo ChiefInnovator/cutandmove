@@ -1,0 +1,68 @@
+name: Update page after release
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: release-marketing
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Read latest published stable release
+        run: gh api "repos/$GITHUB_REPOSITORY/releases/latest" > "$RUNNER_TEMP/release.json"
+      - name: Update full versions and download links
+        run: python3 scripts/sync-release.py "$RUNNER_TEMP/release.json"
+      - name: Verify generated content
+        run: |
+          python3 scripts/sync-marketing.py --check
+          python3 scripts/test-marketing.py
+          python3 scripts/test-release-sync.py
+          node scripts/test-share.cjs
+          git diff --check
+      - name: Commit release marketing
+        run: |
+          git add marketing.json index.html README.md llms.txt
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Sync marketing with latest published release'
+            git push origin HEAD:main
+          fi
+      # Bot pushes do not start another push workflow. Request Pages explicitly.
+      - name: Rebuild GitHub Pages
+        run: gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+      - name: Verify live release version
+        run: |
+          python3 - <<'PY'
+          import json, time, urllib.request
+          config = json.load(open('marketing.json'))
+          expected = f"/releases/download/v{config['released_version']}/CutAndMove.dmg"
+          for attempt in range(40):
+              try:
+                  url = config['site_url'] + f'?release-check={time.time_ns()}'
+                  with urllib.request.urlopen(url, timeout=20) as response:
+                      page = response.read().decode()
+                  if expected in page:
+                      print('Live page advertises', config['released_version'])
+                      break
+              except (OSError, UnicodeError):
+                  pass
+              time.sleep(15)
+          else:
+              raise SystemExit('Pages did not expose the published download within 10 minutes')
+          PY
