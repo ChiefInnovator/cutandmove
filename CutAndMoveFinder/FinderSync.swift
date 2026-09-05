@@ -12,11 +12,20 @@ final class FinderSync: FIFinderSync {
         super.init()
         let image = NSImage(systemSymbolName: "scissors.circle.fill", accessibilityDescription: "Ready to move")!
         FIFinderSyncController.default().setBadgeImage(image, label: "Cut & Move: ready to move", forBadgeIdentifier: "cut")
+        for name in [NSWorkspace.didMountNotification, NSWorkspace.didUnmountNotification] {
+            NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(refreshDirectories), name: name, object: nil)
+        }
+        refreshDirectories()
         refresh()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in self?.refresh() }
     }
 
-    private func refresh() {
+    deinit {
+        timer?.invalidate()
+        NSWorkspace.shared.notificationCenter.removeObserver(self)
+    }
+
+    @objc private func refreshDirectories() {
         // Finder Sync scopes UI recursively. Cover the filesystem and every
         // mounted volume automatically, including drives mounted after launch.
         // Registration does not scan files or grant additional file access.
@@ -24,6 +33,9 @@ final class FinderSync: FIFinderSync {
             (FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: nil, options: []) ?? []))
         let controller = FIFinderSyncController.default()
         if controller.directoryURLs != directories { controller.directoryURLs = directories }
+    }
+
+    private func refresh() {
         if bridge == nil { bridge = try? FinderBridge() }
         guard let bridge else { failure = "Open Cut & Move to set up Finder integration."; return }
         do {
