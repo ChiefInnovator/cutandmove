@@ -5,4 +5,4 @@
 - Handle approval-required results, report unconfirmed registration, and clear stale errors when the service becomes enabled.
 - Add regression coverage for missing-service registration, approval, errors, retries, and status recovery.
 
-Requires macOS 26.1+. The local v1.0.3 build is Developer ID signed and Apple notarized. GitHub's published download remains v1.0.2 until v1.0.3 is explicitly published.
+Requires macOS 26.1+. Developer ID signed and Apple notarized. Download the DMG or ZIP from this release; SHA-256 checksums are included. No Mac App Store installation is required.
