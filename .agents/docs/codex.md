@@ -81,7 +81,9 @@ Do not use `file://` links in Codex chat.
 
 ## Verification
 
-Run the offline packaging checks with `pytest tests/unit`. The opt-in native
+From a full upstream EGM source checkout, run the offline packaging checks with
+`pytest tests/unit`. These development tests are not included in the installed
+project runtime; use [the pinned source checkout instructions](../README.md). The opt-in native
 workflow tests are documented in [TESTING.md](https://github.com/google/elephant-goldfish-model/blob/main/TESTING.md). They require
 an authenticated Codex CLI and consume model usage. Installing or discovering
 the plugin alone does not establish end-to-end workflow support.
@@ -89,7 +91,9 @@ the plugin alone does not establish end-to-end workflow support.
 ## ChatGPT
 
 For personal testing, open Plugins > Add > Upload plugin archive in ChatGPT.
-Package the runtime files from the repository root:
+Package the runtime files from a full upstream EGM repository root, not the
+Cut & Move checkout or this mixed-skill runtime folder. First follow
+[the pinned source checkout instructions](../README.md), then run:
 
 ```sh
 python3 scripts/pack_plugin.py --target openai --output /tmp/egm-chatgpt

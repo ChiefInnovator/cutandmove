@@ -15,6 +15,7 @@ colors:
   violet: "#8b5cf6"
   action-blue: "#1d4ed8"
   action-violet: "#6d28d9"
+  status-green: "#22c55e"
 typography:
   display:
     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif'
@@ -28,10 +29,49 @@ typography:
     lineHeight: 1.6
   label:
     fontFamily: 'ui-monospace, "SF Mono", Menlo, Consolas, monospace'
+  navigation:
+    fontSize: "14.5px"
+    fontWeight: 500
+  action:
+    fontSize: "15.5px"
+    fontWeight: 600
+  caption:
+    fontSize: "13px"
+  keycap:
+    fontSize: "14px"
+  feature-body:
+    fontSize: "15px"
+  download-headline:
+    fontSize: "clamp(32px, 4.5vw, 58px)"
+  section-headline:
+    fontSize: "clamp(30px, 4vw, 50px)"
+  hero-lead:
+    fontSize: "clamp(18px, 2.1vw, 22px)"
+  step-title:
+    fontSize: "22px"
+  faq-heading:
+    fontSize: "26px"
+  faq-body:
+    fontSize: "16px"
+  creator-mark:
+    fontSize: "52px"
+  creator-name:
+    fontSize: "32px"
+  share-message:
+    fontSize: "19px"
 rounded:
   nav: "8px"
   button: "12px"
   comparison: "16px"
+  footer-icon: "5px"
+  logo-icon: "6px"
+  keycap: "7px"
+  creator-link: "9px"
+  feature: "18px"
+  step: "20px"
+  creator: "24px"
+  app-icon: "28px"
+  pill: "999px"
 spacing:
   compact: "10px"
   controls: "14px"
@@ -97,7 +137,8 @@ shadow. No new decorative elevation system is required.
 
 ## Shapes
 
-Website nav CTA is 8px radius, primary controls 12px, comparison panels 16px.
+Website nav CTA is 8px radius, primary controls 12px, comparison panels 16px;
+frontmatter records the other existing icon, keycap, feature, step, and creator radii.
 Shortcut keys use the incumbent beveled key-cap treatment. Native controls retain
 system shapes; preserve the existing full-bleed app-icon artwork.
 
@@ -113,7 +154,8 @@ system shapes; preserve the existing full-bleed app-icon artwork.
   while a move is busy; never equate pending cut with a completed move.
 - Permission UI must distinguish absent access, unavailable monitoring, and ready.
   Success stays readable until dismissed. Diagnostics name a recovery action.
-- Native windows and menu labels are the application interface; do not import
+- Native About links to the product homepage and Support; Finder labels use
+  singular/plural counts. Native windows and menu labels are the application interface; do not import
   website gradients, social copy, or browser-specific controls into them.
 
 ## Do's and Don'ts

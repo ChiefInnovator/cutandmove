@@ -65,7 +65,7 @@ struct AppMenu: View {
         Text(finder.extensionEnabled ? "Finder Extension Enabled" : "Finder Extension Not Enabled")
         Button("Enable / Manage Finder Extension…") { finder.configureExtension() }
         if let cut = finder.status.cut {
-            Button("Cancel Cut (\(cut.urls.count) items)") { finder.cancel() }
+            Button("Cancel Cut (\(cut.urls.count) \(cut.urls.count == 1 ? "item" : "items"))") { finder.cancel() }
                 .disabled(finder.status.busy)
         }
         if let message = finder.status.message { Text(message) }
@@ -89,7 +89,7 @@ struct AppMenu: View {
         }
 
         if !keyHandler.isMonitoring {
-            Button("Fix Permissions...") {
+            Button("Keyboard Shortcut Settings…") {
                 openWindow(id: "permissions-window")
                 NSApplication.shared.activate(ignoringOtherApps: true)
             }

@@ -33,6 +33,10 @@ class MarketingTests(unittest.TestCase):
                     config_path.write_text(json.dumps(config))
                     for name, text in marketing.outputs().items():
                         self.assertIn(expected, text, name)
+                        if name == "index.html":
+                            for block in ["hero-requirements", "download-requirements"]:
+                                visible = re.search(rf'<!-- {block}:start -->(.*?)<!-- {block}:end -->', text, re.S)[1]
+                                self.assertIn(expected, visible, block)
                         if version == "2.0.1":
                             self.assertNotIn("Intel", text, name)
             finally:
@@ -53,6 +57,7 @@ class MarketingTests(unittest.TestCase):
         self.assertIn('%20', email)
         self.assertNotIn('+', email)
         self.assertIn('id="copy-share" hidden', share)
+        self.assertIn('Select the message above to copy it, or use a sharing link.', share)
 
     def test_metadata_and_visible_faq_match(self):
         page = marketing.outputs()["index.html"]
@@ -65,6 +70,9 @@ class MarketingTests(unittest.TestCase):
         self.assertNotIn("raw.githubusercontent.com", page)
         self.assertNotIn("InStock", page)
         self.assertNotIn('href="/llms.txt"', page)
+        released = json.loads((marketing.ROOT / "marketing.json").read_text())["released_version"]
+        self.assertIn(f'The published v{released} release includes a Finder Sync extension', page)
+        self.assertNotIn('These features require the current source version', page)
 
     def test_version_bump_updates_all_surfaces_without_changing_download(self):
         original = marketing.ROOT
@@ -79,6 +87,8 @@ class MarketingTests(unittest.TestCase):
             try:
                 marketing.ROOT = root
                 output = marketing.outputs()
+                self.assertIn('The v2.3.4 development preview adds', output["index.html"])
+                self.assertIn('not a guarantee about the published download', output["index.html"])
                 released = json.loads((root / "marketing.json").read_text())["released_version"]
                 for name, text in output.items():
                     self.assertIn("v2.3.4", text, name)

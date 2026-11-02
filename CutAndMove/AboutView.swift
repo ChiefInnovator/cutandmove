@@ -38,7 +38,7 @@ struct AboutView: View {
             // 3. Action Buttons
             HStack(spacing: 20) {
                 Button("Website") {
-                    openURL("https://inventingfirewith.ai")
+                    openURL("https://chiefinnovator.github.io/cutandmove/")
                 }
                 .buttonStyle(.link)
                 

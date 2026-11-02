@@ -197,8 +197,10 @@ Only merge commits are allowed; develop is retained. Ruleset IDs are 26359272
 Install seven EGM skills plus personas, resources, docs, license, and upstream
 revision 403d8881d62022490637d740657b33f01e321ea8 in .agents. Install Impeccable
 4.8.0 using its Codex project installer without hooks. Preserve launchers and
-checksums, ignore downloaded scripts/bin engines and Python cache. Never edit
-bundled upstream skill instructions to change their behavior.
+checksums, ignore downloaded scripts/bin engines and Python cache. Keep runtime
+SKILL.md prompts/personas/standards byte-identical. Adapt consumer documentation
+links only where upstream development paths do not exist in this application;
+record each adaptation in provenance.
 
 ### Phase 2: Documentation and source change inventory
 
@@ -212,6 +214,7 @@ intermediate_zoom_out_report,implementation_readiness_report,
 consolidated_review_report,goldfish_review_report}.md;
 docs/reviews/impeccable-review.md; docs/reviews/verification.md.
 
+Create .gitattributes to preserve vendored runtime whitespace/Windows CRLF bytes.
 Modify .gitignore (local engine/cache exclusions), .github/workflows/branch-policy.yml
 (target-specific source check and stale-event validation), marketing.yml (run
 new governance regression scripts), release-marketing.yml (read-only patch
@@ -222,6 +225,17 @@ CutAndMove/CutAndMoveApp.swift (matching window title/default dimensions), and
 index.html (measured text/button contrast and neutral shadows replacing the
 Impeccable hook's confirmed decorative-glow findings). Further Impeccable corrections must
 first be named in its report and this inventory; no unexplained refactoring.
+Impeccable accepted additions: Modify AboutView.swift to open the product
+homepage, CutAndMoveApp.swift recovery label and singular cut count, FinderSync.swift
+singular/plural menu labels, scripts/sync-marketing.py for download-adjacent
+hardware requirements and published/preview integration FAQ, scripts/test-marketing.py
+for those generated contracts, and generated README.md/llms.txt/index.html. Keep
+only semantic ordered-list numbering in the how-to and provide static manual-copy
+guidance for share fallback. Expand design frontmatter to cover observed scales;
+retain explicitly triaged incumbent pattern advisories without suppression.
+Add canonical .agents/assets, .agents/LICENSE, and a consumer .agents/README.md;
+redirect EGM development-only test/build links to the pinned upstream checkout,
+recording the adapted documentation paths in egm-source.json.
 Delete no existing files. Leave core keyboard/bridge/file-move logic, signing,
 project deployment targets, generated product facts, and historical output intact.
 

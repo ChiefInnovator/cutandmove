@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-02T00:00:00-05:00",
+  "generatedAt": "2026-11-02T06:04:41.868174-05:00",
   "title": "Design System: Cut & Move",
   "extensions": {
     "shadows": [
@@ -8,6 +8,11 @@
         "name": "download",
         "value": "0 12px 30px -10px rgba(0, 0, 0, 0.35)",
         "purpose": "Primary download control at rest."
+      },
+      {
+        "name": "download-hover",
+        "value": "0 16px 36px -10px rgba(0, 0, 0, 0.45)",
+        "purpose": "Neutral elevation on download hover; not a chromatic glow."
       }
     ],
     "motion": [

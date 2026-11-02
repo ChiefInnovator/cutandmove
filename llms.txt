@@ -42,7 +42,7 @@ Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior
 
 ### What does Finder integration add in v2.0.1?
 
-The v2.0.1 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.
+The published v2.0.1 release includes a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites.
 
 ### How do I cancel cut mode?
 

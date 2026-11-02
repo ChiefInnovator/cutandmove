@@ -1,5 +1,10 @@
 # Directory packages
 
+This development guide applies only to a full upstream EGM source checkout.
+The builder and development tests are intentionally outside this installed
+application runtime. Follow [the pinned source checkout instructions](../README.md)
+before running the commands below.
+
 Build a runtime folder and ZIP using only Python's standard library:
 
 ```sh

@@ -4,8 +4,9 @@ All changes follow `feature/<name>` → `develop` → `main`, using pull request
 and merge commits. Source branches must belong to this repository. Forks must
 be imported into a local feature branch before integration.
 
-Both integration branches require the target-specific GitHub Actions check (`Branch source to main` or
-`Branch source to develop`),
+Both integration branches require a GitHub Actions source check: `Branch source`
+during bootstrap, then `Branch source to main` or `Branch source to develop`
+after the corresponding workflow/ruleset migration,
 resolved conversations, and a pull request. Direct pushes, force pushes, and
 deletion are blocked. No bypass actors are configured. The owner can still
 change repository settings; rules cannot prevent administrative policy changes.
