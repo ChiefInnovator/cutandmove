@@ -5,9 +5,11 @@ ARCHIVE_PATH = $(BUILD_DIR)/$(APP_NAME).xcarchive
 EXPORT_PATH = $(BUILD_DIR)/export
 APP_PATH = $(EXPORT_PATH)/$(APP_NAME).app
 DEVELOPER_ID = Developer ID Application: MILL5, LLC (FS6453639M)
+NOTARY_PROFILE ?= CutAndMoveNotarize
+export NOTARY_PROFILE
 VERSION = $(shell sed -n 's/.*MARKETING_VERSION = \([^;]*\);/\1/p' CutAndMove.xcodeproj/project.pbxproj | head -1)
 
-.PHONY: build test test-finder archive export notarize verify-release dmg zip package release publish marketing marketing-check
+.PHONY: build test test-finder archive export notarize notarize-dmg verify-release verify-dmg dmg zip package release publish marketing marketing-check
 .NOTPARALLEL:
 build:
 	xcodebuild -project CutAndMove.xcodeproj -scheme $(SCHEME) -configuration Debug build
@@ -45,6 +47,15 @@ dmg: verify-release
 	create-dmg --volname "$(APP_NAME)" --background $(BUILD_DIR)/dmg-background.png --window-pos 200 120 --window-size 660 400 --icon-size 100 --icon "$(APP_NAME).app" 175 190 --app-drop-link 485 190 --text-size 14 --no-internet-enable $(BUILD_DIR)/$(APP_NAME).dmg $(APP_PATH)
 	codesign --sign "$(DEVELOPER_ID)" $(BUILD_DIR)/$(APP_NAME).dmg
 	codesign --verify --strict $(BUILD_DIR)/$(APP_NAME).dmg
+	$(MAKE) notarize-dmg
+notarize-dmg:
+	xcrun notarytool submit "$(BUILD_DIR)/$(APP_NAME).dmg" --keychain-profile "$$NOTARY_PROFILE" --wait --timeout 10m
+	xcrun stapler staple "$(BUILD_DIR)/$(APP_NAME).dmg"
+	$(MAKE) verify-dmg
+verify-dmg:
+	codesign --verify --strict --verbose "$(BUILD_DIR)/$(APP_NAME).dmg"
+	xcrun stapler validate "$(BUILD_DIR)/$(APP_NAME).dmg"
+	spctl --assess --type open --context context:primary-signature --verbose=2 "$(BUILD_DIR)/$(APP_NAME).dmg"
 zip: verify-release
 	test ! -e $(BUILD_DIR)/$(APP_NAME).zip
 	ditto -c -k --sequesterRsrc --keepParent $(APP_PATH) $(BUILD_DIR)/$(APP_NAME).zip
@@ -52,6 +63,6 @@ package: dmg zip
 	cd $(BUILD_DIR) && shasum -a 256 $(APP_NAME).dmg $(APP_NAME).zip > SHA256SUMS
 release: notarize
 	$(MAKE) package
-publish: verify-release
+publish: verify-release verify-dmg
 	cd $(BUILD_DIR) && shasum -a 256 -c SHA256SUMS
 	gh release create v$(VERSION) $(BUILD_DIR)/$(APP_NAME).dmg $(BUILD_DIR)/$(APP_NAME).zip $(BUILD_DIR)/SHA256SUMS LICENSE --verify-tag --title "$(APP_NAME) v$(VERSION)" --notes-file docs/RELEASE_NOTES_$(VERSION).md

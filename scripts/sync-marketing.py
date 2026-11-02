@@ -39,7 +39,7 @@ def outputs():
     preview = current != released
     status = "development preview; not yet published" if preview else "published release"
     hardware = "Apple silicon only (M1 or later)" if tuple(map(int, released.split("."))) >= (2, 0, 1) else "Apple silicon and Intel"
-    integration_intro = f"The v{current} development preview adds" if preview else f"The published v{released} release includes"
+    integration_intro = f"The v{current} development preview includes" if preview else f"The published v{released} release includes"
     integration_limit = " This describes development source, not a guarantee about the published download." if preview else ""
     version_fact = f"Current source: v{current} ({status}). Published download: v{released}."
     title = f"Cut & Move v{released} — Cmd+X Cut and Paste for Mac Finder"
@@ -52,7 +52,7 @@ def outputs():
         ("What are the macOS and hardware requirements?", f"Cut & Move v{released} requires macOS 26.1 or later and supports {hardware}."),
         ("Why does Cut & Move need Accessibility permission?", "Accessibility permission lets the app intercept and modify keyboard events for Finder shortcuts. The app does not record keystrokes, collect analytics, or transmit file contents. You can revoke access in System Settings > Privacy & Security > Accessibility."),
         ("Does Cut & Move change shortcuts in other apps?", "Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs."),
-        (f"What does Finder integration add in v{current}?", f"{integration_intro} a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites.{integration_limit}"),
+        (f"What does Finder integration include in v{current}?", f"{integration_intro} a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites.{integration_limit}"),
         ("How do I cancel cut mode?", "Press Escape or Cmd+C to cancel a pending cut. The menu bar scissors icon indicates whether cut mode is active."),
         ("Is Cut & Move free or open source?", "Cut & Move is free for uses permitted by PolyForm Strict 1.0.0. Its source is available on GitHub, but it is not offered under an unrestricted open-source license. Read LICENSE for use, modification, and distribution restrictions."),
         ("Who makes Cut & Move and how do I get support?", "Cut & Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Contact rich@mill5.com for support."),

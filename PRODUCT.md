@@ -39,10 +39,11 @@ Launch at Login is optional and may require macOS approval. No account is needed
 
 ## Capabilities and Constraints
 
-- Current source and published download: v2.0.1, per pbxproj and marketing.json.
+- Version sources: Xcode `MARKETING_VERSION` for current source and marketing.json
+  `released_version` for the published download. The generated README shows both.
 - macOS 26.1+, Apple silicon only (M1 or later).
 - GitHub Releases distributes Developer ID signed/notarized DMG and ZIP;
-  no Mac App Store version. This task does not release a new binary.
+  no Mac App Store version.
 - No keystroke recording, app telemetry, file-content upload, or third-party
   runtime dependencies. The marketing page naturally links to external sites.
 - Menu moves reject conflicts/changed sources and retain remaining items after
