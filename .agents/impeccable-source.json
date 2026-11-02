@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/pbakaus/impeccable",
+  "installer": "npx --yes impeccable install -y --providers=codex --scope=project --no-hooks",
+  "skillVersion": "4.8.0",
+  "engineVersion": "0.1.18",
+  "installed": "2026-11-02",
+  "platformBinaries": "downloaded locally, excluded from Git"
+}

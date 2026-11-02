@@ -30,10 +30,10 @@ struct CutAndMoveApp: App {
         .defaultSize(width: 350, height: 420)
         
         // 3. The Permissions Window
-        Window("Permissions Required", id: "permissions-window") {
+        Window("Keyboard Shortcuts", id: "permissions-window") {
             PermissionsView()
         }
-        .defaultSize(width: 400, height: 300)
+        .defaultSize(width: 400, height: 360)
         .windowResizability(.contentSize)
     }
 }

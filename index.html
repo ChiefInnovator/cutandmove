@@ -187,10 +187,11 @@
       --border-strong: rgba(255, 255, 255, 0.14);
       --text: #f5f5f7;
       --text-dim: #a1a1aa;
-      --text-faint: #6b6b76;
+      --text-faint: #90909c;
       --accent: #3b82f6;
       --accent-2: #60a5fa;
       --accent-grad: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --action-grad: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
       --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
     }
@@ -268,7 +269,7 @@
     }
     .nav-links a:hover { color: var(--text); }
     .nav-cta {
-      background: var(--accent-grad);
+      background: var(--action-grad);
       color: white !important;
       padding: 8px 16px;
       border-radius: 8px;
@@ -299,7 +300,6 @@
     .eyebrow .dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: #22c55e;
-      box-shadow: 0 0 12px #22c55e;
     }
     h1 {
       font-size: clamp(40px, 6vw, 76px);
@@ -342,13 +342,13 @@
       cursor: pointer;
     }
     .btn-primary {
-      background: var(--accent-grad);
+      background: var(--action-grad);
       color: white;
-      box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.5);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.35);
     }
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 16px 36px -10px rgba(59, 130, 246, 0.6);
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.45);
     }
     .btn-secondary {
       background: rgba(255, 255, 255, 0.04);
@@ -366,7 +366,7 @@
     .hero-visual img {
       width: min(260px, 55vw);
       height: auto;
-      filter: drop-shadow(0 40px 80px rgba(59, 130, 246, 0.3));
+      filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.35));
       border-radius: 28px;
       animation: float 6s ease-in-out infinite;
     }
@@ -587,7 +587,7 @@
       font-weight: 700;
       color: white;
       letter-spacing: -0.04em;
-      box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
       flex-shrink: 0;
     }
     @media (max-width: 760px) { .creator-avatar { margin: 0 auto; } }

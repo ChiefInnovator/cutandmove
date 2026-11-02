@@ -13,3 +13,5 @@ jobs:
       - run: python3 scripts/test-marketing.py
       - run: python3 scripts/test-release-sync.py
       - run: node scripts/test-share.cjs
+      - run: node scripts/test-branch-policy.cjs
+      - run: node scripts/test-governance.cjs

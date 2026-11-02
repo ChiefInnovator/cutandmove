@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   source:
-    name: Branch source
+    name: Branch source to ${{ github.event.pull_request.base.ref }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -25,11 +25,15 @@ jobs:
             const sameRepo = pr.head.repo?.full_name === pr.base.repo.full_name;
             const allowed = sameRepo && (
               (pr.base.ref === 'main' && pr.head.ref === 'develop') ||
-              (pr.base.ref === 'develop' && /^feature\/.+/.test(pr.head.ref))
+              (pr.base.ref === 'develop' && /^feature\/.+$/.test(pr.head.ref))
             );
             if (!allowed) {
               core.setFailed('Required route: same-repository feature/* → develop → main.');
             }
-            if (pr.head.sha !== context.payload.pull_request.head.sha) {
-              core.setFailed('PR changed during validation; use the check for the latest push.');
+            const eventPR = context.payload.pull_request;
+            if (pr.head.sha !== eventPR.head.sha ||
+                pr.head.ref !== eventPR.head.ref ||
+                pr.base.ref !== eventPR.base.ref ||
+                pr.head.repo?.full_name !== eventPR.head.repo?.full_name) {
+              core.setFailed('PR metadata changed during validation; use the check for the latest event.');
             }
