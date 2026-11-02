@@ -54,6 +54,7 @@ notarize-dmg:
 	$(MAKE) verify-dmg
 verify-dmg:
 	codesign --verify --strict --verbose "$(BUILD_DIR)/$(APP_NAME).dmg"
+	codesign -dvv "$(BUILD_DIR)/$(APP_NAME).dmg" 2>&1 | grep -F 'Authority=$(DEVELOPER_ID)'
 	xcrun stapler validate "$(BUILD_DIR)/$(APP_NAME).dmg"
 	spctl --assess --type open --context context:primary-signature --verbose=2 "$(BUILD_DIR)/$(APP_NAME).dmg"
 zip: verify-release
