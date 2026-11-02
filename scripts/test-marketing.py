@@ -72,7 +72,7 @@ class MarketingTests(unittest.TestCase):
         self.assertNotIn('href="/llms.txt"', page)
         released = json.loads((marketing.ROOT / "marketing.json").read_text())["released_version"]
         current = re.search(r"MARKETING_VERSION = ([^;]+);", (marketing.ROOT / "CutAndMove.xcodeproj/project.pbxproj").read_text())[1]
-        expected = f'The published v{released} release includes' if current == released else f'The v{current} development preview adds'
+        expected = f'The published v{released} release includes' if current == released else f'The v{current} development preview includes'
         self.assertIn(expected + ' a Finder Sync extension', page)
         self.assertNotIn('These features require the current source version', page)
 
@@ -92,7 +92,7 @@ class MarketingTests(unittest.TestCase):
             try:
                 marketing.ROOT = root
                 output = marketing.outputs()
-                self.assertIn(f'The v{preview} development preview adds', output["index.html"])
+                self.assertIn(f'The v{preview} development preview includes', output["index.html"])
                 self.assertIn('not a guarantee about the published download', output["index.html"])
                 for name, text in output.items():
                     self.assertIn("v" + preview, text, name)
