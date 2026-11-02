@@ -1,0 +1,35 @@
+name: Branch policy
+
+on:
+  pull_request_target:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  source:
+    name: Branch source
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Execute only trusted base-branch code. Never check out the PR head here.
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo, pull_number: context.issue.number
+            });
+            const sameRepo = pr.head.repo?.full_name === pr.base.repo.full_name;
+            const allowed = sameRepo && (
+              (pr.base.ref === 'main' && pr.head.ref === 'develop') ||
+              (pr.base.ref === 'develop' && /^feature\/.+/.test(pr.head.ref))
+            );
+            if (!allowed) {
+              core.setFailed('Required route: same-repository feature/* → develop → main.');
+            }
+            if (pr.head.sha !== context.payload.pull_request.head.sha) {
+              core.setFailed('PR changed during validation; use the check for the latest push.');
+            }
