@@ -35,8 +35,10 @@ bootstrap check. After the new workflow lands on each base branch, switch that
 branch's required context to its exact target-specific name (GitHub Actions app
 15368). A real next PR can register the new name before switching; if no such PR
 exists yet, installing the requirement is fail-closed until its first real run.
-Never use an empty commit or no-op push to register a check. The job always runs;
-there are no skipped inactive-target jobs that can accidentally count as passing.
+Never use an empty commit or no-op push to register a check. The source validator always runs. A legacy `Branch source` compatibility job
+uses `needs: source` and `if: always()` and succeeds only when the validator
+succeeds; failure, cancellation, skipped, and empty results fail. It prevents a
+required-context gap during migration and is never a validation bypass.
 
 The validator rejects live/event base ref, source ref, source repository, and head
 SHA mismatches. `node scripts/test-branch-policy.cjs` exercises the actual trusted

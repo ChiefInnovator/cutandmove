@@ -37,3 +37,16 @@ jobs:
                 pr.head.repo?.full_name !== eventPR.head.repo?.full_name) {
               core.setFailed('PR metadata changed during validation; use the check for the latest event.');
             }
+
+  compatibility:
+    name: Branch source
+    needs: source
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Keep bootstrap protections enforced while required contexts are migrated.
+      - name: Forward validated source result
+        env:
+          SOURCE_RESULT: ${{ needs.source.result }}
+        run: test "$SOURCE_RESULT" = success

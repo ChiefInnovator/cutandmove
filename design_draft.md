@@ -241,10 +241,14 @@ project deployment targets, generated product facts, and historical output intac
 
 ### Phase 3: Exact branch-check change and rollout
 
-Keep a single always-running job `source`; use the check name
+Keep an always-running validator job `source`; use the check name
 `Branch source to ${{ github.event.pull_request.base.ref }}`. It emits exactly
-`Branch source to main` or `Branch source to develop`; there are no inactive jobs
-whose skipped result could count as a source pass. Keep pull_request_target,
+`Branch source to main` or `Branch source to develop`. Add a compatibility job
+named `Branch source`, with `needs: source` and `if: always()`. It runs
+`test "$SOURCE_RESULT" = success`, where SOURCE_RESULT is needs.source.result.
+Failure, cancellation, skipped, and missing source results all fail the legacy
+context. This preserves bootstrap protection until ruleset migration; it is a
+forwarding check, not an inactive-target job or bypass. Keep pull_request_target,
 branches main/develop, opened/synchronize/reopened/edited/ready_for_review,
 read-only contents/PR permissions, pinned github-script, and no checkout.
 
@@ -269,7 +273,8 @@ under main's still-required bootstrap `Branch source` check. After promotion,
 register the new main check on a real promotion PR when there are real changes,
 then update main's ruleset. For either branch, changing the required name after
 the new workflow is installed is fail-closed: pending PRs remain blocked until
-GitHub reports the new named check. Never keep a permanent legacy-name bypass.
+GitHub reports the new named check. The compatibility alias never bypasses validation, whether retained or removed
+   after migration.
 Read the effective rules after each migration. No empty commit/no-op push is
 permitted to register checks. Do not falsely report unexecuted live route tests.
 

@@ -11,6 +11,16 @@ assert.match(policy, /types: \[opened, synchronize, reopened, edited, ready_for_
 assert.match(policy, /name: Branch source to \$\{\{ github.event.pull_request.base.ref \}\}/);
 assert.doesNotMatch(policy, /actions\/checkout|contents: write|pull-requests: write/);
 assert.match(policy, /github-script@[a-f0-9]{40}/);
+assert.match(policy, /name: Branch source\n    needs: source\n    if: always\(\)/);
+assert.match(policy, /SOURCE_RESULT: \$\{\{ needs.source.result \}\}/);
+const forwarding = policy.match(/        run: (test "\$SOURCE_RESULT" = success)/);
+assert.ok(forwarding, 'Legacy context must forward actual validator success');
+for (const result of ['success', 'failure', 'cancelled', 'skipped', '']) {
+  const { status } = require('node:child_process').spawnSync('bash', ['-c', forwarding[1]], {
+    env: { ...process.env, SOURCE_RESULT: result },
+  });
+  assert.equal(status === 0, result === 'success', `Compatibility result ${result}`);
+}
 const release = read('release-marketing.yml');
 assert.match(release, /permissions:\n  contents: read\n/);
 assert.doesNotMatch(release, /(?:contents|pages|pull-requests): write/);

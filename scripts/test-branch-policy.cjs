@@ -6,10 +6,9 @@ const vm = require('node:vm');
 const workflow = fs.readFileSync(path.join(__dirname, '../.github/workflows/branch-policy.yml'), 'utf8');
 const blocks = workflow.split('          script: |\n');
 assert.equal(blocks.length, 2, 'Expected exactly one trusted inline validator');
-const source = blocks[1].split('\n').map(line => {
-  assert.ok(!line.trim() || line.startsWith('            '), 'Unexpected validator indentation');
-  return line.slice(12);
-}).join('\n');
+const lines = blocks[1].split('\n');
+const end = lines.findIndex(line => line.trim() && !line.startsWith('            '));
+const source = lines.slice(0, end < 0 ? undefined : end).map(line => line.slice(12)).join('\n');
 const repository = { full_name: 'ChiefInnovator/cutandmove' };
 function fixture(base = 'develop', head = 'feature/work') {
   return { base: { ref: base, repo: repository }, head: { ref: head, sha: 'current-head', repo: repository } };

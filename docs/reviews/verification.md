@@ -13,7 +13,8 @@ All passed after the final production corrections:
 - `python3 scripts/test-release-sync.py`: 6 tests.
 - `node scripts/test-share.cjs`: success, denied permission, unsupported API.
 - `node scripts/test-branch-policy.cjs`: 17 legal/illegal route, fork/deleted repo,
-  source/base/head/SHA stale-event cases against the actual trusted inline script.
+  source/base/head/SHA stale-event cases against the actual trusted inline script. Five additional actual-shell cases
+  verify the legacy compatibility check passes only validator success.
 - `node scripts/test-governance.cjs`: privileged-workflow contracts plus execution
   of the actual release patch shell in a disposable Git repository; empty patch,
   changed patch, unchanged HEAD/branch, four-file scope, and apply round trip.
@@ -80,6 +81,13 @@ and identified 13 low-severity consumer-documentation/evidence issues. The worki
 changes add the evidence destination, correct bootstrap wording, and redirect
 upstream-source-only testing/packaging instructions without altering runtime
 prompts. No review was requested or re-requested manually.
+
+The next automatic review completed on f96acd1 (run41435197517) and identified
+one check-name migration hazard. The workflow now retains a legacy compatibility
+job that always evaluates the canonical validator result. Actual-shell tests
+prove success forwarding and failure on failed/cancelled/skipped/missing results.
+This keeps the bootstrap required context enforced while the rulesets switch to
+target-specific names. Actionlint and both governance suites pass after the fix.
 
 ## Acceptance boundaries
 
