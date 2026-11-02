@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-02T06:04:41.868174-05:00",
+  "title": "Design System: Cut & Move",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "download",
+        "value": "0 12px 30px -10px rgba(0, 0, 0, 0.35)",
+        "purpose": "Primary download control at rest."
+      },
+      {
+        "name": "download-hover",
+        "value": "0 16px 36px -10px rgba(0, 0, 0, 0.45)",
+        "purpose": "Neutral elevation on download hover; not a chromatic glow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-hover",
+        "value": "transform 0.15s, box-shadow 0.2s, background 0.2s",
+        "purpose": "Existing button hover; disabled under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "600px"
+      },
+      {
+        "name": "navigation",
+        "value": "720px"
+      },
+      {
+        "name": "creator",
+        "value": "760px"
+      },
+      {
+        "name": "features",
+        "value": "900px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary download",
+      "kind": "button",
+      "description": "Release download action with independently darkened action gradient for readable white text.",
+      "html": "<a class=\"ds-download\" href=\"#download\">Download Cut &amp; Move</a>",
+      "css": ".ds-download { display: inline-flex; background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%); color: white; padding: 14px 26px; border-radius: 12px; font-weight: 600; text-decoration: none; } .ds-download:focus-visible { outline: 3px solid #3b82f6; outline-offset: 5px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Existing Mac shortcut utility identity",
+    "overview": "Source-derived record; separate dark download website and native macOS system controls. No new visual world chosen.",
+    "keyCharacteristics": [
+      "Finder conventions",
+      "Readable operation state",
+      "Existing scissors icon"
+    ],
+    "rules": [
+      {
+        "name": "Surface scope",
+        "body": "Web literals apply only to index.html; native windows keep system semantics.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Preserve product evidence and platform behavior."
+    ],
+    "donts": [
+      "Do not infer runtime acceptance from builds."
+    ]
+  }
+}

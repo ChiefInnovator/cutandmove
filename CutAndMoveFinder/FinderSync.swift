@@ -77,7 +77,8 @@ final class FinderSync: FIFinderSync {
         // context can offer Move Here only when its target is itself a folder.
         let directory = target.flatMap { try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory } == true
         let destination = (menuKind == .contextualMenuForContainer || menuKind == .toolbarItemMenu || directory) ? target : nil
-        let move = NSMenuItem(title: "Move \(status.cut?.urls.count ?? 0) Item(s) Here", action: #selector(send(_:)), keyEquivalent: "")
+        let count = status.cut?.urls.count ?? 0
+        let move = NSMenuItem(title: "Move \(count) \(count == 1 ? "Item" : "Items") Here", action: #selector(send(_:)), keyEquivalent: "")
         move.target = self
         move.tag = actions.register(FinderRequest(action: .move, urls: destination.map { [$0] } ?? [], cutID: status.cut?.id))
         move.isEnabled = destination != nil && status.cut != nil && !status.busy && failure == nil

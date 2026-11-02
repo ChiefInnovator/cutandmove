@@ -1,3 +1,8 @@
 build/
 .DS_Store
 **/xcuserdata/
+
+# Impeccable downloads a platform-specific engine on first use.
+.agents/skills/impeccable/scripts/bin/
+.impeccable/cache/
+__pycache__/

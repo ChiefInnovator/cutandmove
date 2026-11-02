@@ -31,18 +31,18 @@ The app will appear as a **scissors icon** in your menu bar.
 
 ## Granting Accessibility Permissions
 
-Cut & Move requires **Accessibility** permissions for keyboard shortcuts. The v2.0.0 Finder extension's menu commands can work without keyboard monitoring.
+Cut & Move requires **Accessibility** permissions for keyboard shortcuts. The Finder extension's menu commands can work without keyboard monitoring.
 
 ### On first launch
 
 1. macOS is asked to display its Accessibility permission prompt. Until access is granted, the menu shows **"Permissions Missing"**.
-2. Click **Fix Permissions…** to open the permissions window.
+2. Click **Keyboard Shortcut Settings…** to open the keyboard-shortcut settings window.
 3. Click **Open System Settings**.
 4. In System Settings, navigate to **Privacy & Security → Accessibility**.
 5. Find **Cut & Move** in the list and toggle it **on**.
 6. You may need to unlock the settings with your password.
 
-Permissions are rechecked every second and when applications change. The permissions window auto-dismisses after keyboard monitoring starts successfully. Revoking access stops monitoring and clears cut mode.
+Permissions are rechecked every second and when applications change. When monitoring starts, the window shows **Keyboard Shortcuts Ready** and remains open until you click **Done**. If access is enabled but monitoring is unavailable, use **Retry Monitoring** or check **Open System Settings**. Revoking access stops monitoring and clears cut mode.
 
 ### If permissions were denied
 
@@ -62,7 +62,7 @@ The app uses a low-level `CGEvent` tap to intercept keyboard events before they 
 
 1. Install the entire app in Applications and launch it. The Finder extension is embedded in the app, not installed separately.
 2. Choose **Enable / Manage Finder Extension…** from the scissors menu and enable Cut & Move in macOS's extension settings.
-3. In Finder, right-click selected files and choose **Cut with Cut & Move**. Open the destination, right-click its background, and choose **Move Item(s) Here**.
+3. In Finder, right-click selected files and choose **Cut with Cut & Move**. Open the destination, right-click its background, and choose **Move … Here** (the menu includes the selected-item count).
 4. Optionally use Finder's **Customize Toolbar…** to add the Cut & Move toolbar button.
 
 The extension automatically covers local folders and mounted drives, including drives connected after launch. There is no folder list to configure. This enables Finder actions and badges; it does not scan, upload, or synchronize your files. Protected and read-only locations still obey macOS permissions, and virtual Finder views may not expose an actionable destination.
@@ -92,7 +92,7 @@ Click the scissors icon in the menu bar, then click **Quit**.
 | **Cmd+X does nothing in Finder** | Check that Accessibility permissions are granted and the menu shows **"Ready to Cut"**. |
 | **Cut mode stuck (filled icon)** | Press **Escape** or **Cmd+C** to cancel, or switch away from Finder. |
 | **App Sandbox errors** | The main app is not sandboxed; the Finder extension is sandboxed and shares a team-owned app group. Keep each target's configured entitlements. |
-| **Keyboard Monitoring Unavailable** | Open Fix Permissions for the error details. The app retries monitoring and recovers disabled taps automatically. |
+| **Keyboard Monitoring Unavailable** | Open **Keyboard Shortcut Settings…** for error details and **Retry Monitoring**. The app also retries monitoring and recovers disabled taps automatically. |
 | **Cmd+X still edits text** | Expected in Finder search/rename fields. File shortcuts are enabled only in recognized non-editable file views. |
 | **Paste copies instead of moving** | For safety, the app requires a fresh file clipboard from the cut. An unchanged, replaced, or non-file clipboard is never converted into a move. |
 
