@@ -71,7 +71,9 @@ class MarketingTests(unittest.TestCase):
         self.assertNotIn("InStock", page)
         self.assertNotIn('href="/llms.txt"', page)
         released = json.loads((marketing.ROOT / "marketing.json").read_text())["released_version"]
-        self.assertIn(f'The published v{released} release includes a Finder Sync extension', page)
+        current = re.search(r"MARKETING_VERSION = ([^;]+);", (marketing.ROOT / "CutAndMove.xcodeproj/project.pbxproj").read_text())[1]
+        expected = f'The published v{released} release includes' if current == released else f'The v{current} development preview adds'
+        self.assertIn(expected + ' a Finder Sync extension', page)
         self.assertNotIn('These features require the current source version', page)
 
     def test_version_bump_updates_all_surfaces_without_changing_download(self):
@@ -83,19 +85,25 @@ class MarketingTests(unittest.TestCase):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(original / name, target)
             project = root / "CutAndMove.xcodeproj/project.pbxproj"
-            project.write_text(re.sub(r"MARKETING_VERSION = [^;]+;", "MARKETING_VERSION = 2.3.4;", project.read_text()))
+            released = json.loads((root / "marketing.json").read_text())["released_version"]
+            current = re.search(r"MARKETING_VERSION = ([^;]+);", project.read_text())[1]
+            preview = f"{max(int(current.split('.')[0]), int(released.split('.')[0])) + 1}.0.0"
+            project.write_text(re.sub(r"MARKETING_VERSION = [^;]+;", f"MARKETING_VERSION = {preview};", project.read_text()))
             try:
                 marketing.ROOT = root
                 output = marketing.outputs()
-                self.assertIn('The v2.3.4 development preview adds', output["index.html"])
+                self.assertIn(f'The v{preview} development preview adds', output["index.html"])
                 self.assertIn('not a guarantee about the published download', output["index.html"])
-                released = json.loads((root / "marketing.json").read_text())["released_version"]
                 for name, text in output.items():
-                    self.assertIn("v2.3.4", text, name)
+                    self.assertIn("v" + preview, text, name)
                     self.assertIn("v" + released, text, name)
                     (root / name).write_text(text)
                 self.assertEqual(marketing.outputs(), output)
-                project.write_text(project.read_text().replace("2.3.4", "2.3"))
+                project.write_text(re.sub(r"MARKETING_VERSION = [^;]+;", f"MARKETING_VERSION = {released};", project.read_text()))
+                published = marketing.outputs()["index.html"]
+                self.assertIn(f'The published v{released} release includes', published)
+                self.assertNotIn('not a guarantee about the published download', published)
+                project.write_text(re.sub(r"MARKETING_VERSION = [^;]+;", "MARKETING_VERSION = 2.3;", project.read_text()))
                 with self.assertRaises(ValueError):
                     marketing.outputs()
             finally:

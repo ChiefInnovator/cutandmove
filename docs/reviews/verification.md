@@ -94,6 +94,22 @@ open inline issues and all14 conversations resolved. Its summary identified stal
 setup-guide labels and success-window timing; docs/setup.md now matches Keyboard
 Shortcut Settings, persistent Ready/Done, Retry Monitoring, and counted move labels.
 
+Review5735964335 completed on20f1173 with no open inline issues, but its summary
+raised a supported-preview test assertion plus unspecified baseline/asset notes.
+The test assertion was a real defect: the metadata check assumed published source,
+and the synthetic preview version was fixed. Both now derive expected state from
+source/released versions, use a distinct dynamic preview, and cover published as
+well as preview output. The full four-test suite passes on normal, temporary
+preview3.0.0/release2.0.1, and source-equals-release2.0.1 baselines:12 executions.
+Logs: /tmp/cutandmove-preview-audit.log.
+
+The remaining summary notes were assessed against files:8 local HTML references
+and14 EGM icon references across7 skills resolve; no missing Impeccable asset
+reference was evidenced. Source/release/exported-app versions are2.0.1; the2.0.0
+build5 Finder record explicitly describes historical testing. No baseline defect
+was evidenced. No asset or historical-record change was made merely to satisfy
+a vague summary. Log: /tmp/cutandmove-asset-baseline-audit.log.
+
 ## Acceptance boundaries
 
 A passing unit build is not native UI/VoiceOver, real Finder file-operation,
