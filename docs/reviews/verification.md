@@ -89,6 +89,11 @@ prove success forwarding and failure on failed/cancelled/skipped/missing results
 This keeps the bootstrap required context enforced while the rulesets switch to
 target-specific names. Actionlint and both governance suites pass after the fix.
 
+The following exact-head review completed on 880750e (run41436509292), with no
+open inline issues and all14 conversations resolved. Its summary identified stale
+setup-guide labels and success-window timing; docs/setup.md now matches Keyboard
+Shortcut Settings, persistent Ready/Done, Retry Monitoring, and counted move labels.
+
 ## Acceptance boundaries
 
 A passing unit build is not native UI/VoiceOver, real Finder file-operation,

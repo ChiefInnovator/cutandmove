@@ -236,6 +236,8 @@ retain explicitly triaged incumbent pattern advisories without suppression.
 Add canonical .agents/assets, .agents/LICENSE, and a consumer .agents/README.md;
 redirect EGM development-only test/build links to the pinned upstream checkout,
 recording the adapted documentation paths in egm-source.json.
+Update docs/setup.md to match Keyboard Shortcut Settings, persistent Ready/Done,
+Retry Monitoring, and counted Finder move labels.
 Delete no existing files. Leave core keyboard/bridge/file-move logic, signing,
 project deployment targets, generated product facts, and historical output intact.
 
