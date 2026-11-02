@@ -1,16 +1,16 @@
 <!-- overview:start -->
-# Cut & Move v2.0.1 — Cmd+X Cut and Paste for macOS Finder
+# Cut & Move v2.0.2 — Cmd+X Cut and Paste for macOS Finder
 
 Cut & Move is a native macOS menu bar app that adds **Cmd+X → Cmd+V file moves to Finder**. Use familiar cut-and-paste shortcuts while Finder handles the actual move and any conflicts.
 
-**Current source: v2.0.1 (published release). Published download: v2.0.1.**
+**Current source: v2.0.2 (development preview; not yet published). Published download: v2.0.1.**
 
-[Download v2.0.1](https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.1) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v2.0.1 release notes](docs/RELEASE_NOTES_2.0.1.md)
+[Download v2.0.1](https://github.com/ChiefInnovator/cutandmove/releases/tag/v2.0.1) · [Marketing page](https://chiefinnovator.github.io/cutandmove/) · [Setup guide](docs/setup.md) · [v2.0.2 release notes](docs/RELEASE_NOTES_2.0.2.md)
 
 | Product fact | Details |
 | :--- | :--- |
 | Published version | v2.0.1 — signed and notarized DMG / ZIP |
-| Current source | v2.0.1 — published release |
+| Current source | v2.0.2 — development preview; not yet published |
 | Compatibility | macOS 26.1 or later; Apple silicon only (M1 or later) |
 | Permission | Accessibility access for Finder keyboard shortcuts |
 | License | Free for uses permitted by [PolyForm Strict 1.0.0](LICENSE) |
@@ -54,7 +54,7 @@ Open `CutAndMove.xcodeproj` in Xcode to develop locally, or use `make build` and
 
 Releases follow MacEdgeLight's workflow: archive → Developer ID upload for notarization → export the notarized app → verify → package a signed DMG and ZIP → GitHub Release.
 
-Requirements: full Xcode selected with `xcode-select` (or `DEVELOPER_DIR`), the MILL5 Apple account configured in Xcode, its Developer ID Application certificate/private key, `create-dmg`, and authenticated GitHub CLI access.
+Requirements: full Xcode selected with `xcode-select` (or `DEVELOPER_DIR`), the MILL5 Apple account configured in Xcode, its Developer ID Application certificate/private key, `create-dmg`, authenticated GitHub CLI access, and a valid notarytool Keychain profile for the signed DMG. Create it locally with `xcrun notarytool store-credentials CutAndMoveNotarize --team-id FS6453639M`; enter the Apple ID and app-specific password in Terminal, never in source or chat. Use `NOTARY_PROFILE=existing-profile` with make to select another saved profile.
 
 ```sh
 make release
@@ -62,22 +62,21 @@ make release
 make publish
 ```
 
-Update `MARKETING_VERSION` (always major.minor.patch), `CURRENT_PROJECT_VERSION`, and `docs/RELEASE_NOTES_VERSION.md` before releasing. Run `make marketing` to synchronize the full version across this README, the marketing page, metadata, FAQs, and `llms.txt`. `make marketing-check` and CI reject stale generated content. The current version comes from Xcode; the published download version comes from `marketing.json`. `make release` waits for notarization and checks the signature, stapled ticket, and Gatekeeper acceptance before packaging. It refuses to overwrite existing DMG/ZIP files; move previous artifacts aside before rerunning. `make publish` requires the tag to exist on GitHub and verifies package checksums.
+Update `MARKETING_VERSION` (always major.minor.patch), `CURRENT_PROJECT_VERSION`, and `docs/RELEASE_NOTES_VERSION.md` before releasing. Run `make marketing` to synchronize the full version across this README, the marketing page, metadata, FAQs, and `llms.txt`. `make marketing-check` and CI reject stale generated content. The current version comes from Xcode; the published download version comes from `marketing.json`. `make release` checks the app's signature, stapled ticket, and Gatekeeper acceptance, then signs, notarizes, staples, and verifies the outer DMG. It refuses to overwrite existing DMG/ZIP files; use a fresh `BUILD_DIR` for a new build. To retry notarization of an already-created DMG, run `make BUILD_DIR=your-build-folder notarize-dmg`. This submits a new request; it does not resume an earlier timed-out submission. Regenerate `SHA256SUMS` after stapling changes the DMG bytes. `make publish` requires the tag to exist on GitHub and verifies the DMG ticket/Gatekeeper assessment and package checksums.
 
 The export plists use `method=developer-id`; `destination=upload` sends to Apple's notary service, **not App Store Connect publishing**. Keep the bundle identifier `M5.CutAndMove` and team `FS6453639M`. Downloads are available from GitHub Releases. Update `marketing.json` only after a new release is actually published.
 
 <!-- preview-version:start -->
-## New in v2.0.1
+## Coming in v2.0.2
 
-Published release. The enhancements below describe the current source, not an older download.
+Development preview; not yet published. The enhancements below describe the current source, not an older download.
 <!-- preview-version:end -->
 
-- **Finder Sync extension:** right-click Cut, Move Here, and Cancel Cut commands.
-- **Visible cut selection:** scissors badges and a Finder toolbar menu.
-- **Keyboard + mouse:** share pending files between the keyboard helper and Finder actions.
-- **Safe menu moves:** reject collisions and changed sources; retain unmoved items after partial failures.
-- **All-folder coverage:** enable the extension once; local folders and mounted drives are covered automatically.
-- **Correct keyboard remapping:** fix the Unicode override that could leave text on the clipboard.
+- **Clear keyboard setup:** separate permission, monitoring-unavailable, and ready states.
+- **Persistent recovery:** Retry Monitoring and Done controls, with content-sized diagnostics.
+- **Accurate native labels:** Keyboard Shortcut Settings, the product homepage in About, and counted Finder actions.
+- **Readable downloads:** full hardware requirements, stronger contrast, and clearer release/help wording.
+- **Existing Finder integration:** keyboard, context-menu, toolbar, badges, and validated menu moves remain available.
 
 See [verification status](docs/REVIEW_VERIFICATION.md) for test coverage and remaining live-Finder checks.
 
@@ -94,7 +93,7 @@ Without an app, select files in Finder, press Cmd+C, open the destination, then 
 
 ### Which version can I download?
 
-The published download is Cut & Move v2.0.1, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.1 (published release). It is not distributed through the Mac App Store.
+The published download is Cut & Move v2.0.1, available as a Developer ID signed, Apple-notarized DMG or ZIP on GitHub Releases. The current source is v2.0.2 (development preview; not yet published). It is not distributed through the Mac App Store.
 
 ### What are the macOS and hardware requirements?
 
@@ -108,9 +107,9 @@ Accessibility permission lets the app intercept and modify keyboard events for F
 
 Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs.
 
-### What does Finder integration add in v2.0.1?
+### What does Finder integration include in v2.0.2?
 
-The published v2.0.1 release includes a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites.
+The v2.0.2 development preview includes a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. This describes development source, not a guarantee about the published download.
 
 ### How do I cancel cut mode?
 
