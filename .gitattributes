@@ -1,0 +1,2 @@
+# Preserve the upstream skill bundles byte-for-byte, including Windows CRLF launchers.
+.agents/** -whitespace

@@ -145,7 +145,7 @@
           "name": "What does Finder integration add in v2.0.1?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The v2.0.1 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing."
+            "text": "The published v2.0.1 release includes a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites."
           }
         },
         {
@@ -187,10 +187,11 @@
       --border-strong: rgba(255, 255, 255, 0.14);
       --text: #f5f5f7;
       --text-dim: #a1a1aa;
-      --text-faint: #6b6b76;
+      --text-faint: #90909c;
       --accent: #3b82f6;
       --accent-2: #60a5fa;
       --accent-grad: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --action-grad: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
       --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
     }
@@ -268,7 +269,7 @@
     }
     .nav-links a:hover { color: var(--text); }
     .nav-cta {
-      background: var(--accent-grad);
+      background: var(--action-grad);
       color: white !important;
       padding: 8px 16px;
       border-radius: 8px;
@@ -299,7 +300,6 @@
     .eyebrow .dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: #22c55e;
-      box-shadow: 0 0 12px #22c55e;
     }
     h1 {
       font-size: clamp(40px, 6vw, 76px);
@@ -342,13 +342,13 @@
       cursor: pointer;
     }
     .btn-primary {
-      background: var(--accent-grad);
+      background: var(--action-grad);
       color: white;
-      box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.5);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.35);
     }
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 16px 36px -10px rgba(59, 130, 246, 0.6);
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.45);
     }
     .btn-secondary {
       background: rgba(255, 255, 255, 0.04);
@@ -366,7 +366,7 @@
     .hero-visual img {
       width: min(260px, 55vw);
       height: auto;
-      filter: drop-shadow(0 40px 80px rgba(59, 130, 246, 0.3));
+      filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.35));
       border-radius: 28px;
       animation: float 6s ease-in-out infinite;
     }
@@ -478,7 +478,6 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      counter-reset: step;
     }
     @media (max-width: 900px) { .steps { grid-template-columns: 1fr; } }
     .step {
@@ -487,17 +486,6 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       position: relative;
-      counter-increment: step;
-    }
-    .step::before {
-      content: "0" counter(step);
-      position: absolute;
-      top: 28px;
-      right: 30px;
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--text-faint);
-      letter-spacing: 0.05em;
     }
     .step h3 {
       font-size: 22px;
@@ -587,7 +575,7 @@
       font-weight: 700;
       color: white;
       letter-spacing: -0.04em;
-      box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
       flex-shrink: 0;
     }
     @media (max-width: 760px) { .creator-avatar { margin: 0 auto; } }
@@ -760,7 +748,9 @@
 <!-- version:start -->
 <p class="version-summary">Current source: v2.0.1 (published release). Published download: v2.0.1.</p>
 <!-- version:end -->
-        <p class="version-summary">Requires macOS 26.1 or later.</p>
+<!-- hero-requirements:start -->
+<p class="version-summary">Requires macOS 26.1 or later · Apple silicon only (M1 or later).</p>
+<!-- hero-requirements:end -->
         <div class="cta-row">
 <!-- hero-download:start -->
 <a href="https://github.com/ChiefInnovator/cutandmove/releases/download/v2.0.1/CutAndMove.dmg" class="btn btn-primary">Download v2.0.1 DMG <span aria-hidden="true">↓</span></a>
@@ -925,7 +915,7 @@
 <details class="faq-item"><summary>What are the macOS and hardware requirements?</summary><p class="faq-item-body">Cut &amp; Move v2.0.1 requires macOS 26.1 or later and supports Apple silicon only (M1 or later).</p></details>
 <details class="faq-item"><summary>Why does Cut &amp; Move need Accessibility permission?</summary><p class="faq-item-body">Accessibility permission lets the app intercept and modify keyboard events for Finder shortcuts. The app does not record keystrokes, collect analytics, or transmit file contents. You can revoke access in System Settings &gt; Privacy &amp; Security &gt; Accessibility.</p></details>
 <details class="faq-item"><summary>Does Cut &amp; Move change shortcuts in other apps?</summary><p class="faq-item-body">Cut &amp; Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder&#x27;s Move Item Here command and conflict dialogs.</p></details>
-<details class="faq-item"><summary>What does Finder integration add in v2.0.1?</summary><p class="faq-item-body">The v2.0.1 current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing.</p></details>
+<details class="faq-item"><summary>What does Finder integration add in v2.0.1?</summary><p class="faq-item-body">The published v2.0.1 release includes a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites.</p></details>
 <details class="faq-item"><summary>How do I cancel cut mode?</summary><p class="faq-item-body">Press Escape or Cmd+C to cancel a pending cut. The menu bar scissors icon indicates whether cut mode is active.</p></details>
 <details class="faq-item"><summary>Is Cut &amp; Move free or open source?</summary><p class="faq-item-body">Cut &amp; Move is free for uses permitted by PolyForm Strict 1.0.0. Its source is available on GitHub, but it is not offered under an unrestricted open-source license. Read LICENSE for use, modification, and distribution restrictions.</p></details>
 <details class="faq-item"><summary>Who makes Cut &amp; Move and how do I get support?</summary><p class="faq-item-body">Cut &amp; Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Contact rich@mill5.com for support.</p></details>
@@ -974,14 +964,16 @@
 <!-- download-version:start -->
 <p class="version-summary">Signed and notarized DMG or ZIP. Current source: v2.0.1 (published release). Published download: v2.0.1.</p>
 <!-- download-version:end -->
-        <div class="requirements">Requires macOS 26.1 or later · Free for uses permitted by <a href="https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE">PolyForm Strict 1.0.0</a></div>
+<!-- download-requirements:start -->
+<div class="requirements">Requires macOS 26.1 or later · Apple silicon only (M1 or later) · Free for uses permitted by <a href="https://github.com/ChiefInnovator/cutandmove/blob/main/LICENSE">PolyForm Strict 1.0.0</a></div>
+<!-- download-requirements:end -->
       </div>
     </section>
     <section id="share" class="share-panel" aria-labelledby="share-heading">
       <div class="container">
         <span class="label">Small app. Familiar feeling.</span>
         <h2 id="share-heading">Know a Mac user who keeps pressing Cmd+X?</h2>
-        <p>Send them their next favorite shortcut. Edit the message to make it yours.</p>
+        <p>Copy the message or open a sharing link, then edit it to make it yours.</p>
 <!-- share:start -->
 <p class="share-message" id="share-message">Your fingers know Cmd+X. Now Finder does too. Cut &amp; Move v2.0.1 adds familiar cut-and-paste file moves to macOS Finder. <a href="https://chiefinnovator.github.io/cutandmove/">https://chiefinnovator.github.io/cutandmove/</a></p>
 <div class="share-actions">
@@ -990,7 +982,7 @@
   <a class="btn btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fchiefinnovator.github.io%2Fcutandmove%2F" target="_blank" rel="noopener noreferrer">Share on LinkedIn ↗</a>
   <a class="btn btn-secondary" href="mailto:?subject=Cut%20%26%20Move%20v2.0.1%20for%20Mac&amp;body=Your%20fingers%20know%20Cmd%2BX.%20Now%20Finder%20does%20too.%20Cut%20%26%20Move%20v2.0.1%20adds%20familiar%20cut-and-paste%20file%20moves%20to%20macOS%20Finder.%0Ahttps%3A%2F%2Fchiefinnovator.github.io%2Fcutandmove%2F">Send to a Mac friend</a>
 </div>
-<p id="share-status" role="status" aria-live="polite"></p>
+<p id="share-status" role="status" aria-live="polite">Select the message above to copy it, or use a sharing link.</p>
 <!-- share:end -->
       </div>
     </section>

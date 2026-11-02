@@ -1,0 +1,29 @@
+{
+  "repository": "https://github.com/google/elephant-goldfish-model",
+  "revision": "403d8881d62022490637d740657b33f01e321ea8",
+  "installed": "2026-11-02",
+  "runtime": [
+    "skills/egm-*",
+    "agents",
+    "resources",
+    "docs",
+    "EGM-LICENSE",
+    "assets",
+    "LICENSE",
+    "README.md"
+  ],
+  "consumerDocumentationAdaptations": [
+    "skills/egm-review/TEST.md",
+    "skills/egm-resolve/TEST.md",
+    "skills/egm-bootstrap/TEST.md",
+    "skills/egm-drift-report/TEST.md",
+    "skills/egm-review-loop/TEST.md",
+    "skills/egm-brainstorm/TEST.md",
+    "skills/egm-draft/TEST.md",
+    "docs/codex.md",
+    "docs/directory.md",
+    "docs/designs/skill_icons.md",
+    "docs/designs/multi_harness_support.md"
+  ],
+  "adaptationReason": "Direct development-only links/commands to pinned upstream source; keep runtime prompts/personas/standards byte-identical."
+}

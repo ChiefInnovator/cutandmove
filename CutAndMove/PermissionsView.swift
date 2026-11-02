@@ -8,41 +8,45 @@
 import SwiftUI
 
 struct PermissionsView: View {
-    // Changed to ObservedObject to fix conformance error
     @ObservedObject var keyHandler = GlobalKeyboardHandler.shared
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "hand.raised.fill")
+            Image(systemName: keyHandler.isMonitoring ? "checkmark.circle.fill" : "hand.raised.fill")
                 .font(.system(size: 50))
-                .foregroundColor(.orange)
+                .foregroundColor(keyHandler.isMonitoring ? .green : .orange)
                 .padding(.top, 20)
+                .accessibilityHidden(true)
             
-            Text("Permission Required")
+            Text(keyHandler.isMonitoring ? "Keyboard Shortcuts Ready" :
+                    keyHandler.hasPermissions ? "Keyboard Monitoring Unavailable" : "Accessibility Permission Required")
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("To detect Command+X in Finder, this app needs Accessibility permissions.")
+            Text(keyHandler.isMonitoring ? "You can now use Command+X and Command+V to move files in Finder." :
+                    keyHandler.hasPermissions ? "Accessibility access is enabled, but keyboard monitoring has not started. Retry monitoring or check System Settings." :
+                    "Accessibility access lets Cut & Move detect Command+X in Finder. Shortcuts in other apps stay unchanged.")
                 .multilineTextAlignment(.center)
                 .foregroundColor(.secondary)
                 .padding(.horizontal)
             
             if keyHandler.isMonitoring {
-                VStack {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green)
-                        .font(.largeTitle)
-                    Text("You're all set!")
+                Button("Done") {
+                    dismiss()
                 }
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        dismiss()
-                    }
-                }
+                .buttonStyle(.borderedProminent)
+                .keyboardShortcut(.defaultAction)
             } else {
                 if let error = keyHandler.monitoringError {
                     Text(error).font(.caption).foregroundStyle(.red)
+                        .textSelection(.enabled)
+                }
+                if keyHandler.hasPermissions {
+                    Button("Retry Monitoring") {
+                        keyHandler.checkPermissions()
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
                 Button(action: {
                     keyHandler.openSystemSettings()
@@ -53,16 +57,17 @@ struct PermissionsView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-                .padding(.horizontal, 40)
+                .padding(.horizontal, 20)
             }
             
-            Spacer()
-            
-            Text("Go to Privacy & Security > Accessibility")
-                .font(.caption)
-                .foregroundColor(.gray)
-                .padding(.bottom, 20)
+            if !keyHandler.isMonitoring {
+                Text("Go to Privacy & Security > Accessibility")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
-        .frame(width: 400, height: 360)
+        .fixedSize(horizontal: false, vertical: true)
+        .padding(20)
+        .frame(width: 400)
     }
 }

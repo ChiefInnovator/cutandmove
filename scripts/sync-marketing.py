@@ -39,6 +39,8 @@ def outputs():
     preview = current != released
     status = "development preview; not yet published" if preview else "published release"
     hardware = "Apple silicon only (M1 or later)" if tuple(map(int, released.split("."))) >= (2, 0, 1) else "Apple silicon and Intel"
+    integration_intro = f"The v{current} development preview adds" if preview else f"The published v{released} release includes"
+    integration_limit = " This describes development source, not a guarantee about the published download." if preview else ""
     version_fact = f"Current source: v{current} ({status}). Published download: v{released}."
     title = f"Cut & Move v{released} — Cmd+X Cut and Paste for Mac Finder"
     social_title = f"Your fingers know Cmd+X. Now Finder does too. | Cut & Move v{released}"
@@ -50,7 +52,7 @@ def outputs():
         ("What are the macOS and hardware requirements?", f"Cut & Move v{released} requires macOS 26.1 or later and supports {hardware}."),
         ("Why does Cut & Move need Accessibility permission?", "Accessibility permission lets the app intercept and modify keyboard events for Finder shortcuts. The app does not record keystrokes, collect analytics, or transmit file contents. You can revoke access in System Settings > Privacy & Security > Accessibility."),
         ("Does Cut & Move change shortcuts in other apps?", "Cut & Move targets Finder. Other apps keep their normal Cmd+X and Cmd+V behavior. Keyboard moves use Finder's Move Item Here command and conflict dialogs."),
-        (f"What does Finder integration add in v{current}?", f"The v{current} current source adds a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites. These features require the current source version; check the published download version before installing."),
+        (f"What does Finder integration add in v{current}?", f"{integration_intro} a Finder Sync extension with right-click Cut, Move Here, and Cancel Cut, a toolbar menu, and pending-cut badges. Enable it once for automatic coverage of local folders and mounted drives; no folder setup is needed. macOS permissions still apply. The main app performs menu-driven moves without automatic overwrites.{integration_limit}"),
         ("How do I cancel cut mode?", "Press Escape or Cmd+C to cancel a pending cut. The menu bar scissors icon indicates whether cut mode is active."),
         ("Is Cut & Move free or open source?", "Cut & Move is free for uses permitted by PolyForm Strict 1.0.0. Its source is available on GitHub, but it is not offered under an unrestricted open-source license. Read LICENSE for use, modification, and distribution restrictions."),
         ("Who makes Cut & Move and how do I get support?", "Cut & Move was created by Richard Crane, Microsoft MVP and founder of MILL5. Contact rich@mill5.com for support."),
@@ -103,6 +105,8 @@ def outputs():
     page = (ROOT / "index.html").read_text()
     page = replace_block(page, "seo", metadata)
     page = replace_block(page, "version", f'<p class="version-summary">{esc(version_fact)}</p>')
+    page = replace_block(page, "hero-requirements", f'<p class="version-summary">Requires macOS 26.1 or later · {esc(hardware)}.</p>')
+    page = replace_block(page, "download-requirements", f'<div class="requirements">Requires macOS 26.1 or later · {esc(hardware)} · Free for uses permitted by <a href="{repo}/blob/main/LICENSE">PolyForm Strict 1.0.0</a></div>')
     page = replace_block(page, "nav-download", f'<a href="#download" class="nav-cta">Download v{released}</a>')
     page = replace_block(page, "hero-download", f'<a href="{dmg}" class="btn btn-primary">Download v{released} DMG <span aria-hidden="true">↓</span></a>')
     page = replace_block(page, "download", f'<a href="{dmg}" class="btn btn-primary">Download Cut &amp; Move v{released} DMG</a>\n<a href="{release}" class="btn btn-secondary">ZIP &amp; release notes v{released}</a>')
@@ -113,7 +117,7 @@ def outputs():
   <a class="btn btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?{esc(urlencode({'url': site}))}" target="_blank" rel="noopener noreferrer">Share on LinkedIn ↗</a>
   <a class="btn btn-secondary" href="mailto:?{esc(urlencode({'subject': f'Cut & Move v{released} for Mac', 'body': share_text + chr(10) + site}, quote_via=quote))}">Send to a Mac friend</a>
 </div>
-<p id="share-status" role="status" aria-live="polite"></p>''')
+<p id="share-status" role="status" aria-live="polite">Select the message above to copy it, or use a sharing link.</p>''')
     page = replace_block(page, "download-version", f'<p class="version-summary">Signed and notarized DMG or ZIP. {esc(version_fact)}</p>')
     page = replace_block(page, "preview-version", f'<h3>What\'s {"coming in" if preview else "new in"} v{current}?</h3>\n<p>{esc(status.capitalize())}. See the <a href="{repo}/blob/main/docs/RELEASE_NOTES_{current}.md">v{current} release notes</a>.</p>')
     page = replace_block(page, "faq", '\n'.join(f'<details class="faq-item"><summary>{esc(q)}</summary><p class="faq-item-body">{esc(a)}</p></details>' for q, a in questions))

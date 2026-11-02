@@ -1,12 +1,11 @@
-name: Update page after release
+name: Prepare release marketing patch
 on:
   release:
     types: [published]
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pages: write
+  contents: read
 
 concurrency:
   group: release-marketing
@@ -34,35 +33,25 @@ jobs:
           python3 scripts/test-release-sync.py
           node scripts/test-share.cjs
           git diff --check
-      - name: Commit release marketing
+      - name: Prepare reviewable patch
+        id: patch
         run: |
-          git add marketing.json index.html README.md llms.txt
-          if ! git diff --cached --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'Sync marketing with latest published release'
-            git push origin HEAD:main
+          mkdir -p "$RUNNER_TEMP/release-marketing"
+          git diff --binary -- marketing.json index.html README.md llms.txt > "$RUNNER_TEMP/release-marketing/release-marketing.patch"
+          if test -s "$RUNNER_TEMP/release-marketing/release-marketing.patch"; then
+            git rev-parse HEAD > "$RUNNER_TEMP/release-marketing/base-sha.txt"
+            cp "$RUNNER_TEMP/release.json" "$RUNNER_TEMP/release-marketing/release.json"
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+            echo 'Download the release-marketing artifact and apply it through feature/* → develop → main. See docs/marketing.md. Nothing has been deployed.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            echo 'Published release marketing is already current; no patch is needed.' >> "$GITHUB_STEP_SUMMARY"
           fi
-      # Bot pushes do not start another push workflow. Request Pages explicitly.
-      - name: Rebuild GitHub Pages
-        run: gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
-      - name: Verify live release version
-        run: |
-          python3 - <<'PY'
-          import json, time, urllib.request
-          config = json.load(open('marketing.json'))
-          expected = f"/releases/download/v{config['released_version']}/CutAndMove.dmg"
-          for attempt in range(40):
-              try:
-                  url = config['site_url'] + f'?release-check={time.time_ns()}'
-                  with urllib.request.urlopen(url, timeout=20) as response:
-                      page = response.read().decode()
-                  if expected in page:
-                      print('Live page advertises', config['released_version'])
-                      break
-              except (OSError, UnicodeError):
-                  pass
-              time.sleep(15)
-          else:
-              raise SystemExit('Pages did not expose the published download within 10 minutes')
-          PY
+      - name: Upload release patch
+        if: steps.patch.outputs.changed == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-marketing
+          path: ${{ runner.temp }}/release-marketing/
+          retention-days: 7
+          if-no-files-found: error
