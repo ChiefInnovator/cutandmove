@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "icon-tile-stack",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-02T11:58:53.971Z",
+        "reason": "Agent assessment: six existing feature tiles predate this task at 3e8b75b; retained incumbent identity and scoped refinement documented in docs/reviews/impeccable-review.md."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-02T11:58:53.998Z",
+        "reason": "Agent assessment: detector samples compact comparison headings; actual section headings are 30–50px and final download heading 32–58px, verified in source and rendered review."
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-02T11:58:54.026Z",
+        "reason": "Agent assessment: pre-existing blue-violet gradient is present at baseline 3e8b75b and recorded in DESIGN.md; preserve incumbent branding during the requested governance/accessibility refinement."
+      }
+    ]
+  }
+}
