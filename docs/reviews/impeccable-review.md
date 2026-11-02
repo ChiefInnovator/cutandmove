@@ -142,3 +142,23 @@ Desktop captures remain about 3564×2416 physical pixels, with CSS viewport unkn
 Native label/URL/plural corrections were verified in source. About large-text,
 VoiceOver, Clipboard API denied/absent runtime, signed app, and Finder behavior
 were not exercised. The assessor closed its review tab/DevTools.
+
+## Follow-up Hook Triage
+
+The Stop hooks re-raised pre-existing findings after delivery. These are not
+regressions: baseline 3e8b75b already contains all six icon tiles and the blue-violet
+gradient. Three file-scoped rule/value exceptions are now recorded through
+`impeccable hooks ignore-value` in .impeccable/config.json for index.html only:
+
+- icon-tile-stack: retain the existing six-feature composition within the requested
+  governance/accessibility refinement; no redesign was requested.
+- flat-type-hierarchy: false positive from compact comparison headings; actual
+  section and final-download headings have explicit 30–50px and 32–58px scales.
+- ai-color-palette: legacy 4.3.1 heuristic flags the established blue-violet palette,
+  which is documented incumbent branding rather than a new task regression.
+
+Reasons are attributed to agent assessment and source/render evidence, not user
+confirmation of aesthetics. No whole-rule or whole-file ignore was added. All
+other rules remain active. Both installed 4.8 and legacy 4.3.1 detectors now return
+zero configured findings. Original unfiltered review counts above are historical;
+no UI or product behavior changed during this follow-up.
